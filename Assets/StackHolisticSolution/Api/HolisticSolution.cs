@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Common;
 using StackHolisticSolution.Platforms;
-using UnityEngine;
-
 
 namespace StackHolisticSolution.Api
 {
@@ -55,6 +51,22 @@ namespace StackHolisticSolution.Api
             nativeHSFirebaseService = HolisticSolutionClientFactory.GetHSFirebaseService();
         }
     }
+    
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class HSFacebookService
+    {
+        private readonly IHSFacebookService nativeHSFacebookService;
+
+        public IHSFacebookService getHSFacebookService()
+        {
+            return nativeHSFacebookService;
+        }
+
+        public HSFacebookService()
+        {
+            nativeHSFacebookService = HolisticSolutionClientFactory.GetHSFacebookService();
+        }
+    }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSAppConfig
@@ -76,12 +88,49 @@ namespace StackHolisticSolution.Api
             nativeHSAppConfig.withConnectors(connector);
             return this;
         }
-
-        public HSAppConfig withServices(HSAppsflyerService appsflyerService, HSFirebaseService firebaseService)
+        
+        public HSAppConfig withServices(HSFacebookService hsFacebookService)
         {
-            nativeHSAppConfig.withServices(appsflyerService, firebaseService);
+            nativeHSAppConfig.withServices(hsFacebookService);
             return this;
         }
+        
+        public HSAppConfig withServices(HSFirebaseService hsFirebaseService)
+        {
+            nativeHSAppConfig.withServices(hsFirebaseService);
+            return this;
+        }
+        
+        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService)
+        {
+            nativeHSAppConfig.withServices(hsAppsflyerService);
+            return this;
+        }
+        
+        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService, HSFirebaseService hsFirebaseService)
+        {
+            nativeHSAppConfig.withServices(hsAppsflyerService, hsFirebaseService);
+            return this;
+        }
+       
+        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService, HSFacebookService hsFacebookService)
+        {
+            nativeHSAppConfig.withServices(hsAppsflyerService, hsFacebookService);
+            return this;
+        }
+
+        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService, HSFirebaseService hsFirebaseService, HSFacebookService hsFacebookService)
+        {
+            nativeHSAppConfig.withServices(hsAppsflyerService, hsFirebaseService, hsFacebookService);
+            return this;
+        }
+        
+        public HSAppConfig withServices(HSFirebaseService hsFirebaseService, HSFacebookService hsFacebookService)
+        {
+            nativeHSAppConfig.withServices(hsFirebaseService, hsFacebookService);
+            return this;
+        }
+        
 
         public HSAppConfig setDebugEnabled(bool value)
         {
@@ -92,7 +141,7 @@ namespace StackHolisticSolution.Api
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class HSApp
+    public static class HSApp
     {
         private static IHSApp nativeHsApp;
 
@@ -109,6 +158,7 @@ namespace StackHolisticSolution.Api
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class HSLogger
     {
         private static IHSLogger nativeHSLogger;
@@ -130,6 +180,7 @@ namespace StackHolisticSolution.Api
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class HSError
     {
         private readonly IHSError nativeHSError;
@@ -139,9 +190,9 @@ namespace StackHolisticSolution.Api
             return nativeHSError;
         }
 
-        public HSError()
+        public HSError(IHSError getHsError)
         {
-            nativeHSError = HolisticSolutionClientFactory.GetHSError();
+            nativeHSError = getHsError;
         }
     }
 }

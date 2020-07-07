@@ -17,7 +17,7 @@ namespace StackHolisticSolution.Platforms.Android
             HSAppodealConnectorInstance = new AndroidJavaObject(
                 "com.explorestack.hs.sdk.connector.appodeal.HSAppodealConnector");
         }
-        
+
         public AndroidJavaObject getAndroidHSAppodealConnector()
         {
             return HSAppodealConnectorInstance;
@@ -43,9 +43,10 @@ namespace StackHolisticSolution.Platforms.Android
             return HSAppsflyerServiceInstance;
         }
     }
-    
+
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AndroidHSFirebaseService : IHSFirebaseService
     {
         private readonly AndroidJavaObject HSFirebaseServiceInstance;
@@ -63,12 +64,30 @@ namespace StackHolisticSolution.Platforms.Android
     }
     
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    public class AndroidHSFacebookService : IHSFacebookService
+    {
+        private readonly AndroidJavaObject HSFacebookServiceInstance;
+
+        public AndroidHSFacebookService()
+        {
+            HSFacebookServiceInstance = new AndroidJavaObject(
+                "com.explorestack.hs.sdk.service.facebook.HSFacebookService");
+        }
+
+        public AndroidJavaObject getAndroidHSFacebookService()
+        {
+            return HSFacebookServiceInstance;
+        }
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AndroidHSAppConfig : IHSAppConfig
     {
         private readonly AndroidJavaObject HSAppConfigInstance;
-        private AndroidJavaObject 
-        
+
         public AndroidHSAppConfig()
         {
             HSAppConfigInstance = new AndroidJavaObject(
@@ -79,19 +98,65 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSAppConfigInstance;
         }
-        
+
         public void withConnectors(HSAppodealConnector hsAppodealConnector)
         {
             var androidHSAppodealConnector = (AndroidHSAppodealConnector) hsAppodealConnector.getHSAppodealConnector();
-            HSAppConfigInstance.CallStatic("withConnectors", androidHSAppodealConnector.getAndroidHSAppodealConnector());
+            HSAppConfigInstance.CallStatic("withConnectors",
+                androidHSAppodealConnector.getAndroidHSAppodealConnector());
         }
 
-        public void withServices(HSAppsflyerService appsflyerService, HSFirebaseService hsFirebaseService)
+        public void withServices(HSAppsflyerService hsAppsflyerService)
         {
-            var androidHSAppsflyerService = (AndroidHSAppsflyerService) appsflyerService.getHSAppsflyerService();
+            var androidHSAppsflyerService = (AndroidHSAppsflyerService) hsAppsflyerService.getHSAppsflyerService();
+            HSAppConfigInstance.CallStatic("withServices", androidHSAppsflyerService.getAndroidHSAppsflyerService());
+        }
+
+        public void withServices(HSFirebaseService hsFirebaseService)
+        {
             var androidHSFirebaseService = (AndroidHSFirebaseService) hsFirebaseService.getHSFirebaseService();
-            HSAppConfigInstance.CallStatic("withServices", androidHSAppsflyerService.getAndroidHSAppsflyerService(), 
-                androidHSFirebaseService.getAndroidHSFirebaseService() );
+            HSAppConfigInstance.CallStatic("withServices", androidHSFirebaseService.getAndroidHSFirebaseService());
+        }
+
+        public void withServices(HSFacebookService hsFacebookService)
+        {
+            var androidHSFacebookService = (AndroidHSFacebookService) hsFacebookService.getHSFacebookService();
+            HSAppConfigInstance.CallStatic("withServices", androidHSFacebookService.getAndroidHSFacebookService());
+        }
+
+        public void withServices(HSFirebaseService hsFirebaseService, HSFacebookService hsFacebookService)
+        {
+            var androidHSFirebaseService = (AndroidHSFirebaseService) hsFirebaseService.getHSFirebaseService();
+            var androidHSFacebookService = (AndroidHSFacebookService) hsFacebookService.getHSFacebookService();
+            object[] objects = {androidHSFirebaseService.getAndroidHSFirebaseService(), androidHSFacebookService.getAndroidHSFacebookService()};
+            HSAppConfigInstance.CallStatic("withServices", objects);
+        }
+
+        public void withServices(HSAppsflyerService hsAppsflyerService, HSFirebaseService hsFirebaseService,
+            HSFacebookService hsFacebookService)
+        {
+            var androidHSAppsflyerService = (AndroidHSAppsflyerService) hsAppsflyerService.getHSAppsflyerService();
+            var androidHSFirebaseService = (AndroidHSFirebaseService) hsFirebaseService.getHSFirebaseService();
+            var androidHSFacebookService = (AndroidHSFacebookService) hsFacebookService.getHSFacebookService();
+            object[] objects = {androidHSAppsflyerService.getAndroidHSAppsflyerService(), 
+                androidHSFirebaseService.getAndroidHSFirebaseService(), androidHSFacebookService.getAndroidHSFacebookService()};
+            HSAppConfigInstance.CallStatic("withServices", objects);
+        }
+
+        public void withServices(HSAppsflyerService hsAppsflyerService, HSFirebaseService hsFirebaseService)
+        {
+            var androidHSAppsflyerService = (AndroidHSAppsflyerService) hsAppsflyerService.getHSAppsflyerService();
+            var androidHSFirebaseService = (AndroidHSFirebaseService) hsFirebaseService.getHSFirebaseService();
+            object[] objects = {androidHSAppsflyerService.getAndroidHSAppsflyerService(), androidHSFirebaseService.getAndroidHSFirebaseService()};
+            HSAppConfigInstance.CallStatic("withServices", objects);
+        }
+
+        public void withServices(HSAppsflyerService hsAppsflyerService, HSFacebookService hsFacebookService)
+        {
+            var androidHSAppsflyerService = (AndroidHSAppsflyerService) hsAppsflyerService.getHSAppsflyerService();
+            var androidHSFacebookService = (AndroidHSFacebookService) hsFacebookService.getHSFacebookService();
+            object[] objects = {androidHSAppsflyerService.getAndroidHSAppsflyerService(), androidHSFacebookService.getAndroidHSFacebookService()};
+            HSAppConfigInstance.CallStatic("withServices", objects);
         }
 
         public void setDebugEnabled(bool value)
@@ -101,16 +166,18 @@ namespace StackHolisticSolution.Platforms.Android
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidHSApp : IHSApp
     {
         private AndroidJavaClass HSAppClass;
         private AndroidJavaObject activity;
-        
+
         private AndroidJavaClass getHSAppClass()
         {
             return HSAppClass ?? (HSAppClass = new AndroidJavaClass("com.explorestack.hs.sdk.HSApp"));
         }
-        
+
         private AndroidJavaObject getActivity()
         {
             if (activity != null) return activity;
@@ -124,12 +191,27 @@ namespace StackHolisticSolution.Platforms.Android
         {
             var androidHSAppConfig = (AndroidHSAppConfig) appConfig.getHSAppConfig();
             HSAppClass.CallStatic("initialize", getActivity(), androidHSAppConfig.getHSAppConfig(),
-                new AndroidHSAppInitializeListener(hsAppInitializeListener)  );
+                new AndroidHSAppInitializeListener(hsAppInitializeListener));
         }
     }
-    
-    
-    
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class AndroidHSError : IHSError
+    {
+        private readonly AndroidJavaObject HSErrorInstance;
+
+        public AndroidHSError(AndroidJavaObject hsErrorInstance)
+        {
+            HSErrorInstance = hsErrorInstance;
+        }
+
+        public AndroidJavaObject getHSError()
+        {
+            return HSErrorInstance;
+        }
+    }
+
+
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
     public static class Helper
@@ -174,6 +256,4 @@ namespace StackHolisticSolution.Platforms.Android
             return value ?? null;
         }
     }
-    
-    
 }

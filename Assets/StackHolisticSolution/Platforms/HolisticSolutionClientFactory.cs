@@ -39,6 +39,17 @@ namespace StackHolisticSolution.Platforms
 #endif
         }
         
+        internal static IHSFacebookService GetHSFacebookService()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+			return new AndroidHSFacebookService();
+#elif UNITY_IPHONE && !UNITY_EDITOR
+            return new iOS.iOSHSFacebookService();
+#else
+            return new Dummy.Dummy();
+#endif
+        }
+        
         internal static IHSAppConfig GetHSAppConfig()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR

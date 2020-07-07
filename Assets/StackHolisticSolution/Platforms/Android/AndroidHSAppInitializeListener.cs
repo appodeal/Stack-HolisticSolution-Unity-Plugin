@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
 using UnityEngine;
 
@@ -18,17 +20,19 @@ namespace StackHolisticSolution.Platforms.Android
                 this.listener = listener;
             }
 
-            private void onAppInitialized()
+            private void onAppInitialized(IEnumerable<AndroidJavaObject> javaObjects)
             {
-                listener.onAppInitialized();
+                var errors = new List<HSError>();
+
+                foreach (var javaObject in javaObjects)
+                {
+                    var androidHsError = new AndroidHSError(javaObject);
+                    errors.Add(new HSError(androidHsError));
+                }
+                
+                listener.onAppInitialized(errors);
             }
 
-            private void onAppInitializationFailed(AndroidJavaObject javaObject)
-            {
-                //var consentManagerException = new HSError(new AndroidConsentManagerException(exception));
-               // listener.onAppInitializationFailed();
-            }
-            
         }
 #else
     {
