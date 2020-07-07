@@ -194,5 +194,10 @@ namespace StackHolisticSolution.Api
         {
             nativeHSError = getHsError;
         }
+
+        public IHSError getHSErr()
+        {
+            return HolisticSolutionClientFactory.GetHSError();
+        }
     }
 }

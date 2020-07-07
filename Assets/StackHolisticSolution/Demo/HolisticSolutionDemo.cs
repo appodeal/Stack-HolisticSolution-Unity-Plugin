@@ -7,13 +7,12 @@ using UnityEngine;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener
 {
-    private const string YOUR_APPSFLYER_DEV_KEY = "";
-
+    
     void Start()
     {
         HSLogger.setEnabled(true);
         HSAppodealConnector hsAppodealConnector = new HSAppodealConnector();
-        HSAppsflyerService appsflyerService = new HSAppsflyerService(YOUR_APPSFLYER_DEV_KEY);
+        HSAppsflyerService appsflyerService = new HSAppsflyerService("YOUR_APPSFLYER_DEV_KEY");
         HSFirebaseService firebaseService = new HSFirebaseService();
         HSFacebookService facebookService = new HSFacebookService();
 

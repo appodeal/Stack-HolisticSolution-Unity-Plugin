@@ -8,8 +8,7 @@ namespace StackHolisticSolution.Platforms.Dummy
         IHSAppConfig, IHSApp, IHSError, IHSLogger, IHSFacebookService
     {
         private const string DummyMessage = "Not supported on this platform";
-
-
+        
         public void withConnectors(HSAppodealConnector hsAppodealConnector)
         {
             Debug.LogError(DummyMessage);

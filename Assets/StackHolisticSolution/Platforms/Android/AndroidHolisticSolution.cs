@@ -205,12 +205,43 @@ namespace StackHolisticSolution.Platforms.Android
             HSErrorInstance = hsErrorInstance;
         }
 
+        public AndroidHSError()
+        {
+            HSErrorInstance = new AndroidJavaObject(
+                "com.explorestack.hs.sdk.HSAppConfig");
+        }
+
         public AndroidJavaObject getHSError()
         {
             return HSErrorInstance;
         }
     }
 
+     
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    public class AndroidHSLogger : IHSLogger
+    {
+        private readonly AndroidJavaObject HSLoggerInstance;
+
+        public AndroidHSLogger()
+        {
+            HSLoggerInstance = new AndroidJavaObject(
+                "com.explorestack.hs.sdk.HSLogger");
+        }
+
+        public AndroidJavaObject getAndroidHSLogger()
+        {
+            return HSLoggerInstance;
+        }
+
+        public void setEnabled(bool value)
+        {
+            HSLoggerInstance.Call("setEnabled", Helper.getJavaObject(value));
+        }
+    }
+
+  
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
