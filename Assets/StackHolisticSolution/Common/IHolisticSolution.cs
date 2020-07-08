@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Api;
+using StackHolisticSolution.Platforms.Android;
+using UnityEngine;
 
 namespace StackHolisticSolution.Common
 {
@@ -9,32 +11,32 @@ namespace StackHolisticSolution.Common
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSAppsflyerService
+    public interface IHSAppsflyerService : IHSService
+    {
+        
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public interface IHSFirebaseService : IHSService
     {
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSFirebaseService
+    public interface IHSFacebookService : IHSService
     {
     }
 
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSFacebookService
+    public interface IHSService
     {
+        AndroidJavaObject GetAndroidInstance();
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSAppConfig
     {
+        
         void withConnectors(HSAppodealConnector hsAppodealConnector);
-        void withServices(HSAppsflyerService appsflyerService);
-        void withServices(HSFirebaseService hsFirebaseService);
-        void withServices(HSFacebookService facebookService);
-        void withServices(HSAppsflyerService appsflyerService, HSFirebaseService hsFirebaseService);
-        void withServices(HSAppsflyerService appsflyerService, HSFacebookService facebookService);
-        void withServices(HSFirebaseService hsFirebaseService, HSFacebookService facebookService);
-        void withServices(HSAppsflyerService appsflyerService, HSFirebaseService hsFirebaseService,
-            HSFacebookService facebookService);
+        void withServices(params IHSService[] services);
         void setDebugEnabled(bool value);
     }
 
@@ -47,6 +49,7 @@ namespace StackHolisticSolution.Common
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSError
     {
+        string toString();
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

@@ -7,6 +7,7 @@
         <androidPackage spec="com.explorestack.hs.sdk.connector:appodeal:1.0.0"/>
         <androidPackage spec="com.explorestack.hs.sdk.service:appsflyer:1.0.0"/>
         <androidPackage spec="com.explorestack.hs.sdk.service:firebase:1.0.0"/>
+        <androidPackage spec="com.explorestack.hs.sdk.service:facebook:1.0.0"/>
     </androidPackages>
     <iosPods>
 <!--        <iosPod name='Appodeal' version='2.6.5-OMG' minTargetSdk='9.0'/>-->

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
 using UnityEngine;
@@ -7,33 +8,31 @@ using UnityEngine;
 namespace StackHolisticSolution.Platforms.Android
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        public class AndroidHSAppInitializeListener
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    public class AndroidHSAppInitializeListener
 #if UNITY_ANDROID
-            : UnityEngine.AndroidJavaProxy
+        : UnityEngine.AndroidJavaProxy
+    {
+        private readonly IHSAppInitializeListener listener;
+
+        internal AndroidHSAppInitializeListener(IHSAppInitializeListener listener) : base(
+            "com.explorestack.hs.sdk.HSAppInitializeListener")
         {
-            private readonly IHSAppInitializeListener listener;
-
-            internal AndroidHSAppInitializeListener(IHSAppInitializeListener listener) : base(
-                "io.bidmachine.app_event.BMAdManagerAppEventListener")
-            {
-                this.listener = listener;
-            }
-
-            private void onAppInitialized(IEnumerable<AndroidJavaObject> javaObjects)
-            {
-                var errors = new List<HSError>();
-
-                foreach (var javaObject in javaObjects)
-                {
-                    var androidHsError = new AndroidHSError(javaObject);
-                    errors.Add(new HSError(androidHsError));
-                }
-                
-                listener.onAppInitialized(errors);
-            }
-
+            this.listener = listener;
         }
+
+        private void onAppInitialized(AndroidJavaObject javaTypeList)
+        {
+            var csTypeList = new List<HSError>();
+            var length = javaTypeList.Call<int>("size");
+            for (var i = 0; i < length; i++)
+            {
+                var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
+               csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
+            }
+            listener.onAppInitialized(csTypeList);
+        }
+    }
 #else
     {
         public AndroidHSAppInitializeListener(IHSAppInitializeListener listener)
@@ -42,5 +41,4 @@ namespace StackHolisticSolution.Platforms.Android
         }
     }
 #endif
-    
 }

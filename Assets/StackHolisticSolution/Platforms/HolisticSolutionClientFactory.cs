@@ -86,16 +86,5 @@ namespace StackHolisticSolution.Platforms
             return new Dummy.Dummy();
 #endif
         }
-        
-        internal static IHSError GetHSError()
-        {
-#if UNITY_ANDROID && !UNITY_EDITOR
-			return new AndroidHSError();
-#elif UNITY_IPHONE && !UNITY_EDITOR
-            //return new iOS.iOSHSError();
-#else
-            return new Dummy.Dummy();
-#endif
-        }
     }
 }

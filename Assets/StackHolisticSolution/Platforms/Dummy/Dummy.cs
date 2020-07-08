@@ -1,5 +1,6 @@
 using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
+using StackHolisticSolution.Platforms.Android;
 using UnityEngine;
 
 namespace StackHolisticSolution.Platforms.Dummy
@@ -12,6 +13,11 @@ namespace StackHolisticSolution.Platforms.Dummy
         public void withConnectors(HSAppodealConnector hsAppodealConnector)
         {
             Debug.LogError(DummyMessage);
+        }
+
+        public void withServices(params IHSService[] services)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void withServices(HSAppsflyerService appsflyerService)
@@ -63,6 +69,16 @@ namespace StackHolisticSolution.Platforms.Dummy
         public void setEnabled(bool value)
         {
             Debug.LogError(DummyMessage);
+        }
+
+        public string toString()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public AndroidJavaObject GetAndroidInstance()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener
 {
-    
     void Start()
     {
         HSLogger.setEnabled(true);
@@ -17,7 +16,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener
         HSFacebookService facebookService = new HSFacebookService();
 
         HSAppConfig appConfig = new HSAppConfig()
-            .withServices(appsflyerService, firebaseService, facebookService)
+            .withServices(appsflyerService.getHSAppsflyerService(), firebaseService.getHSFirebaseService(), facebookService.getHSFacebookService())
             .withConnectors(hsAppodealConnector)
             .setDebugEnabled(true);
 

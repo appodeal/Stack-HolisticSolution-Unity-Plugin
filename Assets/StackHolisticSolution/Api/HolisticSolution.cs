@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Common;
 using StackHolisticSolution.Platforms;
+using UnityEngine;
 
 namespace StackHolisticSolution.Api
 {
@@ -24,7 +25,7 @@ namespace StackHolisticSolution.Api
     public class HSAppsflyerService
     {
         private readonly IHSAppsflyerService nativeHSAppsflyerService;
-
+        
         public IHSAppsflyerService getHSAppsflyerService()
         {
             return nativeHSAppsflyerService;
@@ -89,48 +90,11 @@ namespace StackHolisticSolution.Api
             return this;
         }
         
-        public HSAppConfig withServices(HSFacebookService hsFacebookService)
+        public HSAppConfig withServices(params IHSService[] services)
         {
-            nativeHSAppConfig.withServices(hsFacebookService);
+            nativeHSAppConfig.withServices(services);
             return this;
         }
-        
-        public HSAppConfig withServices(HSFirebaseService hsFirebaseService)
-        {
-            nativeHSAppConfig.withServices(hsFirebaseService);
-            return this;
-        }
-        
-        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService)
-        {
-            nativeHSAppConfig.withServices(hsAppsflyerService);
-            return this;
-        }
-        
-        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService, HSFirebaseService hsFirebaseService)
-        {
-            nativeHSAppConfig.withServices(hsAppsflyerService, hsFirebaseService);
-            return this;
-        }
-       
-        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService, HSFacebookService hsFacebookService)
-        {
-            nativeHSAppConfig.withServices(hsAppsflyerService, hsFacebookService);
-            return this;
-        }
-
-        public HSAppConfig withServices(HSAppsflyerService hsAppsflyerService, HSFirebaseService hsFirebaseService, HSFacebookService hsFacebookService)
-        {
-            nativeHSAppConfig.withServices(hsAppsflyerService, hsFirebaseService, hsFacebookService);
-            return this;
-        }
-        
-        public HSAppConfig withServices(HSFirebaseService hsFirebaseService, HSFacebookService hsFacebookService)
-        {
-            nativeHSAppConfig.withServices(hsFirebaseService, hsFacebookService);
-            return this;
-        }
-        
 
         public HSAppConfig setDebugEnabled(bool value)
         {
@@ -195,9 +159,9 @@ namespace StackHolisticSolution.Api
             nativeHSError = getHsError;
         }
 
-        public IHSError getHSErr()
+        public string toString()
         {
-            return HolisticSolutionClientFactory.GetHSError();
+           return nativeHSError.toString();
         }
     }
 }
