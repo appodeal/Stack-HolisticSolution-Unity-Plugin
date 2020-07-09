@@ -5,8 +5,10 @@ using StackHolisticSolution.Api;
 namespace StackHolisticSolution.Common
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSAppInitializeListener
+    public interface IHSInAppPurchaseValidateListener
     {
-        void onAppInitialized(IEnumerable<HSError> hsErrors);
+        void onInAppPurchaseValidateSuccess(HSInAppPurchase purchase, List<HSError> errors);
+
+        void onInAppPurchaseValidateFail(List<HSError> errors);
     }
 }

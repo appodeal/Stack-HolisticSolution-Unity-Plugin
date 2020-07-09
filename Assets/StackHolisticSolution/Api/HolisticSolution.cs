@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Common;
 using StackHolisticSolution.Platforms;
-using UnityEngine;
 
 namespace StackHolisticSolution.Api
 {
@@ -19,13 +19,18 @@ namespace StackHolisticSolution.Api
         {
             nativeHSAppodealConnector = HolisticSolutionClientFactory.GetHSAppodealConnector();
         }
+
+        public void setEventsEnabled(bool value)
+        {
+            getHSAppodealConnector().setEventsEnabled(value);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSAppsflyerService
     {
         private readonly IHSAppsflyerService nativeHSAppsflyerService;
-        
+
         public IHSAppsflyerService getHSAppsflyerService()
         {
             return nativeHSAppsflyerService;
@@ -34,6 +39,11 @@ namespace StackHolisticSolution.Api
         public HSAppsflyerService(string sellerId)
         {
             nativeHSAppsflyerService = HolisticSolutionClientFactory.GetHSAppsflyerService(sellerId);
+        }
+
+        public void setEventsEnabled(bool value)
+        {
+            nativeHSAppsflyerService.setEventsEnabled(value);
         }
     }
 
@@ -51,8 +61,13 @@ namespace StackHolisticSolution.Api
         {
             nativeHSFirebaseService = HolisticSolutionClientFactory.GetHSFirebaseService();
         }
+
+        public void setEventsEnabled(bool value)
+        {
+            nativeHSFirebaseService.setEventsEnabled(value);
+        }
     }
-    
+
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSFacebookService
     {
@@ -66,6 +81,11 @@ namespace StackHolisticSolution.Api
         public HSFacebookService()
         {
             nativeHSFacebookService = HolisticSolutionClientFactory.GetHSFacebookService();
+        }
+
+        public void setEventsEnabled(bool value)
+        {
+            nativeHSFacebookService.setEventsEnabled(value);
         }
     }
 
@@ -89,7 +109,7 @@ namespace StackHolisticSolution.Api
             nativeHSAppConfig.withConnectors(connector);
             return this;
         }
-        
+
         public HSAppConfig withServices(params IHSService[] services)
         {
             nativeHSAppConfig.withServices(services);
@@ -101,7 +121,6 @@ namespace StackHolisticSolution.Api
             nativeHSAppConfig.setDebugEnabled(value);
             return this;
         }
-
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -118,7 +137,22 @@ namespace StackHolisticSolution.Api
         {
             getInstance().initialize(hsAppConfig, hsAppInitializeListener);
         }
-        
+
+        public static void logEvent(string key, Dictionary<string, object> dictionary)
+        {
+            getInstance().logEvent(key, dictionary);
+        }
+
+        public static void logEvent(string key)
+        {
+            getInstance().logEvent(key);
+        }
+
+        public static void validateInAppPurchase(HSInAppPurchase purchase,
+            IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
+        {
+            getInstance().validateInAppPurchase(purchase, hsInAppPurchaseValidateListener);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -161,7 +195,106 @@ namespace StackHolisticSolution.Api
 
         public string toString()
         {
-           return nativeHSError.toString();
+            return nativeHSError.toString();
+        }
+    }
+
+    // ReSharper disable once InconsistentNaming
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class HSInAppPurchase
+    {
+        private readonly IHSInAppPurchase nativeHSInAppPurchase;
+
+        public HSInAppPurchase(IHSInAppPurchase builder)
+        {
+            nativeHSInAppPurchase = builder;
+        }
+
+        public IHSInAppPurchase getNativeHSInAppPurchase()
+        {
+            return nativeHSInAppPurchase;
+        }
+
+        public string getPublicKey()
+        {
+            return nativeHSInAppPurchase.getPublicKey();
+        }
+
+        public string getSignature()
+        {
+            return nativeHSInAppPurchase.getSignature();
+        }
+
+        public string getPurchaseData()
+        {
+            return nativeHSInAppPurchase.getPurchaseData();
+        }
+
+        public string getPrice()
+        {
+            return nativeHSInAppPurchase.getPrice();
+        }
+
+        public string getCurrency()
+        {
+            return nativeHSInAppPurchase.getCurrency();
+        }
+
+        public string getAdditionalParameters()
+        {
+            return nativeHSInAppPurchase.getAdditionalParameters();
+        }
+
+        public class Builder
+        {
+            private readonly IHSInAppPurchaseBuilder nativeIHSInAppPurchaseBuilder;
+
+            public Builder()
+            {
+                nativeIHSInAppPurchaseBuilder =
+                    HolisticSolutionClientFactory.GetInAppPurchaseBuilder();
+            }
+
+            public HSInAppPurchase build()
+            {
+                return new HSInAppPurchase(nativeIHSInAppPurchaseBuilder.build());
+            }
+
+            public Builder withAdditionalParams(Dictionary<string, string> additionalParameters)
+            {
+                nativeIHSInAppPurchaseBuilder.withAdditionalParams(additionalParameters);
+                return this;
+            }
+
+            public Builder withCurrency(string currency)
+            {
+                nativeIHSInAppPurchaseBuilder.withCurrency(currency);
+                return this;
+            }
+
+            public Builder withPrice(string price)
+            {
+                nativeIHSInAppPurchaseBuilder.withPrice(price);
+                return this;
+            }
+
+            public Builder withPurchaseData(string purchaseData)
+            {
+                nativeIHSInAppPurchaseBuilder.withPurchaseData(purchaseData);
+                return this;
+            }
+
+            public Builder withSignature(string signature)
+            {
+                nativeIHSInAppPurchaseBuilder.withSignature(signature);
+                return this;
+            }
+
+            public Builder withPublicKey(string publicKey)
+            {
+                nativeIHSInAppPurchaseBuilder.withPublicKey(publicKey);
+                return this;
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ namespace StackHolisticSolution.Platforms.Android
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidHSLogger : IHSLogger
     {
         private AndroidJavaClass HSLoggerClass;
@@ -42,6 +43,11 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSAppodealConnectorInstance;
         }
+
+        public void setEventsEnabled(bool value)
+        {
+            HSAppodealConnectorInstance.Call("setEventsEnabled", value);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -68,6 +74,11 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSAppsflyerServiceInstance;
         }
+
+        public void setEventsEnabled(bool value)
+        {
+            HSAppsflyerServiceInstance.Call("setEventsEnabled", value);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -92,10 +103,16 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSFirebaseServiceInstance;
         }
+
+        public void setEventsEnabled(bool value)
+        {
+            HSFirebaseServiceInstance.Call("setEventsEnabled", value);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidHSFacebookService : IHSFacebookService
     {
         private readonly AndroidJavaObject HSFacebookServiceInstance;
@@ -114,6 +131,11 @@ namespace StackHolisticSolution.Platforms.Android
         public AndroidJavaObject GetAndroidInstance()
         {
             return HSFacebookServiceInstance;
+        }
+
+        public void setEventsEnabled(bool value)
+        {
+            HSFacebookServiceInstance.Call("setEventsEnabled", value);
         }
     }
 
@@ -134,7 +156,7 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSAppConfigInstance;
         }
-        
+
         public void setDebugEnabled(bool value)
         {
             HSAppConfigInstance.Call<AndroidJavaObject>("setDebugEnabled", value);
@@ -149,28 +171,22 @@ namespace StackHolisticSolution.Platforms.Android
             var args = AndroidJNIHelper.CreateJNIArgArray(new object[] {objects});
             AndroidJNI.CallObjectMethod(HSAppConfigInstance.GetRawObject(), eventMethod, args);
         }
-        
+
         public void withServices(params IHSService[] services)
         {
             var eventMethod = AndroidJNI.GetMethodID(getHSAppConfigClass().GetRawClass(),
                 "withServices", "([Lcom/explorestack/hs/sdk/HSService;)Lcom/explorestack/hs/sdk/HSAppConfig;");
 
-            var androidJavaObjects = 
+            var androidJavaObjects =
                 services.Select(e => e.GetAndroidInstance()).ToArray();
-            
+
             var args = AndroidJNIHelper.CreateJNIArgArray(new object[]
             {
                 javaArrayFromCS(androidJavaObjects,
                     "com.explorestack.hs.sdk.HSService")
             });
-
-            Debug.LogError(args.Length);
-
+            
             AndroidJNI.CallObjectMethod(HSAppConfigInstance.GetRawObject(), eventMethod, args);
-
-            var list = HSAppConfigInstance.Call<AndroidJavaObject>("getServices");
-            int length = list.Call<int>("size");
-            Debug.LogError($"length - {length}");
         }
 
         private static AndroidJavaObject javaArrayFromCS(IReadOnlyList<AndroidJavaObject> values, string classType)
@@ -207,13 +223,33 @@ namespace StackHolisticSolution.Platforms.Android
 
         public void initialize(HSAppConfig appConfig, IHSAppInitializeListener hsAppInitializeListener)
         {
-            Debug.LogError("HSAppInstance.CallStatic<bool>(isInitialized) - " +
-                           HSAppInstance.CallStatic<bool>("isInitialized"));
-
             var androidHSAppConfig = (AndroidHSAppConfig) appConfig.getHSAppConfig();
             HSAppInstance.CallStatic("initialize", getActivity(),
                 androidHSAppConfig.getHSAppConfigInstance(),
                 new AndroidHSAppInitializeListener(hsAppInitializeListener));
+        }
+
+        public void logEvent(string key, Dictionary<string, object> dictionary)
+        {
+            var map = new AndroidJavaObject("java.util.HashMap");
+            foreach (var entry in dictionary)
+            {
+                map.Call<AndroidJavaObject>("put", entry.Key, Helper.getJavaObject(entry.Value));
+            }
+
+            HSAppInstance.CallStatic("logEvent", Helper.getJavaObject(key), map);
+        }
+
+        public void logEvent(string key)
+        {
+            HSAppInstance.CallStatic("logEvent", Helper.getJavaObject(key));
+        }
+
+        public void validateInAppPurchase(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener hsAppInitializeListener)
+        {
+            var androidHSInAppPurchase = (AndroidHSInAppPurchase) purchase.getNativeHSInAppPurchase();
+            HSAppInstance.CallStatic("validateInAppPurchase", androidHSInAppPurchase.getHSInAppPurchase(),
+                new AndroidHSInAppPurchaseValidateListener(hsAppInitializeListener));
         }
     }
 
@@ -235,6 +271,115 @@ namespace StackHolisticSolution.Platforms.Android
         public string toString()
         {
             return HSErrorInstance.Call<string>("toString");
+        }
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    public class AndroidHSInAppPurchaseBuilder : IHSInAppPurchaseBuilder
+    {
+        private readonly AndroidJavaObject HSInAppPurchaseBuilder;
+        private AndroidJavaObject HSInAppPurchase;
+
+        public AndroidHSInAppPurchaseBuilder()
+        {
+            HSInAppPurchaseBuilder =
+                new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase").CallStatic<AndroidJavaObject>(
+                    "newBuilder");
+        }
+
+        private AndroidJavaObject getBuilder()
+        {
+            return HSInAppPurchaseBuilder;
+        }
+
+        public IHSInAppPurchase build()
+        {
+            HSInAppPurchase = new AndroidJavaObject("com.explorestack.hs.sdk.HSInAppPurchase");
+            HSInAppPurchase = getBuilder().Call<AndroidJavaObject>("build");
+            return new AndroidHSInAppPurchase(HSInAppPurchase);
+        }
+
+        public void withPublicKey(string publicKey)
+        {
+            getBuilder().Call<AndroidJavaObject>("withPublicKey", Helper.getJavaObject(publicKey));
+        }
+
+        public void withAdditionalParams(Dictionary<string, string> additionalParameters)
+        {
+            var map = new AndroidJavaObject("java.util.HashMap");
+            foreach (var entry in additionalParameters)
+            {
+                map.Call<AndroidJavaObject>("put", entry.Key, Helper.getJavaObject(entry.Value));
+            }
+
+            getBuilder().Call<AndroidJavaObject>("withAdditionalParams", map);
+        }
+
+        public void withCurrency(string currency)
+        {
+            getBuilder().Call<AndroidJavaObject>("withCurrency", Helper.getJavaObject(currency));
+        }
+
+        public void withPrice(string price)
+        {
+            getBuilder().Call<AndroidJavaObject>("withPrice", Helper.getJavaObject(price));
+        }
+
+        public void withPurchaseData(string purchaseData)
+        {
+            getBuilder().Call<AndroidJavaObject>("withPurchaseData", Helper.getJavaObject(purchaseData));
+        }
+
+        public void withSignature(string signature)
+        {
+            getBuilder().Call<AndroidJavaObject>("withSignature", Helper.getJavaObject(signature));
+        }
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class AndroidHSInAppPurchase : IHSInAppPurchase
+    {
+        private readonly AndroidJavaObject HSInAppPurchase;
+
+        public AndroidHSInAppPurchase(AndroidJavaObject hSInAppPurchase)
+        {
+            HSInAppPurchase = hSInAppPurchase;
+        }
+
+        public AndroidJavaObject getHSInAppPurchase()
+        {
+            return HSInAppPurchase;
+        }
+
+        public string getPublicKey()
+        {
+            return HSInAppPurchase.Call<string>("getPublicKey");
+        }
+
+        public string getSignature()
+        {
+            return HSInAppPurchase.Call<string>("getSignature");
+        }
+
+        public string getPurchaseData()
+        {
+            return HSInAppPurchase.Call<string>("getPurchaseData");
+        }
+
+        public string getPrice()
+        {
+            return HSInAppPurchase.Call<string>("getPrice");
+        }
+
+        public string getCurrency()
+        {
+            return HSInAppPurchase.Call<string>("getCurrency");
+        }
+
+        public string getAdditionalParameters()
+        {
+            return HSInAppPurchase.Call<AndroidJavaObject>("getAdditionalParameters").Call<string>("toString");
         }
     }
 

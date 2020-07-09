@@ -86,5 +86,16 @@ namespace StackHolisticSolution.Platforms
             return new Dummy.Dummy();
 #endif
         }
+        
+        internal static IHSInAppPurchaseBuilder GetInAppPurchaseBuilder()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+			return new AndroidHSInAppPurchaseBuilder();
+#elif UNITY_IPHONE && !UNITY_EDITOR
+            //return new iOS.iOSHSLogger();
+#else
+            return new Dummy.Dummy();
+#endif
+        }
     }
 }
