@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -74,6 +75,11 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSAppsflyerServiceInstance;
         }
+        
+        public IntPtr GetIntPtr()
+        {
+            return new IntPtr();
+        }
 
         public void setEventsEnabled(bool value)
         {
@@ -103,6 +109,11 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSFirebaseServiceInstance;
         }
+        
+        public IntPtr GetIntPtr()
+        {
+            return new IntPtr();
+        }
 
         public void setEventsEnabled(bool value)
         {
@@ -131,6 +142,11 @@ namespace StackHolisticSolution.Platforms.Android
         public AndroidJavaObject GetAndroidInstance()
         {
             return HSFacebookServiceInstance;
+        }
+
+        public IntPtr GetIntPtr()
+        {
+            return new IntPtr();
         }
 
         public void setEventsEnabled(bool value)

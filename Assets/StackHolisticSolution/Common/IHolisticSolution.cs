@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Api;
@@ -33,6 +34,7 @@ namespace StackHolisticSolution.Common
     public interface IHSService
     {
         AndroidJavaObject GetAndroidInstance();
+        IntPtr GetIntPtr();
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

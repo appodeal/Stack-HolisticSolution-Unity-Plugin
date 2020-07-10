@@ -1,9 +1,8 @@
 // ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
-using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
 using StackHolisticSolution.Platforms.Android;
-using UnityEditor;
+
 
 namespace StackHolisticSolution.Platforms
 {
@@ -15,7 +14,7 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSAppodealConnector();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            //return PlayerSettings.iOS.iOSHSAppodealConnector.Instance;
+            return new iOS.iOSHSAppodealConnector;
 #else
             return new Dummy.Dummy();
 #endif
@@ -26,7 +25,7 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSAppsflyerService(key);
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            //return new iOS.iOSHSAppsflyerService(key);
+            return new iOS.iOSHSAppsflyerService(key);
 #else
             return new Dummy.Dummy();
 #endif
@@ -81,7 +80,7 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSLogger();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            //return new iOS.iOSHSLogger();
+            return new iOS.iOSHSLogger();
 #else
             return new Dummy.Dummy();
 #endif
@@ -92,7 +91,7 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSInAppPurchaseBuilder();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            //return new iOS.iOSHSLogger();
+            return new iOS.iOSHSInAppPurchaseBuilder();
 #else
             return new Dummy.Dummy();
 #endif

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
@@ -20,6 +21,12 @@ namespace StackHolisticSolution.Platforms.Dummy
         {
             Debug.Log(DummyMessage);
             return null;
+        }
+
+        public IntPtr GetIntPtr()
+        {
+            Debug.Log(DummyMessage);
+            return new IntPtr();
         }
 
         void IHSFacebookService.setEventsEnabled(bool value)
