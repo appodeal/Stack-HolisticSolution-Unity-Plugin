@@ -8,24 +8,7 @@ using UnityEngine;
 
 namespace StackHolisticSolution.Platforms.Android
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    public class AndroidHSLogger : IHSLogger
-    {
-        private AndroidJavaClass HSLoggerClass;
-
-        private AndroidJavaClass getHSLoggerClass()
-        {
-            return HSLoggerClass ?? (HSLoggerClass = new AndroidJavaClass("com.explorestack.hs.sdk.HSLogger"));
-        }
-
-        public void setEnabled(bool value)
-        {
-            getHSLoggerClass().CallStatic("setEnabled", value);
-        }
-    }
-
+    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
@@ -261,15 +244,23 @@ namespace StackHolisticSolution.Platforms.Android
             HSAppInstance.CallStatic("logEvent", Helper.getJavaObject(key));
         }
 
-        public void validateInAppPurchase(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener hsAppInitializeListener)
+        public void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
+            IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
         {
             var androidHSInAppPurchase = (AndroidHSInAppPurchase) purchase.getNativeHSInAppPurchase();
             HSAppInstance.CallStatic("validateInAppPurchase", androidHSInAppPurchase.getHSInAppPurchase(),
-                new AndroidHSInAppPurchaseValidateListener(hsAppInitializeListener));
+                new AndroidHSInAppPurchaseValidateListener(hsInAppPurchaseValidateListener));
+        }
+
+        public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId,
+            string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+        {
+            Debug.Log("Not support");
         }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidHSError : IHSError
     {
         private readonly AndroidJavaObject HSErrorInstance;
@@ -398,8 +389,7 @@ namespace StackHolisticSolution.Platforms.Android
             return HSInAppPurchase.Call<AndroidJavaObject>("getAdditionalParameters").Call<string>("toString");
         }
     }
-
-
+    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
     public static class Helper

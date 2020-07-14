@@ -8,5 +8,6 @@ namespace StackHolisticSolution.Common
     public interface IHSAppInitializeListener
     {
         void onAppInitialized(IEnumerable<HSError> hsErrors);
+        void onAppInitialized(string error);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using StackHolisticSolution.Common;
 using StackHolisticSolution.Platforms;
 
@@ -41,6 +42,12 @@ namespace StackHolisticSolution.Api
             nativeHSAppsflyerService = HolisticSolutionClientFactory.GetHSAppsflyerService(sellerId);
         }
 
+        public HSAppsflyerService(string devkey, string defaults, string[] keys)
+        {
+            nativeHSAppsflyerService =
+                HolisticSolutionClientFactory.GetHSAppsflyerService(devkey, defaults, string.Join(",", keys));
+        }
+
         public void setEventsEnabled(bool value)
         {
             nativeHSAppsflyerService.setEventsEnabled(value);
@@ -60,6 +67,14 @@ namespace StackHolisticSolution.Api
         public HSFirebaseService()
         {
             nativeHSFirebaseService = HolisticSolutionClientFactory.GetHSFirebaseService();
+        }
+
+        public HSFirebaseService(Dictionary<string, string> defaults, long expirationDuration)
+        {
+            string defaultsString =
+                defaults.Aggregate("", (current, kvp) => current + (kvp.Key + "=" + kvp.Value + "\n"));
+            nativeHSFirebaseService =
+                HolisticSolutionClientFactory.GetHSFirebaseService(defaultsString, expirationDuration);
         }
 
         public void setEventsEnabled(bool value)
@@ -148,32 +163,17 @@ namespace StackHolisticSolution.Api
             getInstance().logEvent(key);
         }
 
-        public static void validateInAppPurchase(HSInAppPurchase purchase,
+        public static void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
             IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
         {
-            getInstance().validateInAppPurchase(purchase, hsInAppPurchaseValidateListener);
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class HSLogger
-    {
-        private static IHSLogger nativeHSLogger;
-
-        private static IHSLogger getInstance()
-        {
-            return nativeHSLogger ?? (nativeHSLogger = HolisticSolutionClientFactory.GetHSLogger());
+            getInstance().validateInAppPurchaseAndroid(purchase, hsInAppPurchaseValidateListener);
         }
 
-        public HSLogger()
+        public static void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
+            string transactionId,
+            string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
         {
-            nativeHSLogger = HolisticSolutionClientFactory.GetHSLogger();
-        }
-
-        public static void setEnabled(bool value)
-        {
-            getInstance().setEnabled(value);
+            getInstance().validateInAppPurchaseiOS(productIdentifier, price, currency, transactionId, additionalParams, inAppPurchaseValidationiOSCallback);
         }
     }
 
@@ -199,7 +199,6 @@ namespace StackHolisticSolution.Api
         }
     }
 
-    // ReSharper disable once InconsistentNaming
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSInAppPurchase
     {

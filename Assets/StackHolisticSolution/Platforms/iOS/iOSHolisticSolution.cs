@@ -9,23 +9,7 @@ using UnityEngine;
 
 namespace StackHolisticSolution.Platforms.iOS
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    public class iOSHSLogger : IHSLogger
-    {
-        private readonly HSLoggerObjCBridge hsLoggerObjCBridge;
-
-        public iOSHSLogger()
-        {
-            hsLoggerObjCBridge = new HSLoggerObjCBridge();
-        }
-        
-        public void setEnabled(bool value)
-        {
-            hsLoggerObjCBridge.setEnabled(true);
-        }
-    }
-
+    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class iOSHSAppodealConnector : IHSAppodealConnector
     {
@@ -48,13 +32,14 @@ namespace StackHolisticSolution.Platforms.iOS
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class iOSHSAppsflyerService : IHSAppsflyerService
     {
         private readonly HSAppsflyerServiceObjCBridge hsAppsflyerServiceObjCBridge;
 
-        public iOSHSAppsflyerService(string key)
+        public iOSHSAppsflyerService(string devKey, string appId, string keys)
         {
-            hsAppsflyerServiceObjCBridge = new HSAppsflyerServiceObjCBridge(key);
+            hsAppsflyerServiceObjCBridge = new HSAppsflyerServiceObjCBridge(devKey,  appId, keys);
         }
         
         public IntPtr GetIntPtr()
@@ -75,13 +60,14 @@ namespace StackHolisticSolution.Platforms.iOS
     }
     
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class iOSHSFirebaseService : IHSFirebaseService
     {
         private readonly HSFirebaseServiceObjCBridge hSFirebaseServiceObjCBridge;
 
-        public iOSHSFirebaseService()
+        public iOSHSFirebaseService(string defaults, long expirationDuration)
         {
-            hSFirebaseServiceObjCBridge = new HSFirebaseServiceObjCBridge();
+            hSFirebaseServiceObjCBridge = new HSFirebaseServiceObjCBridge(defaults, expirationDuration);
         }
         
         public IntPtr GetIntPtr()
@@ -102,6 +88,7 @@ namespace StackHolisticSolution.Platforms.iOS
     }
     
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class iOSHSFacebookService : IHSFacebookService
     {
         private readonly HSFacebookServiceObjCBridge hSFacebookServiceObjCBridge;
@@ -126,8 +113,6 @@ namespace StackHolisticSolution.Platforms.iOS
             Debug.Log("Not supported");
             return null;
         }
-
-        
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -168,7 +153,7 @@ namespace StackHolisticSolution.Platforms.iOS
     {
         private readonly HSAppObjCBridge hsAppObjCBridge;
         private static IHSAppInitializeListener hsAppInitializeListener;
-        private static IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener;
+        private static IInAppPurchaseValidationiOSCallback _inAppPurchaseValidationiOSCallback;
 
         public iOSHSApp()
         {
@@ -192,45 +177,49 @@ namespace StackHolisticSolution.Platforms.iOS
             hsAppObjCBridge.logEvent(key);
         }
 
-        public void validateInAppPurchase(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener listener)
+        public void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener listener)
         {
-            hsInAppPurchaseValidateListener = listener;
-            var inAppPurchase = (iOSHSInAppPurchase) purchase.getNativeHSInAppPurchase();
-            hsAppObjCBridge.validateInAppPurchase(inAppPurchase.getIntPtr(), onInAppPurchaseValidateSuccess, onInAppPurchaseValidateFail);
+            Debug.Log("Not supported");
         }
-        
+
+        public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId,
+            string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+        {
+            _inAppPurchaseValidationiOSCallback = inAppPurchaseValidationiOSCallback;
+            hsAppObjCBridge.validateInAppPurchaseiOS(productIdentifier,price, currency, transactionId,
+                additionalParams, onSuccess, onFailure);
+        }
+
         #region HSAppInitializeListener delegate
 
-        [MonoPInvokeCallback(typeof(HSAppInitializeListener))]
-        private static void onAppInitialized(IntPtr error)
+        [MonoPInvokeCallback(typeof(HSUSdkInitialisationCallback))]
+        private static void onAppInitialized(string error)
         {
-            var hsErrors = new List<HSError> { new HSError(new iOSHSError(error))};
-            hsAppInitializeListener?.onAppInitialized(hsErrors);
+            hsAppInitializeListener?.onAppInitialized(error);
         }
         
         #endregion
-        
-        #region InAppPurchaseValidateListener delegate
 
-        [MonoPInvokeCallback(typeof(InAppPurchaseValidateSuccess))]
-        private static void onInAppPurchaseValidateSuccess(IntPtr purchase,IntPtr error)
+        #region HSAppInitializeListeneriOS
+
+        [MonoPInvokeCallback(typeof(HSUSdkInAppPurchaseValidationSuccessCallback))]
+        private static void onSuccess(string json)
         {
-            var hsErrors = new List<HSError> { new HSError(new iOSHSError(error))};
-            hsInAppPurchaseValidateListener?.onInAppPurchaseValidateSuccess(
-                new HSInAppPurchase(new iOSHSInAppPurchase(purchase)),hsErrors );
+            _inAppPurchaseValidationiOSCallback?.InAppPurchaseValidationSuccessCallback(json);
         }
         
-        [MonoPInvokeCallback(typeof(InAppPurchaseValidateFail))]
-        private static void onInAppPurchaseValidateFail(IntPtr error)
+        [MonoPInvokeCallback(typeof(HSUSdkInAppPurchaseValidationFailureCallback))]
+        private static void onFailure(string error)
         {
-            var hsErrors = new List<HSError> { new HSError(new iOSHSError(error))};
-            hsInAppPurchaseValidateListener?.onInAppPurchaseValidateFail(hsErrors);
+            _inAppPurchaseValidationiOSCallback?.InAppPurchaseValidationFailureCallback(error);
         }
-        
+
         #endregion
+        
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class iOSHSError : IHSError
     {
         private readonly HSErrorObjCBridge hSErrorObjCBridge;
@@ -252,6 +241,7 @@ namespace StackHolisticSolution.Platforms.iOS
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class iOSHSInAppPurchase : IHSInAppPurchase
     {
         private readonly HSInAppPurchaseObjCBridge hsInAppPurchaseObjBridge;
@@ -298,6 +288,7 @@ namespace StackHolisticSolution.Platforms.iOS
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class iOSHSInAppPurchaseBuilder : IHSInAppPurchaseBuilder
     {
         private readonly HSInAppPurchaseBuilderObjCBridge hsInAppPurchaseBuilderObjCBridge;

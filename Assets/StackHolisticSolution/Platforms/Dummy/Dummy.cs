@@ -1,3 +1,4 @@
+// ReSharper disable All
 using System;
 using System.Collections.Generic;
 using StackHolisticSolution.Api;
@@ -8,7 +9,7 @@ using UnityEngine;
 namespace StackHolisticSolution.Platforms.Dummy
 {
     public class Dummy : IHSAppodealConnector, IHSAppsflyerService, IHSFirebaseService,
-        IHSAppConfig, IHSApp, IHSError, IHSLogger, IHSFacebookService, IHSInAppPurchaseBuilder
+        IHSAppConfig, IHSApp, IHSError, IHSFacebookService, IHSInAppPurchaseBuilder
     {
         private const string DummyMessage = "Not supported on this platform";
         
@@ -74,7 +75,20 @@ namespace StackHolisticSolution.Platforms.Dummy
             Debug.Log(DummyMessage);
         }
 
-        public void validateInAppPurchase(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
+        public void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
+            IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
+        {
+            Debug.Log(DummyMessage);
+        }
+
+        public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId,
+            string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+        {
+            Debug.Log(DummyMessage);
+        }
+
+        public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId,
+            string additionalParams)
         {
             Debug.Log(DummyMessage);
         }
@@ -83,11 +97,6 @@ namespace StackHolisticSolution.Platforms.Dummy
         {
             Debug.Log(DummyMessage);
             return string.Empty;
-        }
-
-        public void setEnabled(bool value)
-        {
-            Debug.Log(DummyMessage);
         }
 
         public IHSInAppPurchase build()

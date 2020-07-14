@@ -1,4 +1,6 @@
 // ReSharper disable All
+
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Common;
 using StackHolisticSolution.Platforms.Android;
@@ -14,7 +16,7 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSAppodealConnector();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            return new iOS.iOSHSAppodealConnector;
+            return new iOS.iOSHSAppodealConnector();
 #else
             return new Dummy.Dummy();
 #endif
@@ -25,7 +27,29 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSAppsflyerService(key);
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            return new iOS.iOSHSAppsflyerService(key);
+            return null;
+#else
+            return new Dummy.Dummy();
+#endif
+        }
+        
+        internal static IHSAppsflyerService GetHSAppsflyerService(string devKey, string appId, string keys)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+			return null;
+#elif UNITY_IPHONE && !UNITY_EDITOR
+            return new iOS.iOSHSAppsflyerService(devKey, appId, keys);
+#else
+            return new Dummy.Dummy();
+#endif
+        }
+        
+        internal static IHSFirebaseService GetHSFirebaseService(string defaults, long expirationDuration)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+			return null;
+#elif UNITY_IPHONE && !UNITY_EDITOR
+            return new iOS.iOSHSFirebaseService(defaults, expirationDuration);
 #else
             return new Dummy.Dummy();
 #endif
@@ -36,11 +60,12 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSFirebaseService();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            return new iOS.iOSHSFirebaseService();
+            return null;
 #else
             return new Dummy.Dummy();
 #endif
         }
+        
         
         internal static IHSFacebookService GetHSFacebookService()
         {
@@ -74,18 +99,7 @@ namespace StackHolisticSolution.Platforms
             return new Dummy.Dummy();
 #endif
         }
-        
-        internal static IHSLogger GetHSLogger()
-        {
-#if UNITY_ANDROID && !UNITY_EDITOR
-			return new AndroidHSLogger();
-#elif UNITY_IPHONE && !UNITY_EDITOR
-            return new iOS.iOSHSLogger();
-#else
-            return new Dummy.Dummy();
-#endif
-        }
-        
+
         internal static IHSInAppPurchaseBuilder GetInAppPurchaseBuilder()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -96,5 +110,6 @@ namespace StackHolisticSolution.Platforms
             return new Dummy.Dummy();
 #endif
         }
+        
     }
 }
