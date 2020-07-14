@@ -1,3 +1,4 @@
+#if UNITY_ANDROID
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,9 +7,10 @@ using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
 using UnityEngine;
 
+
 namespace StackHolisticSolution.Platforms.Android
 {
-    
+
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
@@ -58,7 +60,7 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSAppsflyerServiceInstance;
         }
-        
+
         public IntPtr GetIntPtr()
         {
             return new IntPtr();
@@ -92,7 +94,7 @@ namespace StackHolisticSolution.Platforms.Android
         {
             return HSFirebaseServiceInstance;
         }
-        
+
         public IntPtr GetIntPtr()
         {
             return new IntPtr();
@@ -184,7 +186,7 @@ namespace StackHolisticSolution.Platforms.Android
                 javaArrayFromCS(androidJavaObjects,
                     "com.explorestack.hs.sdk.HSService")
             });
-            
+
             AndroidJNI.CallObjectMethod(HSAppConfigInstance.GetRawObject(), eventMethod, args);
         }
 
@@ -252,7 +254,8 @@ namespace StackHolisticSolution.Platforms.Android
                 new AndroidHSInAppPurchaseValidateListener(hsInAppPurchaseValidateListener));
         }
 
-        public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId,
+        public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
+            string transactionId,
             string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
         {
             Debug.Log("Not support");
@@ -389,7 +392,7 @@ namespace StackHolisticSolution.Platforms.Android
             return HSInAppPurchase.Call<AndroidJavaObject>("getAdditionalParameters").Call<string>("toString");
         }
     }
-    
+
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
     public static class Helper
@@ -435,3 +438,4 @@ namespace StackHolisticSolution.Platforms.Android
         }
     }
 }
+#endif
