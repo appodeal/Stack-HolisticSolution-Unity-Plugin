@@ -1,3 +1,4 @@
+#if UNITY_IOS
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -386,3 +387,4 @@ namespace StackHolisticSolution.Platforms.iOS
         private static extern string WithPublicKey(string publicKey);
     }
 }
+#endif
