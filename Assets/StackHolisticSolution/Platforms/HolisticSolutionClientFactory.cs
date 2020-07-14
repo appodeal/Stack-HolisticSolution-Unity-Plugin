@@ -105,7 +105,7 @@ namespace StackHolisticSolution.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
 			return new AndroidHSInAppPurchaseBuilder();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            return new iOS.iOSHSInAppPurchaseBuilder();
+            return null;
 #else
             return new Dummy.Dummy();
 #endif
