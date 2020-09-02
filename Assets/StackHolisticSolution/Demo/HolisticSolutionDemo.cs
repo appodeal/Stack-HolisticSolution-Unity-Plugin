@@ -53,6 +53,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         HSFacebookService facebookService = new HSFacebookService();
 #endif
 
+        #if UNITY_ANDROID || UNITY_ANDROID
         HSAppConfig appConfig = new HSAppConfig()
             .setDebugEnabled(true)
             .withServices(appsflyerService.getHSAppsflyerService(), firebaseService.getHSFirebaseService(),
@@ -61,6 +62,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
         HSApp.initialize(appConfig, this);
         HSApp.logEvent("hs_sdk_example_test_event_1");
+#endif
         
 #if UNITY_ANDROID
             HSInAppPurchase purchase = new HSInAppPurchase.Builder()
