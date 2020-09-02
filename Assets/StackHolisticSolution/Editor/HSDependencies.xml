@@ -10,6 +10,6 @@
         <androidPackage spec="com.explorestack.hs.sdk.service:facebook:1.0.0"/>
     </androidPackages>
     <iosPods>
-        <iosPod name='HolisticSolutionSDK' version='1.0.0' minTargetSdk='9.0'/>
+        <iosPod name='HolisticSolutionSDK' version='1.0.1' minTargetSdk='9.0'/>
     </iosPods>
 </dependencies>
