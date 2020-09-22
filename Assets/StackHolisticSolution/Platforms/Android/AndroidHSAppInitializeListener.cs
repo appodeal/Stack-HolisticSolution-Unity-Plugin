@@ -23,14 +23,23 @@ namespace StackHolisticSolution.Platforms.Android
 
         private void onAppInitialized(AndroidJavaObject javaTypeList)
         {
-            var csTypeList = new List<HSError>();
-            var length = javaTypeList.Call<int>("size");
-            for (var i = 0; i < length; i++)
+            Debug.Log("onAppInitialized" + HSAppodealConnector.HolisticSolutionPluginVersion);
+            
+            if (javaTypeList!=null)
             {
-                var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
-               csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
+                var csTypeList = new List<HSError>();
+                var length = javaTypeList.Call<int>("size");
+                for (var i = 0; i < length; i++)
+                {
+                    var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
+                    csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
+                }
+                listener.onAppInitialized(csTypeList);
             }
-            listener.onAppInitialized(csTypeList);
+            else
+            {
+                listener.onAppInitialized("true");
+            }
         }
     }
 #else
