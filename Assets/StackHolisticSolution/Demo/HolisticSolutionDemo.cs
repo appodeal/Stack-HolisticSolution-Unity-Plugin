@@ -3,8 +3,11 @@ using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
 using UnityEngine;
+// ReSharper disable All
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "ArrangeTypeMemberModifiers")]
+[SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
 public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHSInAppPurchaseValidateListener,
     IInAppPurchaseValidationiOSCallback
 {
@@ -24,7 +27,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         {"2.KeY", "value.2"},
         {"3.KeY", "value.2"}
     };
-    
+
     Dictionary<string, string> defaults = new Dictionary<string, string>()
     {
         {"key", "value"}
@@ -37,13 +40,13 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 #if UNITY_ANDROID
         HSAppodealConnector hsAppodealConnector = new HSAppodealConnector();
         hsAppodealConnector.setEventsEnabled(true);
-        
+
         HSAppsflyerService appsflyerService = new HSAppsflyerService("YOUR_APPSFLYER_DEV_KEY");
         appsflyerService.setEventsEnabled(true);
-        
+
         HSFirebaseService firebaseService = new HSFirebaseService();
         firebaseService.setEventsEnabled(true);
-        
+
         HSFacebookService facebookService = new HSFacebookService();
         facebookService.setEventsEnabled(true);
 #elif UNITY_IOS
@@ -53,7 +56,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         HSFacebookService facebookService = new HSFacebookService();
 #endif
 
-        #if UNITY_ANDROID || UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_IOS
         HSAppConfig appConfig = new HSAppConfig()
             .setDebugEnabled(true)
             .withServices(appsflyerService.getHSAppsflyerService(), firebaseService.getHSFirebaseService(),
@@ -63,9 +66,9 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         HSApp.initialize(appConfig, this);
         HSApp.logEvent("hs_sdk_example_test_event_1");
 #endif
-        
+
 #if UNITY_ANDROID
-            HSInAppPurchase purchase = new HSInAppPurchase.Builder()
+        HSInAppPurchase purchase = new HSInAppPurchase.Builder()
             .withPublicKey("YOUR_PUBLIC_KEY")
             .withAdditionalParams(additionalParams)
             .withSignature("Signature")
@@ -74,7 +77,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .withCurrency("Currency")
             .build();
 
-            HSApp.validateInAppPurchaseAndroid(purchase, this);
+        HSApp.validateInAppPurchaseAndroid(purchase, this);
 #elif UNITY_IOS
         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
             "additionalParams", this);
