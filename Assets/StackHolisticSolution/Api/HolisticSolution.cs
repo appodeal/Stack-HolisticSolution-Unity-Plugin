@@ -6,9 +6,12 @@ using StackHolisticSolution.Platforms;
 
 namespace StackHolisticSolution.Api
 {
+    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSAppodealConnector
     {
+        public const string HolisticSolutionPluginVersion = "1.0.2";
+
         private readonly IHSAppodealConnector nativeHSAppodealConnector;
 
         public IHSAppodealConnector getHSAppodealConnector()
