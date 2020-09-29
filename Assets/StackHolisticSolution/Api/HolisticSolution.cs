@@ -139,6 +139,12 @@ namespace StackHolisticSolution.Api
             nativeHSAppConfig.setDebugEnabled(value);
             return this;
         }
+
+        public HSAppConfig setComponentInitializeTimeout(long value)
+        {
+            nativeHSAppConfig.setComponentInitializeTimeout(value);
+            return this;
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -297,6 +303,22 @@ namespace StackHolisticSolution.Api
                 nativeIHSInAppPurchaseBuilder.withPublicKey(publicKey);
                 return this;
             }
+        }
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public static class HSLogger
+    {
+        private static IHSLogger nativeHSLogger;
+
+        private static IHSLogger getInstance()
+        {
+            return nativeHSLogger ?? (nativeHSLogger = HolisticSolutionClientFactory.GetHSLogger());
+        }
+
+        public static void setEnabled(bool value)
+        {
+            getInstance().setEnabled(value);
         }
     }
 }

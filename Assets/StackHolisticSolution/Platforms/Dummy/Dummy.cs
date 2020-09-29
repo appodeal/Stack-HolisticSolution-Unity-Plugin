@@ -9,7 +9,7 @@ using UnityEngine;
 namespace StackHolisticSolution.Platforms.Dummy
 {
     public class Dummy : IHSAppodealConnector, IHSAppsflyerService, IHSFirebaseService,
-        IHSAppConfig, IHSApp, IHSError, IHSFacebookService, IHSInAppPurchaseBuilder
+        IHSAppConfig, IHSApp, IHSError, IHSFacebookService, IHSInAppPurchaseBuilder, IHSLogger
     {
         private const string DummyMessage = "Not supported on this platform";
         
@@ -56,6 +56,11 @@ namespace StackHolisticSolution.Platforms.Dummy
         }
 
         public void setDebugEnabled(bool value)
+        {
+            Debug.Log(DummyMessage);
+        }
+
+        public void setComponentInitializeTimeout(long value)
         {
             Debug.Log(DummyMessage);
         }
@@ -131,6 +136,11 @@ namespace StackHolisticSolution.Platforms.Dummy
         }
 
         public void withPublicKey(string publicKey)
+        {
+            Debug.Log(DummyMessage);
+        }
+
+        public void setEnabled(bool value)
         {
             Debug.Log(DummyMessage);
         }

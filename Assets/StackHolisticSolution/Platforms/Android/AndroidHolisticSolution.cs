@@ -163,6 +163,11 @@ namespace StackHolisticSolution.Platforms.Android
             HSAppConfigInstance.Call<AndroidJavaObject>("setDebugEnabled", value);
         }
 
+        public void setComponentInitializeTimeout(long value)
+        {
+            HSAppConfigInstance.Call<AndroidJavaObject>("setComponentInitializeTimeout", value);
+        }
+
         public void withConnectors(HSAppodealConnector hsAppodealConnector)
         {
             var androidHSAppodealConnector = (AndroidHSAppodealConnector) hsAppodealConnector.getHSAppodealConnector();
@@ -390,6 +395,18 @@ namespace StackHolisticSolution.Platforms.Android
         public string getAdditionalParameters()
         {
             return HSInAppPurchase.Call<AndroidJavaObject>("getAdditionalParameters").Call<string>("toString");
+        }
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    public class AndroidHSLogger : IHSLogger
+    {
+        private readonly AndroidJavaObject HSLoggerInstance = new AndroidJavaObject("com.explorestack.hs.sdk.HSLogger");
+
+        public void setEnabled(bool value)
+        {
+            HSLoggerInstance.CallStatic("setEnabled", value);
         }
     }
 
