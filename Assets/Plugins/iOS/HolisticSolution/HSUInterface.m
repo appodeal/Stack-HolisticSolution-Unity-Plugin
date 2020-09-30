@@ -86,6 +86,10 @@ void SetDebugEnabled(bool enabled) {
     HSUSdkBridge.shared.debug = enabled;
 }
 
+void SetComponentInitializeTimeout(long value) {
+    HSUSdkBridge.shared.timeout = value;
+}
+
 HSUAppConfigurationRef GetHSAppConfig(void) {
     return (__bridge_retained HSUAppConfigurationRef)HSUSdkBridge.shared.configuration;
 }

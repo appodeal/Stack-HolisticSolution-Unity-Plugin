@@ -27,6 +27,7 @@ FOUNDATION_EXPORT void SetHSFacebookServiceEventsEnabled(bool value);
 FOUNDATION_EXPORT void WithService(const void *ptr);
 FOUNDATION_EXPORT void WithConnectors(const void *ptr);
 FOUNDATION_EXPORT void SetDebugEnabled(bool enabled);
+FOUNDATION_EXPORT void SetComponentInitializeTimeout(long value);
 FOUNDATION_EXPORT HSUAppConfigurationRef GetHSAppConfig(void);
 
 FOUNDATION_EXPORT HSUAppRef GetHSApp(void);

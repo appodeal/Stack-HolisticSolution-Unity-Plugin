@@ -104,9 +104,10 @@ NSString *const kHSUAppsFlyerConnectorKey = @"HSUAppsFlyerConnector";
 
 - (HSAppConfiguration *)configuration {
     Debug debug = self.debug ? DebugEnabled : DebugDisabled;
+    double timeout = (self.timeout != 0) ? (self.timeout / 1000) : 30.0;
     return [[HSAppConfiguration alloc] initWithServices:self.registeredServices.allObjects
                                              connectors:self.registeredAdvertising.allObjects
-                                                timeout:30
+                                                timeout:timeout
                                                   debug:debug];;
 }
 
