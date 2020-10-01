@@ -147,6 +147,11 @@ namespace StackHolisticSolution.Platforms.iOS
         {
             hSAppConfigObjCBridge.setDebugEnabled(value);
         }
+
+        public void setComponentInitializeTimeout(long value)
+        {
+            hSAppConfigObjCBridge.setComponentInitializeTimeout(value);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

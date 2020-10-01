@@ -22,6 +22,7 @@ FOUNDATION_EXPORT NSString *const kHSUAppodealConnectorKey;
 
 @property (nonatomic, readonly) HSAppConfiguration *configuration;
 @property (nonatomic, assign) BOOL debug;
+@property (nonatomic, assign) long timeout;
 
 + (instancetype)shared;
 

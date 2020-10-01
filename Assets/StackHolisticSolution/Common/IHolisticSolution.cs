@@ -43,6 +43,7 @@ namespace StackHolisticSolution.Common
         void withConnectors(HSAppodealConnector hsAppodealConnector);
         void withServices(params IHSService[] services);
         void setDebugEnabled(bool value);
+        void setComponentInitializeTimeout(long value);
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -82,5 +83,11 @@ namespace StackHolisticSolution.Common
         void withPurchaseData(string purchaseData);
         void withSignature(string signature);
         void withPublicKey(string publicKey);
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public interface IHSLogger
+    {
+        void setEnabled(bool value);
     }
 }

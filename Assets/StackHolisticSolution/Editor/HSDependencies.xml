@@ -5,7 +5,7 @@
         </repositories>
         <androidPackage spec="com.explorestack.hs:sdk:1.0.0"/>
         <androidPackage spec="com.explorestack.hs.sdk.connector:appodeal:1.0.0"/>
-        <androidPackage spec="com.explorestack.hs.sdk.service:appsflyer:1.0.0"/>
+        <androidPackage spec="com.explorestack.hs.sdk.service:appsflyer:1.0.1"/>
         <androidPackage spec="com.explorestack.hs.sdk.service:firebase:1.0.0"/>
         <androidPackage spec="com.explorestack.hs.sdk.service:facebook:1.0.1"/>
     </androidPackages>

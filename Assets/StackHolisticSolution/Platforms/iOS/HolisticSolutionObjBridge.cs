@@ -147,11 +147,19 @@ namespace StackHolisticSolution.Platforms.iOS
             SetDebugEnabled(value);
         }
 
+        public void setComponentInitializeTimeout(long value)
+        {
+            SetComponentInitializeTimeout(value);
+        }
+
         [DllImport("__Internal")]
         private static extern IntPtr GetHSAppConfig();
 
         [DllImport("__Internal")]
         private static extern void SetDebugEnabled(bool value);
+
+        [DllImport("__Internal")]
+        private static extern void SetComponentInitializeTimeout(long value);
 
         [DllImport("__Internal")]
         private static extern void WithService(IntPtr services);
@@ -182,7 +190,7 @@ namespace StackHolisticSolution.Platforms.iOS
 
         public void logEvent(string key)
         {
-           // LogEvent(key);
+            // LogEvent(key);
         }
 
         public void logEvent(string key, Dictionary<string, object> dictionary)

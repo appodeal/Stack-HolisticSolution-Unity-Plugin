@@ -38,6 +38,8 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
     void Start()
     {
 #if UNITY_ANDROID
+        HSLogger.setEnabled(true);
+
         HSAppodealConnector hsAppodealConnector = new HSAppodealConnector();
         hsAppodealConnector.setEventsEnabled(true);
 
@@ -59,6 +61,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 #if UNITY_ANDROID || UNITY_IOS
         HSAppConfig appConfig = new HSAppConfig()
             .setDebugEnabled(true)
+            .setComponentInitializeTimeout(10000)
             .withServices(appsflyerService.getHSAppsflyerService(), firebaseService.getHSFirebaseService(),
                 facebookService.getHSFacebookService())
             .withConnectors(hsAppodealConnector);
