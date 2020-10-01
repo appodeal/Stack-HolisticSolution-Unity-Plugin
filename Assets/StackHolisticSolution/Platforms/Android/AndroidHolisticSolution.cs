@@ -269,6 +269,7 @@ namespace StackHolisticSolution.Platforms.Android
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class AndroidHSError : IHSError
     {
         private readonly AndroidJavaObject HSErrorInstance;

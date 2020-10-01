@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using StackHolisticSolution.Api;
 using StackHolisticSolution.Common;
 using UnityEngine;
@@ -9,6 +8,7 @@ namespace StackHolisticSolution.Platforms.Android
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "RedundantNameQualifier")]
     public class AndroidHSAppInitializeListener
 #if UNITY_ANDROID
         : UnityEngine.AndroidJavaProxy

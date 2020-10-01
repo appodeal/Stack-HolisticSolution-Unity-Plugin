@@ -8,6 +8,7 @@ namespace StackHolisticSolution.Platforms.Android
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "RedundantNameQualifier")]
     public class AndroidHSInAppPurchaseValidateListener
 #if UNITY_ANDROID
         : UnityEngine.AndroidJavaProxy
