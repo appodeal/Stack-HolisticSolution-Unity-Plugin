@@ -91,7 +91,7 @@ void SetComponentInitializeTimeout(long value) {
 }
 
 HSUAppConfigurationRef GetHSAppConfig(void) {
-    return (__bridge_retained HSUAppConfigurationRef)HSUSdkBridge.shared.configuration;
+    return (__bridge_retained HSUAppConfigurationRef)HSUSdkBridge.shared;
 }
 
 #pragma mark - API
@@ -101,9 +101,9 @@ HSUAppRef GetHSApp(void) {
 }
 
 void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback callback) {
-    HSAppConfiguration *config = (__bridge_transfer HSAppConfiguration *)appConfig;
-    if ([config isKindOfClass:HSAppConfiguration.class]) {
-        [HSApp configureWithConfiguration:config completion:^(NSError *error) {
+    HSUSdkBridge *config = (__bridge_transfer HSUSdkBridge *)appConfig;
+    if ([config isKindOfClass:HSUSdkBridge.class]) {
+        [HSApp configureWithConfiguration:config.configuration completion:^(NSError *error) {
             callback ? callback(error.localizedDescription.UTF8String) : nil;
         }];
     } else {
