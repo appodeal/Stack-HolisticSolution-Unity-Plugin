@@ -10,7 +10,7 @@ namespace StackHolisticSolution.Api
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSAppodealConnector
     {
-        public const string HolisticSolutionPluginVersion = "1.0.4";
+        public const string HolisticSolutionPluginVersion = "1.0.5";
 
         private readonly IHSAppodealConnector nativeHSAppodealConnector;
 
