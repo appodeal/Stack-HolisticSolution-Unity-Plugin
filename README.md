@@ -3,7 +3,7 @@
 
 Stack Holistic Solution SDK for Android simplifies the collection and transfer of the necessary parameters from third-party services to the corresponding Stack SDKs to improve the performance of services such as Mediation and UA
 
-[Download hs unity plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Hs-plugin-1.0.4-23.12.2020.unitypackage)
+[Download hs unity plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Hs-plugin-1.0.5-20.01.2020.unitypackage)
 
 ## Import SDK
 
