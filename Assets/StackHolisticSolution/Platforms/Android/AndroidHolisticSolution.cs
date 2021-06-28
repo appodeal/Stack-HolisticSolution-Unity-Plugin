@@ -1,24 +1,19 @@
 #if UNITY_ANDROID
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using AppodealAds.Unity.Android;
 using UnityEngine;
 
 namespace StackHolisticSolution
 {
-    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AndroidHSAppConfig : IHSAppConfig
     {
-        private AndroidJavaObject HSAppConfigInstance = new AndroidJavaObject("com.explorestack.hs.sdk.HSAppConfig");
-        private AndroidJavaClass HSAppConfigClass;
-
-        private AndroidJavaClass getHSAppConfigClass()
-        {
-            return HSAppConfigClass ?? (HSAppConfigClass = new AndroidJavaClass("com.explorestack.hs.sdk.HSAppConfig"));
-        }
-
+        private readonly AndroidJavaObject HSAppConfigInstance =
+            new AndroidJavaObject("com.explorestack.hs.sdk.HSAppConfig");
+        
         public AndroidJavaObject getHSAppConfigInstance()
         {
             return HSAppConfigInstance;
@@ -41,7 +36,8 @@ namespace StackHolisticSolution
 
         public void setAdType(int adType)
         {
-            HSAppConfigInstance.Call<AndroidJavaObject>("setAdType", adType);
+            HSAppConfigInstance.Call<AndroidJavaObject>("setAdType",
+                Helper.getJavaObject(AndroidAppodealClient.nativeAdTypesForType(adType)));
         }
 
         public void setComponentInitializeTimeout(long value)
@@ -147,11 +143,25 @@ namespace StackHolisticSolution
         private readonly AndroidJavaObject HSInAppPurchaseBuilder;
         private AndroidJavaObject HSInAppPurchase;
 
-        public AndroidHSInAppPurchaseBuilder()
+        public AndroidHSInAppPurchaseBuilder(PurchaseType purchaseType)
         {
-            HSInAppPurchaseBuilder =
-                new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase").CallStatic<AndroidJavaObject>(
-                    "newBuilder");
+            switch (purchaseType)
+            {
+                case PurchaseType.Subscription:
+                    HSInAppPurchaseBuilder =
+                        new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase").CallStatic<AndroidJavaObject>(
+                            "newBuilder", new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase$PurchaseType")
+                                .GetStatic<AndroidJavaObject>(
+                                    "SUBSCRIPTION"));
+                    break;
+                case PurchaseType.Purchase:
+                    HSInAppPurchaseBuilder =
+                        new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase").CallStatic<AndroidJavaObject>(
+                            "newBuilder", new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase$PurchaseType")
+                                .Get<AndroidJavaObject>(
+                                    "PURCHASE"));
+                    break;
+            }
         }
 
         private AndroidJavaObject getBuilder()
@@ -168,7 +178,12 @@ namespace StackHolisticSolution
 
         public void withPublicKey(string publicKey)
         {
-            getBuilder().Call<AndroidJavaObject>("withPublicKey", Helper.getJavaObject(publicKey));
+            getBuilder().Call<AndroidJavaObject>("withPublicKey", publicKey);
+        }
+
+        public void withPurchaseTimestamp(long purchaseTimestamp)
+        {
+            getBuilder().Call<AndroidJavaObject>("withPurchaseTimestamp", purchaseTimestamp);
         }
 
         public void withAdditionalParams(Dictionary<string, string> additionalParameters)
@@ -184,22 +199,37 @@ namespace StackHolisticSolution
 
         public void withCurrency(string currency)
         {
-            getBuilder().Call<AndroidJavaObject>("withCurrency", Helper.getJavaObject(currency));
+            getBuilder().Call<AndroidJavaObject>("withCurrency", currency);
+        }
+
+        public void withSku(string sku)
+        {
+            getBuilder().Call<AndroidJavaObject>("withSku", sku);
+        }
+
+        public void withOrderId(string orderId)
+        {
+            getBuilder().Call<AndroidJavaObject>("withOrderId", orderId);
+        }
+
+        public void withPurchaseToken(string purchaseToken)
+        {
+            getBuilder().Call<AndroidJavaObject>("withPurchaseToken", purchaseToken);
         }
 
         public void withPrice(string price)
         {
-            getBuilder().Call<AndroidJavaObject>("withPrice", Helper.getJavaObject(price));
+            getBuilder().Call<AndroidJavaObject>("withPrice", price);
         }
 
         public void withPurchaseData(string purchaseData)
         {
-            getBuilder().Call<AndroidJavaObject>("withPurchaseData", Helper.getJavaObject(purchaseData));
+            getBuilder().Call<AndroidJavaObject>("withPurchaseData", purchaseData);
         }
 
         public void withSignature(string signature)
         {
-            getBuilder().Call<AndroidJavaObject>("withSignature", Helper.getJavaObject(signature));
+            getBuilder().Call<AndroidJavaObject>("withSignature", signature);
         }
     }
 
@@ -216,6 +246,23 @@ namespace StackHolisticSolution
         public AndroidJavaObject getHSInAppPurchase()
         {
             return HSInAppPurchase;
+        }
+
+        public PurchaseType getType()
+        {
+            var purchaseType = PurchaseType.Subscription;
+            var type = HSInAppPurchase.Call<AndroidJavaObject>("getType").Call<string>("toString");
+            switch (type)
+            {
+                case "SUBSCRIPTION":
+                    purchaseType = PurchaseType.Subscription;
+                    break;
+                case "PURCHASE":
+                    purchaseType = PurchaseType.Purchase;
+                    break;
+            }
+
+            return purchaseType;
         }
 
         public string getPublicKey()
@@ -241,6 +288,26 @@ namespace StackHolisticSolution
         public string getCurrency()
         {
             return HSInAppPurchase.Call<string>("getCurrency");
+        }
+
+        public string getSku()
+        {
+            return HSInAppPurchase.Call<string>("getSku");
+        }
+
+        public string getOrderId()
+        {
+            return HSInAppPurchase.Call<string>("getOrderId");
+        }
+
+        public string getPurchaseToken()
+        {
+            return HSInAppPurchase.Call<string>("getPurchaseToken");
+        }
+
+        public string getPurchaseTimestamp()
+        {
+            return HSInAppPurchase.Call<string>("getPurchaseTimestamp");
         }
 
         public string getAdditionalParameters()
