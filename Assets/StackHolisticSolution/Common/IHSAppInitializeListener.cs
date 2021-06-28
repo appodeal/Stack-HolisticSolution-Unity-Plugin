@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using StackHolisticSolution.Api;
 
-namespace StackHolisticSolution.Common
+namespace StackHolisticSolution
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSAppInitializeListener
     {
-        void onAppInitialized(IEnumerable<HSError> hsErrors);
-        void onAppInitialized(string error);
+        void onAppInitializeFailed(IEnumerable<HSError> hsErrors);
+        void onAppInitializeFailed(string error);
+        void onAppInitialized();
     }
 }
