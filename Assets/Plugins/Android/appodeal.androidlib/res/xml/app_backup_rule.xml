@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
-    ...
     <!-- Required for AppsFlyer-->
     <exclude domain="sharedpref" path="appsflyer-data"/>
-
     <!-- Required for Vungle SDK -->
     <exclude domain="file" path="vungle" />
     <exclude domain="file" path="vungle_cache" />
