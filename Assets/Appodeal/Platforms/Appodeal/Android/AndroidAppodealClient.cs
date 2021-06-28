@@ -32,7 +32,7 @@ namespace AppodealAds.Unity.Android
         public const int MREC = 256;
         public const int REWARDED_VIDEO = 128;
 
-        private static int nativeAdTypesForType(int adTypes)
+        public static int nativeAdTypesForType(int adTypes)
         {
             var nativeAdTypes = 0;
 
