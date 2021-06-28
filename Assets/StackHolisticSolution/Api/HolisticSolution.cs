@@ -4,6 +4,10 @@ using StackHolisticSolution.Platforms;
 
 namespace StackHolisticSolution
 {
+    public static class HolisticSolution
+    {
+        public const string HolisticSolutionPluginVersion = "2.0";
+    }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSAppConfig
