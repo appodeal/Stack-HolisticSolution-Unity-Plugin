@@ -12,6 +12,22 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 {
     void Start()
     {
+        HolisticSolutionInitialize();
+
+
+       
+
+
+// #if UNITY_ANDROID
+
+// #elif UNITY_IOS
+//         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
+//             "additionalParams", this);
+// #endif
+    }
+
+    private void HolisticSolutionInitialize()
+    {
         Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
 
         var appConfig = new HSAppConfig()
@@ -19,43 +35,65 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .setLoggingEnabled(true)
             .setAppKey("c05de97de46bf68a9ede523a580bef97e42692848736ecad")
             .setComponentInitializeTimeout(10000)
-            .setAdType(Appodeal.INTERSTITIAL);
+            .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO);
 
         HSApp.initialize(appConfig, this);
-
-        Debug.Log($"HSApp.isInitialized() - {HSApp.isInitialized()}");
-        Debug.Log($"HSApp.getVersion() - {HSApp.getVersion()}");
-
+        
         HSApp.logEvent("custom_log_event");
-
-
-// #if UNITY_ANDROID
-//         HSInAppPurchase purchase = new HSInAppPurchase.Builder()
-//             .withPublicKey("YOUR_PUBLIC_KEY")
-//             .withAdditionalParams(additionalParams)
-//             .withSignature("Signature")
-//             .withPurchaseData("PurchaseData")
-//             .withPrice("Price")
-//             .withCurrency("Currency")
-//             .build();
-//
-//         HSApp.validateInAppPurchaseAndroid(purchase, this);
-// #elif UNITY_IOS
-//         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
-//             "additionalParams", this);
-// #endif
+        
+        
+        var firstPurchase = new HSInAppPurchase.Builder(PurchaseType.Subscription)
+                .withPublicKey("YOUR_PUBLIC_KEY")
+                .withSignature("YOUR_SIGNATURE") 
+                .withPurchaseData("YOUR_PURCHASE_DATA")
+                .withPrice("0.01")
+                .withCurrency("0.02")
+                .withAdditionalParams(new Dictionary<string, string>
+                {
+                    {
+                        "key", "value"
+                    }
+                })
+                .withPurchaseTimestamp(213123)
+                .withPurchaseToken("token")
+                .withSku("sku")
+                .build();
+            
+        
+        HSApp.validateInAppPurchaseAndroid(firstPurchase, this);
+        
+        var secondPurchase = new HSInAppPurchase.Builder(PurchaseType.Purchase)
+            .withPublicKey("YOUR_PUBLIC_KEY")
+            .withSignature("YOUR_SIGNATURE") 
+            .withPurchaseData("YOUR_PURCHASE_DATA")
+            .withPrice("0.01")
+            .withCurrency("0.02")
+            .withAdditionalParams(new Dictionary<string, string>
+            {
+                {
+                    "key", "value"
+                }
+            })
+            .withPurchaseTimestamp(213123)
+            .withPurchaseToken("token")
+            .withSku("sku")
+            .build();
+            
+        
+        HSApp.validateInAppPurchaseAndroid(secondPurchase, this);
     }
 
     #region HSAppInitializeListener
 
     public void onAppInitializeFailed(IEnumerable<HSError> hsErrors)
     {
-        Debug.Log("onAppInitialized");
+        Debug.Log("onAppInitializeFailed");
 
         if (hsErrors == null) return;
+        
         foreach (var error in hsErrors)
         {
-            Debug.LogError($"HSApp: [Error]: " + error.toString());
+            Debug.Log($"HSApp: [Error]: " + error.toString());
         }
     }
 
@@ -69,17 +107,18 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     public void onAppInitialized()
     {
-        Debug.Log($"onAppInitialized");
+        Debug.Log("onAppInitialized");
+        Debug.Log($"HSApp.isInitialized() - {HSApp.isInitialized()}");
+        Debug.Log($"HSApp.getVersion() - {HSApp.getVersion()}");
     }
 
     #endregion
-
-
+    
     #region HSInAppPurchaseValidateListener
 
     public void onInAppPurchaseValidateSuccess(HSInAppPurchase purchase, IEnumerable<HSError> errors)
     {
-        Debug.Log("onInAppPurchaseValidateSuccess");
+        Debug.Log("onInAppPurchaseValidateSuccess(HSInAppPurchase purchase, IEnumerable<HSError> errors)");
 
         foreach (var error in errors)
         {
@@ -89,7 +128,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     public void onInAppPurchaseValidateFail(IEnumerable<HSError> errors)
     {
-        Debug.Log("onInAppPurchaseValidateSuccess");
+        Debug.Log("onInAppPurchaseValidateFail(IEnumerable<HSError> errors)");
 
         foreach (var error in errors)
         {
