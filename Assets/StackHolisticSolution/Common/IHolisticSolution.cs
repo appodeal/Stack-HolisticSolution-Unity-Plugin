@@ -1,50 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using StackHolisticSolution.Api;
 using UnityEngine;
 
-namespace StackHolisticSolution.Common
+namespace StackHolisticSolution
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSAppodealConnector
-    {
-        void setEventsEnabled(bool value);
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSAppsflyerService : IHSService
-    {
-        void setEventsEnabled(bool value);
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSFirebaseService : IHSService
-    {
-        void setEventsEnabled(bool value);
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSFacebookService : IHSService
-    {
-        void setEventsEnabled(bool value);
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSService
-    {
-        AndroidJavaObject GetAndroidInstance();
-        IntPtr GetIntPtr();
-    }
-
+    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSAppConfig
     {
-        void withConnectors(HSAppodealConnector hsAppodealConnector);
-        void withServices(params IHSService[] services);
-        void setDebugEnabled(bool value);
         void setComponentInitializeTimeout(long value);
+        void setDebugEnabled(bool value);
+        void setLoggingEnabled(bool value);
+        void setAppKey(string appKey);
+        void setAdType(int adType);
     }
+    
+    
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSApp
