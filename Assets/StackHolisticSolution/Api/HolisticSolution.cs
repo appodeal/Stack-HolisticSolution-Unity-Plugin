@@ -127,6 +127,12 @@ namespace StackHolisticSolution
         }
     }
 
+    public enum PurchaseType
+    {
+        Subscription,
+        Purchase
+    }
+
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSInAppPurchase
     {
@@ -176,26 +182,32 @@ namespace StackHolisticSolution
         {
             private readonly IHSInAppPurchaseBuilder nativeIHSInAppPurchaseBuilder;
 
-            public Builder()
+            public Builder(PurchaseType purchaseType)
             {
-                nativeIHSInAppPurchaseBuilder =
-                    HolisticSolutionClientFactory.GetInAppPurchaseBuilder();
+                 nativeIHSInAppPurchaseBuilder =
+                     HolisticSolutionClientFactory.GetInAppPurchaseBuilder(purchaseType);
             }
 
             public HSInAppPurchase build()
             {
                 return new HSInAppPurchase(nativeIHSInAppPurchaseBuilder.build());
             }
-
-            public Builder withAdditionalParams(Dictionary<string, string> additionalParameters)
+            
+            public Builder withPublicKey(string publicKey)
             {
-                nativeIHSInAppPurchaseBuilder.withAdditionalParams(additionalParameters);
+                nativeIHSInAppPurchaseBuilder.withPublicKey(publicKey);
                 return this;
             }
-
-            public Builder withCurrency(string currency)
+            
+            public Builder withSignature(string signature)
             {
-                nativeIHSInAppPurchaseBuilder.withCurrency(currency);
+                nativeIHSInAppPurchaseBuilder.withSignature(signature);
+                return this;
+            }
+            
+            public Builder withPurchaseData(string purchaseData)
+            {
+                nativeIHSInAppPurchaseBuilder.withPurchaseData(purchaseData);
                 return this;
             }
 
@@ -205,23 +217,52 @@ namespace StackHolisticSolution
                 return this;
             }
 
-            public Builder withPurchaseData(string purchaseData)
+            public Builder withCurrency(string currency)
             {
-                nativeIHSInAppPurchaseBuilder.withPurchaseData(purchaseData);
+                nativeIHSInAppPurchaseBuilder.withCurrency(currency);
+                return this;
+            }
+            
+            public Builder withSku(string sku)
+            {
+                nativeIHSInAppPurchaseBuilder.withSku(sku);
+                return this;
+            }
+            
+            public Builder withOrderId(string orderId)
+            {
+                nativeIHSInAppPurchaseBuilder.withOrderId(orderId);
+                return this;
+            }
+            
+            public Builder withPurchaseToken(string purchaseToken)
+            {
+                nativeIHSInAppPurchaseBuilder.withPurchaseToken(purchaseToken);
+                return this;
+            }
+            
+            public Builder withPurchaseTimestamp(long purchaseTimestamp)
+            {
+                nativeIHSInAppPurchaseBuilder.withPurchaseTimestamp(purchaseTimestamp);
                 return this;
             }
 
-            public Builder withSignature(string signature)
+            
+            public Builder withAdditionalParams(Dictionary<string, string> additionalParameters)
             {
-                nativeIHSInAppPurchaseBuilder.withSignature(signature);
+                nativeIHSInAppPurchaseBuilder.withAdditionalParams(additionalParameters);
                 return this;
             }
 
-            public Builder withPublicKey(string publicKey)
-            {
-                nativeIHSInAppPurchaseBuilder.withPublicKey(publicKey);
-                return this;
-            }
+
+
+
+          
+
+            
+            
+            
+            
         }
     }
 }
