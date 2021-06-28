@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using UnityEngine;
 
 namespace StackHolisticSolution
 {
@@ -15,8 +13,6 @@ namespace StackHolisticSolution
         void setAppKey(string appKey);
         void setAdType(int adType);
     }
-    
-    
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSApp
@@ -39,23 +35,33 @@ namespace StackHolisticSolution
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSInAppPurchase
     {
+        PurchaseType getType();
         string getPublicKey();
         string getSignature();
         string getPurchaseData();
         string getPrice();
         string getCurrency();
+        string getSku();
+        string getOrderId();
+        string getPurchaseToken();
+        string getPurchaseTimestamp();
         string getAdditionalParameters();
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IHSInAppPurchaseBuilder
     {
-        IHSInAppPurchase build();
-        void withAdditionalParams(Dictionary<string, string> additionalParameters);
-        void withCurrency(string currency);
-        void withPrice(string price);
-        void withPurchaseData(string purchaseData);
-        void withSignature(string signature);
         void withPublicKey(string publicKey);
+        void withSignature(string signature);
+        void withPurchaseData(string purchaseData);
+        void withPrice(string price);
+        void withCurrency(string currency);
+        void withSku(string sku);
+        void withOrderId(string orderId);
+        void withPurchaseToken(string purchaseToken);
+        void withPurchaseTimestamp(long purchaseTimestamp);
+        void withAdditionalParams(Dictionary<string, string> additionalParameters);
+        IHSInAppPurchase build();
+
     }
 }
