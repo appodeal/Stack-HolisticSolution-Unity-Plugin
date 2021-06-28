@@ -43,16 +43,5 @@ namespace StackHolisticSolution.Platforms
 #endif
         }
 
-        internal static IHSLogger GetHSLogger()
-        {
-#if UNITY_ANDROID && !UNITY_EDITOR
-			return new AndroidHSLogger();
-#elif UNITY_IPHONE && !UNITY_EDITOR
-            return null;
-#else
-            return new Dummy.Dummy();
-#endif
-        }
-        
     }
 }
