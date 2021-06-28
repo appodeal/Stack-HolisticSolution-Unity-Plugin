@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using AppodealAds.Unity.Api;
 using StackHolisticSolution;
 using UnityEngine;
 
@@ -11,19 +12,21 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 {
     void Start()
     {
-        HSAppConfig appConfig = new HSAppConfig()
+        Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
+        
+        var appConfig = new HSAppConfig()
             .setDebugEnabled(true)
             .setLoggingEnabled(true)
-            .setAppKey("")
+            .setAppKey("c05de97de46bf68a9ede523a580bef97e42692848736ecad")
             .setComponentInitializeTimeout(10000)
-            .setAdType(2);
+            .setAdType(Appodeal.INTERSTITIAL);
+        
+        HSApp.initialize(appConfig, this);
         
         
         
-        HSApp.initialize(appConfig, this );
-        HSApp.logEvent("hs_sdk_example_test_event_1");
-
-
+        
+        
 // #if UNITY_ANDROID
 //         HSInAppPurchase purchase = new HSInAppPurchase.Builder()
 //             .withPublicKey("YOUR_PUBLIC_KEY")
