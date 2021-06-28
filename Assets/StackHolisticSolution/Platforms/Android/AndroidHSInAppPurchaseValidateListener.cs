@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using StackHolisticSolution.Api;
-using StackHolisticSolution.Common;
 using UnityEngine;
 
-namespace StackHolisticSolution.Platforms.Android
+namespace StackHolisticSolution
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
