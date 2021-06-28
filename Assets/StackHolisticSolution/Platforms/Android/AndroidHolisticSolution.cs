@@ -91,6 +91,16 @@ namespace StackHolisticSolution
             HSAppInstance.CallStatic("logEvent", Helper.getJavaObject(key));
         }
 
+        public string getVersion()
+        {
+            return HSAppInstance.CallStatic<string>("getVersion");
+        }
+
+        public bool isInitialized()
+        {
+            return HSAppInstance.CallStatic<bool>("isInitialized");
+        }
+
         public void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
             IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
         {
@@ -236,18 +246,6 @@ namespace StackHolisticSolution
         public string getAdditionalParameters()
         {
             return HSInAppPurchase.Call<AndroidJavaObject>("getAdditionalParameters").Call<string>("toString");
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    public class AndroidHSLogger : IHSLogger
-    {
-        private readonly AndroidJavaObject HSLoggerInstance = new AndroidJavaObject("com.explorestack.hs.sdk.HSLogger");
-
-        public void setEnabled(bool value)
-        {
-            HSLoggerInstance.CallStatic("setEnabled", value);
         }
     }
 
