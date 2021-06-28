@@ -81,6 +81,16 @@ namespace StackHolisticSolution
             getInstance().logEvent(key);
         }
 
+        public static string getVersion()
+        {
+           return getInstance().getVersion();
+        }
+
+        public static bool isInitialized()
+        {
+            return getInstance().isInitialized();
+        }
+
         public static void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
             IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
         {
@@ -212,22 +222,6 @@ namespace StackHolisticSolution
                 nativeIHSInAppPurchaseBuilder.withPublicKey(publicKey);
                 return this;
             }
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public static class HSLogger
-    {
-        private static IHSLogger nativeHSLogger;
-
-        private static IHSLogger getInstance()
-        {
-            return nativeHSLogger ?? (nativeHSLogger = HolisticSolutionClientFactory.GetHSLogger());
-        }
-
-        public static void setEnabled(bool value)
-        {
-            getInstance().setEnabled(value);
         }
     }
 }
