@@ -13,20 +13,22 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
     void Start()
     {
         Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
-        
+
         var appConfig = new HSAppConfig()
             .setDebugEnabled(true)
             .setLoggingEnabled(true)
             .setAppKey("c05de97de46bf68a9ede523a580bef97e42692848736ecad")
             .setComponentInitializeTimeout(10000)
             .setAdType(Appodeal.INTERSTITIAL);
-        
+
         HSApp.initialize(appConfig, this);
-        
-        
-        
-        
-        
+
+        Debug.Log($"HSApp.isInitialized() - {HSApp.isInitialized()}");
+        Debug.Log($"HSApp.getVersion() - {HSApp.getVersion()}");
+
+        HSApp.logEvent("custom_log_event");
+
+
 // #if UNITY_ANDROID
 //         HSInAppPurchase purchase = new HSInAppPurchase.Builder()
 //             .withPublicKey("YOUR_PUBLIC_KEY")
@@ -43,33 +45,34 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 //             "additionalParams", this);
 // #endif
     }
-    
+
     #region HSAppInitializeListener
-    
+
     public void onAppInitializeFailed(IEnumerable<HSError> hsErrors)
     {
         Debug.Log("onAppInitialized");
-        if (hsErrors!=null)
+
+        if (hsErrors == null) return;
+        foreach (var error in hsErrors)
         {
-            foreach (var error in hsErrors)
-            {
-                Debug.LogError($"HSApp: [Error]: " + error.toString());
-            }
+            Debug.LogError($"HSApp: [Error]: " + error.toString());
         }
     }
 
     public void onAppInitializeFailed(string error)
     {
-        Debug.Log($"onAppInitializeFailed - {error}");
+        if (error != null)
+        {
+            Debug.Log($"onAppInitializeFailed - {error}");
+        }
     }
 
     public void onAppInitialized()
     {
-        
+        Debug.Log($"onAppInitialized");
     }
 
     #endregion
-
 
 
     #region HSInAppPurchaseValidateListener
