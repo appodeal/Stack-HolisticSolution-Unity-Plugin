@@ -1,4 +1,3 @@
-// ReSharper disable All
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -9,7 +8,6 @@ namespace StackHolisticSolution.Platforms
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HolisticSolutionClientFactory
     {
-
         internal static IHSAppConfig GetHSAppConfig()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -32,10 +30,10 @@ namespace StackHolisticSolution.Platforms
 #endif
         }
 
-        internal static IHSInAppPurchaseBuilder GetInAppPurchaseBuilder()
+        internal static IHSInAppPurchaseBuilder GetInAppPurchaseBuilder(PurchaseType purchaseType)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-			return new AndroidHSInAppPurchaseBuilder();
+			return new AndroidHSInAppPurchaseBuilder(purchaseType);
 #elif UNITY_IPHONE && !UNITY_EDITOR
             return null;
 #else
