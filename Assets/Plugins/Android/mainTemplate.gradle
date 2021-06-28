@@ -43,12 +43,12 @@ allprojects {
             url "https://artifactory.appodeal.com/appodeal" // Assets/StackHolisticSolution/Editor/HSDependencies.xml:5, Assets/Appodeal/Editor/ConsentManagerDependencies/ConsentMangerDependencies.xml:7
         }
         maven {
-                                                url 'https://artifactory.appodeal.com:443/explorestack-private'
-                                                credentials {
-                                                     username ="artyom.kul"
-                                                               password = "5IppwSeNIC!p"
-                                                }
-                                            }
+                                url 'https://artifactory.appodeal.com:443/explorestack-private'
+                                credentials {
+                                     username ="artyom.kul"
+                                               password = "5IppwSeNIC!p"
+                                }
+                            }
         mavenLocal()
         jcenter()
         mavenCentral()
