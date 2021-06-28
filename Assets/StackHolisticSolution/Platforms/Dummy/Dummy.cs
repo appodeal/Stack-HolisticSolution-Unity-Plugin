@@ -6,7 +6,7 @@ using UnityEngine;
 namespace StackHolisticSolution.Platforms.Dummy
 {
     public class Dummy : 
-        IHSAppConfig, IHSApp, IHSError, IHSInAppPurchaseBuilder, IHSLogger
+        IHSAppConfig, IHSApp, IHSError, IHSInAppPurchaseBuilder
     {
         private const string DummyMessage = "Not supported on this platform";
 
@@ -47,6 +47,16 @@ namespace StackHolisticSolution.Platforms.Dummy
         }
 
         public void logEvent(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getVersion()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool isInitialized()
         {
             throw new NotImplementedException();
         }
@@ -99,11 +109,6 @@ namespace StackHolisticSolution.Platforms.Dummy
         }
 
         public void withPublicKey(string publicKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void setEnabled(bool value)
         {
             throw new NotImplementedException();
         }
