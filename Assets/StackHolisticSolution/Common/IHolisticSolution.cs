@@ -24,6 +24,8 @@ namespace StackHolisticSolution
         void initialize(HSAppConfig appConfig, IHSAppInitializeListener hsAppInitializeListener);
         void logEvent(string key, Dictionary<string, object> dictionary);
         void logEvent(string key);
+        string getVersion();
+        bool isInitialized();
         void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener);
         void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback);
     }
@@ -55,11 +57,5 @@ namespace StackHolisticSolution
         void withPurchaseData(string purchaseData);
         void withSignature(string signature);
         void withPublicKey(string publicKey);
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public interface IHSLogger
-    {
-        void setEnabled(bool value);
     }
 }
