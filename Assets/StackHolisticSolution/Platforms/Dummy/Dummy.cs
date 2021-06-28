@@ -83,12 +83,37 @@ namespace StackHolisticSolution.Platforms.Dummy
             throw new NotImplementedException();
         }
 
+        public void withPurchaseTimestamp(string purchaseTimestamp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void withPurchaseTimestamp(long purchaseTimestamp)
+        {
+            throw new NotImplementedException();
+        }
+
         public void withAdditionalParams(Dictionary<string, string> additionalParameters)
         {
             throw new NotImplementedException();
         }
 
         public void withCurrency(string currency)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void withSku(string sku)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void withOrderId(string orderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void withPurchaseToken(string purchaseToken)
         {
             throw new NotImplementedException();
         }
