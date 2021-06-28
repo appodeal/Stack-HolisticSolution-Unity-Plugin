@@ -1,111 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using StackHolisticSolution.Common;
 using StackHolisticSolution.Platforms;
 
-namespace StackHolisticSolution.Api
+namespace StackHolisticSolution
 {
-    
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class HSAppodealConnector
-    {
-        public const string HolisticSolutionPluginVersion = "1.0.7";
-
-        private readonly IHSAppodealConnector nativeHSAppodealConnector;
-
-        public IHSAppodealConnector getHSAppodealConnector()
-        {
-            return nativeHSAppodealConnector;
-        }
-
-        public HSAppodealConnector()
-        {
-            nativeHSAppodealConnector = HolisticSolutionClientFactory.GetHSAppodealConnector();
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            getHSAppodealConnector().setEventsEnabled(value);
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class HSAppsflyerService
-    {
-        private readonly IHSAppsflyerService nativeHSAppsflyerService;
-
-        public IHSAppsflyerService getHSAppsflyerService()
-        {
-            return nativeHSAppsflyerService;
-        }
-
-        public HSAppsflyerService(string sellerId)
-        {
-            nativeHSAppsflyerService = HolisticSolutionClientFactory.GetHSAppsflyerService(sellerId);
-        }
-
-        public HSAppsflyerService(string devkey, string defaults, string[] keys)
-        {
-            nativeHSAppsflyerService =
-                HolisticSolutionClientFactory.GetHSAppsflyerService(devkey, defaults, string.Join(",", keys));
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            nativeHSAppsflyerService.setEventsEnabled(value);
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class HSFirebaseService
-    {
-        private readonly IHSFirebaseService nativeHSFirebaseService;
-
-        public IHSFirebaseService getHSFirebaseService()
-        {
-            return nativeHSFirebaseService;
-        }
-
-        public HSFirebaseService()
-        {
-            nativeHSFirebaseService = HolisticSolutionClientFactory.GetHSFirebaseService();
-        }
-
-        public HSFirebaseService(Dictionary<string, string> defaults, long expirationDuration)
-        {
-            string defaultsString =
-                defaults.Aggregate("", (current, kvp) => current + (kvp.Key + "=" + kvp.Value + "\n"));
-            nativeHSFirebaseService =
-                HolisticSolutionClientFactory.GetHSFirebaseService(defaultsString, expirationDuration);
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            nativeHSFirebaseService.setEventsEnabled(value);
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class HSFacebookService
-    {
-        private readonly IHSFacebookService nativeHSFacebookService;
-
-        public IHSFacebookService getHSFacebookService()
-        {
-            return nativeHSFacebookService;
-        }
-
-        public HSFacebookService()
-        {
-            nativeHSFacebookService = HolisticSolutionClientFactory.GetHSFacebookService();
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            nativeHSFacebookService.setEventsEnabled(value);
-        }
-    }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSAppConfig
@@ -122,21 +20,27 @@ namespace StackHolisticSolution.Api
             nativeHSAppConfig = HolisticSolutionClientFactory.GetHSAppConfig();
         }
 
-        public HSAppConfig withConnectors(HSAppodealConnector connector)
-        {
-            nativeHSAppConfig.withConnectors(connector);
-            return this;
-        }
-
-        public HSAppConfig withServices(params IHSService[] services)
-        {
-            nativeHSAppConfig.withServices(services);
-            return this;
-        }
-
         public HSAppConfig setDebugEnabled(bool value)
         {
             nativeHSAppConfig.setDebugEnabled(value);
+            return this;
+        }
+
+        public HSAppConfig setLoggingEnabled(bool value)
+        {
+            nativeHSAppConfig.setLoggingEnabled(value);
+            return this;
+        }
+        
+        public HSAppConfig setAppKey(string appKey)
+        {
+            nativeHSAppConfig.setAppKey(appKey);
+            return this;
+        }
+
+        public HSAppConfig setAdType(int adType)
+        {
+            nativeHSAppConfig.setAdType(adType);
             return this;
         }
 
@@ -145,6 +49,7 @@ namespace StackHolisticSolution.Api
             nativeHSAppConfig.setComponentInitializeTimeout(value);
             return this;
         }
+        
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
