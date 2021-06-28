@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace StackHolisticSolution.Common
+namespace StackHolisticSolution
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IInAppPurchaseValidationiOSCallback
