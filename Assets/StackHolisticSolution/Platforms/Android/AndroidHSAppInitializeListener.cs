@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using StackHolisticSolution.Api;
-using StackHolisticSolution.Common;
 using UnityEngine;
 
-namespace StackHolisticSolution.Platforms.Android
+namespace StackHolisticSolution
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
@@ -23,9 +21,7 @@ namespace StackHolisticSolution.Platforms.Android
 
         private void onAppInitialized(AndroidJavaObject javaTypeList)
         {
-            Debug.Log("onAppInitialized" + HSAppodealConnector.HolisticSolutionPluginVersion);
-            
-            if (javaTypeList!=null)
+            if (javaTypeList != null)
             {
                 var csTypeList = new List<HSError>();
                 var length = javaTypeList.Call<int>("size");
@@ -34,11 +30,12 @@ namespace StackHolisticSolution.Platforms.Android
                     var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
                     csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
                 }
-                listener.onAppInitialized(csTypeList);
+
+                listener.onAppInitializeFailed(csTypeList);
             }
             else
             {
-                listener.onAppInitialized("true");
+                listener.onAppInitialized();
             }
         }
     }
