@@ -1,145 +1,11 @@
 #if UNITY_ANDROID
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using StackHolisticSolution.Api;
-using StackHolisticSolution.Common;
 using UnityEngine;
 
-
-namespace StackHolisticSolution.Platforms.Android
+namespace StackHolisticSolution
 {
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    [SuppressMessage("ReSharper", "NotAccessedField.Local")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class AndroidHSAppodealConnector : IHSAppodealConnector
-    {
-        private readonly AndroidJavaObject HSAppodealConnectorInstance;
-
-        public AndroidHSAppodealConnector()
-        {
-            HSAppodealConnectorInstance = new AndroidJavaObject(
-                "com.explorestack.hs.sdk.connector.appodeal.HSAppodealConnector");
-        }
-
-        public AndroidJavaObject getAndroidHSAppodealConnector()
-        {
-            return HSAppodealConnectorInstance;
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            HSAppodealConnectorInstance.Call("setEventsEnabled", value);
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class AndroidHSAppsflyerService : IHSAppsflyerService
-    {
-        private readonly AndroidJavaObject HSAppsflyerServiceInstance;
-
-        public AndroidHSAppsflyerService(string key)
-        {
-            var androidJavaObject = new AndroidJavaObject("java.lang.String", key);
-            HSAppsflyerServiceInstance = new AndroidJavaObject(
-                "com.explorestack.hs.sdk.service.appsflyer.HSAppsflyerService",
-                androidJavaObject);
-        }
-
-        public AndroidJavaObject getJavaObjectHSAppsflyerService()
-        {
-            return HSAppsflyerServiceInstance;
-        }
-
-        public AndroidJavaObject GetAndroidInstance()
-        {
-            return HSAppsflyerServiceInstance;
-        }
-
-        public IntPtr GetIntPtr()
-        {
-            return new IntPtr();
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            HSAppsflyerServiceInstance.Call("setEventsEnabled", value);
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class AndroidHSFirebaseService : IHSFirebaseService
-    {
-        private readonly AndroidJavaObject HSFirebaseServiceInstance;
-
-        public AndroidHSFirebaseService()
-        {
-            HSFirebaseServiceInstance = new AndroidJavaObject(
-                "com.explorestack.hs.sdk.service.firebase.HSFirebaseService");
-        }
-
-        public AndroidJavaObject getAndroidHSFirebaseService()
-        {
-            return HSFirebaseServiceInstance;
-        }
-
-        public AndroidJavaObject GetAndroidInstance()
-        {
-            return HSFirebaseServiceInstance;
-        }
-
-        public IntPtr GetIntPtr()
-        {
-            return new IntPtr();
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            HSFirebaseServiceInstance.Call("setEventsEnabled", value);
-        }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    public class AndroidHSFacebookService : IHSFacebookService
-    {
-        private readonly AndroidJavaObject HSFacebookServiceInstance;
-
-        public AndroidHSFacebookService()
-        {
-            HSFacebookServiceInstance = new AndroidJavaObject(
-                "com.explorestack.hs.sdk.service.facebook.HSFacebookService");
-        }
-
-        public AndroidJavaObject getAndroidHSFacebookService()
-        {
-            return HSFacebookServiceInstance;
-        }
-
-        public AndroidJavaObject GetAndroidInstance()
-        {
-            return HSFacebookServiceInstance;
-        }
-
-        public IntPtr GetIntPtr()
-        {
-            return new IntPtr();
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            HSFacebookServiceInstance.Call("setEventsEnabled", value);
-        }
-    }
-
+    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
@@ -163,50 +29,24 @@ namespace StackHolisticSolution.Platforms.Android
             HSAppConfigInstance.Call<AndroidJavaObject>("setDebugEnabled", value);
         }
 
+        public void setLoggingEnabled(bool value)
+        {
+            HSAppConfigInstance.Call<AndroidJavaObject>("setLoggingEnabled", value);
+        }
+
+        public void setAppKey(string appKey)
+        {
+            HSAppConfigInstance.Call<AndroidJavaObject>("setAppKey", appKey);
+        }
+
+        public void setAdType(int adType)
+        {
+            HSAppConfigInstance.Call<AndroidJavaObject>("setAdType", adType);
+        }
+
         public void setComponentInitializeTimeout(long value)
         {
             HSAppConfigInstance.Call<AndroidJavaObject>("setComponentInitializeTimeout", value);
-        }
-
-        public void withConnectors(HSAppodealConnector hsAppodealConnector)
-        {
-            var androidHSAppodealConnector = (AndroidHSAppodealConnector) hsAppodealConnector.getHSAppodealConnector();
-            AndroidJavaObject[] objects = {androidHSAppodealConnector.getAndroidHSAppodealConnector()};
-            var eventMethod = AndroidJNI.GetMethodID(getHSAppConfigClass().GetRawClass(),
-                "withConnectors", "([Lcom/explorestack/hs/sdk/HSConnector;)Lcom/explorestack/hs/sdk/HSAppConfig;");
-            var args = AndroidJNIHelper.CreateJNIArgArray(new object[] {objects});
-            AndroidJNI.CallObjectMethod(HSAppConfigInstance.GetRawObject(), eventMethod, args);
-        }
-
-        public void withServices(params IHSService[] services)
-        {
-            var eventMethod = AndroidJNI.GetMethodID(getHSAppConfigClass().GetRawClass(),
-                "withServices", "([Lcom/explorestack/hs/sdk/HSService;)Lcom/explorestack/hs/sdk/HSAppConfig;");
-
-            var androidJavaObjects =
-                services.Select(e => e.GetAndroidInstance()).ToArray();
-
-            var args = AndroidJNIHelper.CreateJNIArgArray(new object[]
-            {
-                javaArrayFromCS(androidJavaObjects,
-                    "com.explorestack.hs.sdk.HSService")
-            });
-
-            AndroidJNI.CallObjectMethod(HSAppConfigInstance.GetRawObject(), eventMethod, args);
-        }
-
-        private static AndroidJavaObject javaArrayFromCS(IReadOnlyList<AndroidJavaObject> values, string classType)
-        {
-            var arrayClass = new AndroidJavaClass("java.lang.reflect.Array");
-            var arrayObject = arrayClass.CallStatic<AndroidJavaObject>("newInstance",
-                new AndroidJavaClass(classType),
-                values.Count);
-            for (var i = 0; i < values.Count; ++i)
-            {
-                arrayClass.CallStatic("set", arrayObject, i, values[i]);
-            }
-
-            return arrayObject;
         }
     }
 
