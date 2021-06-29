@@ -11,23 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT HSUAppodealConnectorRef GetHSAppodealConnector(void);
-
-FOUNDATION_EXPORT HSUAppsFlyerConnectorRef GetHSAppsflyerService(const char *devKey,
-                                                                 const char *appId,
-                                                                 const char *keys);
-FOUNDATION_EXPORT void SetHSAppsflyerServiceEventsEnabled(bool value);
-
-FOUNDATION_EXPORT HSUFirebaseConnectorRef GetHSFirebaseService(const char *defaults, long expirationDuration);
-FOUNDATION_EXPORT void SetHSFirebaseServiceEventsEnabled(bool value);
-
-FOUNDATION_EXPORT HSUFacebookConnectorRef GetHSFacebookService(void);
-FOUNDATION_EXPORT void SetHSFacebookServiceEventsEnabled(bool value);
-
-FOUNDATION_EXPORT void WithService(const void *ptr);
-FOUNDATION_EXPORT void WithConnectors(const void *ptr);
 FOUNDATION_EXPORT void SetDebugEnabled(bool enabled);
 FOUNDATION_EXPORT void SetComponentInitializeTimeout(long value);
+FOUNDATION_EXPORT void SetLoggingEnabled(bool enabled);
+FOUNDATION_EXPORT void SetAppKey(const char *key);
+FOUNDATION_EXPORT void SetAdType(const char *adType);
+
 FOUNDATION_EXPORT HSUAppConfigurationRef GetHSAppConfig(void);
 
 FOUNDATION_EXPORT HSUAppRef GetHSApp(void);
@@ -42,6 +31,7 @@ FOUNDATION_EXPORT void ValidateInAppPurchase(const char *productIdentifier,
                                              const char *currency,
                                              const char *transactionId,
                                              const char *additionalParams,
+                                             int type,
                                              HSUSdkInAppPurchaseValidationSuccessCallback success,
                                              HSUSdkInAppPurchaseValidationFailureCallback failure);
 
