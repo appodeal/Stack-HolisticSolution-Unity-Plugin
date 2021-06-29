@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
-using UnityEngine;
 
 namespace StackHolisticSolution.Platforms.iOS
 {
@@ -16,103 +15,6 @@ namespace StackHolisticSolution.Platforms.iOS
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public delegate void HSUSdkInAppPurchaseValidationFailureCallback(string error);
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal class HSAppodealConnectorObjCBridge
-    {
-        private readonly IntPtr hSAppodealConnector;
-
-        public HSAppodealConnectorObjCBridge()
-        {
-            hSAppodealConnector = GetHSAppodealConnector();
-        }
-
-        public IntPtr getIntPtr()
-        {
-            return hSAppodealConnector;
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            Debug.Log("Not supported");
-        }
-
-        [DllImport("__Internal")]
-        private static extern IntPtr GetHSAppodealConnector();
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal class HSAppsflyerServiceObjCBridge
-    {
-        private readonly IntPtr hSAppsflyerService;
-
-        public HSAppsflyerServiceObjCBridge(string devKey, string appId, string keys)
-        {
-            hSAppsflyerService = GetHSAppsflyerService(devKey, appId, keys);
-        }
-
-        public IntPtr getIntPtr()
-        {
-            return hSAppsflyerService;
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            Debug.Log("Not supported");
-        }
-
-        [DllImport("__Internal")]
-        private static extern IntPtr GetHSAppsflyerService(string devKey, string appId, string keys);
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal class HSFirebaseServiceObjCBridge
-    {
-        private readonly IntPtr hSFirebaseService;
-
-        public HSFirebaseServiceObjCBridge(string defaults, long expirationDuration)
-        {
-            hSFirebaseService = GetHSFirebaseService(defaults, expirationDuration);
-        }
-
-        public IntPtr getIntPtr()
-        {
-            return hSFirebaseService;
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            Debug.Log("Not supported");
-        }
-
-        [DllImport("__Internal")]
-        private static extern IntPtr GetHSFirebaseService(string defaults, long expirationDuration);
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal class HSFacebookServiceObjCBridge
-    {
-        private readonly IntPtr hSFacebookService;
-
-
-        public HSFacebookServiceObjCBridge()
-        {
-            hSFacebookService = GetHSFacebookService();
-        }
-
-        public IntPtr getIntPtr()
-        {
-            return hSFacebookService;
-        }
-
-        public void setEventsEnabled(bool value)
-        {
-            Debug.Log("Not supported");
-        }
-
-        [DllImport("__Internal")]
-        private static extern IntPtr GetHSFacebookService();
-    }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class HSAppConfigObjCBridge
@@ -128,26 +30,28 @@ namespace StackHolisticSolution.Platforms.iOS
         {
             return hSAppConfig;
         }
-
-        public void withConnectors(IntPtr hsAppodealConnector)
+        
+        public static void setLoggingEnabled(bool value)
         {
-            WithConnectors(hsAppodealConnector);
+            SetLoggingEnabled(value);
         }
 
-        public void withServices(IntPtr[] services)
+        public static void setAppKey(string appKey)
         {
-            for (int i = 0; i < services.Length; i++)
-            {
-                WithService(services[i]);
-            }
+            SetAppKey(appKey);
         }
 
-        public void setDebugEnabled(bool value)
+        public static void setAdType(int adType)
+        {
+            SetAdType(adType);
+        }
+
+        public static void setDebugEnabled(bool value)
         {
             SetDebugEnabled(value);
         }
 
-        public void setComponentInitializeTimeout(long value)
+        public static void setComponentInitializeTimeout(long value)
         {
             SetComponentInitializeTimeout(value);
         }
@@ -160,12 +64,16 @@ namespace StackHolisticSolution.Platforms.iOS
 
         [DllImport("__Internal")]
         private static extern void SetComponentInitializeTimeout(long value);
+        
+        [DllImport("__Internal")]
+        private static extern void SetLoggingEnabled(bool value);
+        
+        [DllImport("__Internal")]
+        private static extern void SetAppKey(string appKey);
 
         [DllImport("__Internal")]
-        private static extern void WithService(IntPtr services);
-
-        [DllImport("__Internal")]
-        private static extern void WithConnectors(IntPtr connector);
+        private static extern void SetAdType(int adType);
+        
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -199,17 +107,28 @@ namespace StackHolisticSolution.Platforms.iOS
                 dictionary.Aggregate("", (current, kvp) => current + (kvp.Key + "=" + kvp.Value + "\n"));
             LogEvent(key, defaultsString);
         }
-
-
+        
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
             string transactionId,
-            string additionalParams, HSUSdkInAppPurchaseValidationSuccessCallback success,
+            string additionalParams, 
+            iOSPurchaseType type,
+            
+            HSUSdkInAppPurchaseValidationSuccessCallback success,
             HSUSdkInAppPurchaseValidationFailureCallback failure)
         {
-            ValidateInAppPurchase(productIdentifier, price, currency, transactionId, additionalParams, success,
+            ValidateInAppPurchase(productIdentifier, price, currency, transactionId, additionalParams, (int) type, success,
                 failure);
         }
 
+        public string getVersion()
+        {
+            return GetVersion();
+        }
+
+        public bool isInitialized()
+        {
+            return IsInitialized();
+        }
 
         [DllImport("__Internal")]
         private static extern IntPtr GetHSApp();
@@ -217,10 +136,16 @@ namespace StackHolisticSolution.Platforms.iOS
         [DllImport("__Internal")]
         private static extern void ValidateInAppPurchase(string productIdentifier, string price, string currency,
             string transactionId,
-            string additionalParams, HSUSdkInAppPurchaseValidationSuccessCallback success,
+            string additionalParams,
+            int type,
+            HSUSdkInAppPurchaseValidationSuccessCallback success,
             HSUSdkInAppPurchaseValidationFailureCallback failure);
 
-
+        [DllImport("__Internal")]
+        private static extern bool IsInitialized();
+        
+        [DllImport("__Internal")]
+        private static extern string GetVersion();
 
         [DllImport("__Internal")]
         private static extern void LogEvent(string key, string obj);
