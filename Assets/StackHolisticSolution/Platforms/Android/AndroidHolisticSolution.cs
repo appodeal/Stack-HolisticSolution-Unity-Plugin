@@ -107,7 +107,7 @@ namespace StackHolisticSolution
 
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
             string transactionId,
-            string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+            string additionalParams, iOSPurchaseType type, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
         {
             Debug.Log("Not support");
         }
