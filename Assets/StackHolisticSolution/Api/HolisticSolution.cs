@@ -99,9 +99,11 @@ namespace StackHolisticSolution
 
         public static void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
             string transactionId,
-            string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+            string additionalParams, 
+            iOSPurchaseType type, 
+            IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
         {
-            getInstance().validateInAppPurchaseiOS(productIdentifier, price, currency, transactionId, additionalParams, inAppPurchaseValidationiOSCallback);
+            getInstance().validateInAppPurchaseiOS(productIdentifier, price, currency, transactionId, additionalParams, type, inAppPurchaseValidationiOSCallback);
         }
     }
 
@@ -131,6 +133,13 @@ namespace StackHolisticSolution
     {
         Subscription,
         Purchase
+    }
+    
+    public enum iOSPurchaseType{
+     consumable = 0,
+     nonConsumable = 1,
+     autoRenewableSubscription = 2,
+     nonRenewingSubscription = 3
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
