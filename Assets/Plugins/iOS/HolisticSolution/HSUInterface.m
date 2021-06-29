@@ -8,6 +8,8 @@
 #import "HSUInterface.h"
 #import "HSUSdkBridge.h"
 #import <HolisticSolutionSDK/HolisticSolutionSDK-Swift.h>
+#import <Appodeal/Appodeal.h>
+
 
 #pragma mark - Helpers
 
@@ -32,62 +34,20 @@ static NSDictionary <NSString *, NSString *> *HSUDictionaryFromUTF8String(const 
 
 #pragma mark - Bridging
 
-HSUAppodealConnectorRef GetHSAppodealConnector(void) {
-    [HSUSdkBridge.shared setupAppodeal];
-    return (__bridge HSUAppodealConnectorRef)[HSUSdkBridge.shared connector:kHSUAppodealConnectorKey];
-}
-
-HSUAppsFlyerConnectorRef GetHSAppsflyerService(const char *devKey,
-                                               const char *appId,
-                                               const char *keys) {
-    NSString *devKeyString = HSUStringFromUTF8String(devKey);
-    NSString *appIdString = HSUStringFromUTF8String(appId);
-    NSArray <NSString *> *keysArray = [HSUStringFromUTF8String(keys) componentsSeparatedByString:@","];
-    [HSUSdkBridge.shared setupAppsFlyerWithAppId:appIdString
-                                          devKey:devKeyString
-                                  conversionKeys:keysArray];
-    return (__bridge HSUAppsFlyerConnectorRef)[HSUSdkBridge.shared connector:kHSUAppsFlyerConnectorKey];
-}
-
-void SetHSAppsflyerServiceEventsEnabled(bool value) {
-    [HSUSdkBridge.shared setTrackingForService:kHSUAppsFlyerConnectorKey enabled:value];
-}
-
-HSUFirebaseConnectorRef GetHSFirebaseService(const char *defaults, long expirationDuration) {
-    NSDictionary *defaultsDict = HSUDictionaryFromUTF8String(defaults);
-    [HSUSdkBridge.shared setupFirebaseWithDefaults:defaultsDict
-                                              keys:defaultsDict.allKeys
-                                expirationDuration:expirationDuration];
-    return (__bridge HSUFirebaseConnectorRef)[HSUSdkBridge.shared connector:kHSUFirebaseConnectorKey];
-}
-
-void SetHSFirebaseServiceEventsEnabled(bool value) {
-    [HSUSdkBridge.shared setTrackingForService:kHSUFirebaseConnectorKey enabled:value];
-}
-
-HSUFacebookConnectorRef GetHSFacebookService(void) {
-    [HSUSdkBridge.shared setupFacebook];
-    return (__bridge HSUFacebookConnectorRef)[HSUSdkBridge.shared connector:kHSUFacebookConnectorKey];
-}
-
-void SetHSFacebookServiceEventsEnabled(bool value) {
-    [HSUSdkBridge.shared setTrackingForService:kHSUFacebookConnectorKey enabled:value];
-}
-
-void WithService(const void *ptr) {
-    [HSUSdkBridge.shared registerService:(__bridge id)ptr];
-}
-
-FOUNDATION_EXPORT void WithConnectors(const void *ptr) {
-    [HSUSdkBridge.shared registerConnector:(__bridge id)ptr];
-}
-
 void SetDebugEnabled(bool enabled) {
     HSUSdkBridge.shared.debug = enabled;
 }
 
 void SetComponentInitializeTimeout(long value) {
     HSUSdkBridge.shared.timeout = value;
+}
+
+void SetAdtype(int adType){
+    HSUSdkBridge.shared.adType = adType;
+}
+
+void SetAppKey(const char *appKey){
+    HSUSdkBridge.shared.appKey = appKey;
 }
 
 HSUAppConfigurationRef GetHSAppConfig(void) {
@@ -103,9 +63,15 @@ HSUAppRef GetHSApp(void) {
 void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback callback) {
     HSUSdkBridge *config = (__bridge_transfer HSUSdkBridge *)appConfig;
     if ([config isKindOfClass:HSUSdkBridge.class]) {
-        [HSApp configureWithConfiguration:config.configuration completion:^(NSError *error) {
-            callback ? callback(error.localizedDescription.UTF8String) : nil;
+        [Appodeal.hs initializeWithApplication:UIApplication.sharedApplication
+                                 launchOptions:@{}
+                                 configuration:config.configuration
+                                    completion:^(NSError *error) {
+            
         }];
+//    configureWithConfiguration:config.configuration completion:^(NSError *error) {
+//            callback ? callback(error.localizedDescription.UTF8String) : nil;
+//        }];
     } else {
         callback ? callback("Invalid configuration was sent from Unity") : nil;
     }
@@ -113,17 +79,16 @@ void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback c
 
 void LogEvent(const char *key, const char *params) {
     NSDictionary *paramsDict = HSUDictionaryFromUTF8String(params);
-    [HSApp trackEvent:HSUStringFromUTF8String(key)
+    [Appodeal.hs trackEvent:HSUStringFromUTF8String(key)
      customParameters:paramsDict];
 }
-
-
 
 void ValidateInAppPurchase(const char *productIdentifier,
                            const char *price,
                            const char *currency,
                            const char *transactionId,
                            const char *additionalParams,
+                           int type,
                            HSUSdkInAppPurchaseValidationSuccessCallback success,
                            HSUSdkInAppPurchaseValidationFailureCallback failure) {
     NSString *productIdString = HSUStringFromUTF8String(productIdentifier);
@@ -132,12 +97,17 @@ void ValidateInAppPurchase(const char *productIdentifier,
     NSString *transactionIdString = HSUStringFromUTF8String(transactionId);
     NSDictionary *additionalParamsDict = HSUDictionaryFromUTF8String(additionalParams);
     
-    [HSApp validateAndTrackInAppPurchaseWithProductId:productIdString
-                                                price:priceString
-                                             currency:currencyString
-                                        transactionId:transactionIdString
-                                 additionalParameters:additionalParamsDict
-                                              success:^(NSDictionary *data) {
+    NSString *purchaseType =HSUStringFromUTF8String(type);
+    
+
+    
+    [Appodeal.hs validateAndTrackInAppPurchaseWithProductId:productIdString
+                                                       type:(HSPurchaseType)type
+                                                      price:priceString
+                                                   currency:currencyString
+                                              transactionId:transactionIdString
+                                       additionalParameters:additionalParamsDict
+                                                    success:^(NSDictionary *data) {
         NSData *jsonData;
         NSError *jsonError;
         jsonData = [NSJSONSerialization dataWithJSONObject:data
