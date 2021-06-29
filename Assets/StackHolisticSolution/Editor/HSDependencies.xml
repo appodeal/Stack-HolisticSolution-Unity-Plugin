@@ -6,6 +6,6 @@
         <androidPackage spec="com.explorestack.hs:sdk:2.0.0.0"/>
     </androidPackages>
     <iosPods>
-        <iosPod name='HolisticSolutionSDK' version='1.1.3' minTargetSdk='9.0'/>
+        <iosPod name='HolisticSolutionSDK' version='2.0.0-Beta.2' minTargetSdk='10.0'/>
     </iosPods>
 </dependencies>
