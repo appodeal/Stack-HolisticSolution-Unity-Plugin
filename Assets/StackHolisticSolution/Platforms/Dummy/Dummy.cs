@@ -68,32 +68,34 @@ namespace StackHolisticSolution.Platforms.Dummy
         }
 
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId,
-            string additionalParams, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+            string additionalParams, iOSPurchaseType type,
+            IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
         {
             throw new NotImplementedException();
         }
+
 
         public string toString()
         {
             throw new NotImplementedException();
         }
 
-        public IHSInAppPurchase build()
+        public void withPublicKey(string publicKey)
         {
             throw new NotImplementedException();
         }
 
-        public void withPurchaseTimestamp(string purchaseTimestamp)
+        public void withSignature(string signature)
         {
             throw new NotImplementedException();
         }
 
-        public void withPurchaseTimestamp(long purchaseTimestamp)
+        public void withPurchaseData(string purchaseData)
         {
             throw new NotImplementedException();
         }
 
-        public void withAdditionalParams(Dictionary<string, string> additionalParameters)
+        public void withPrice(string price)
         {
             throw new NotImplementedException();
         }
@@ -118,22 +120,17 @@ namespace StackHolisticSolution.Platforms.Dummy
             throw new NotImplementedException();
         }
 
-        public void withPrice(string price)
+        public void withPurchaseTimestamp(long purchaseTimestamp)
         {
             throw new NotImplementedException();
         }
 
-        public void withPurchaseData(string purchaseData)
+        public void withAdditionalParams(Dictionary<string, string> additionalParameters)
         {
             throw new NotImplementedException();
         }
 
-        public void withSignature(string signature)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void withPublicKey(string publicKey)
+        public IHSInAppPurchase build()
         {
             throw new NotImplementedException();
         }
