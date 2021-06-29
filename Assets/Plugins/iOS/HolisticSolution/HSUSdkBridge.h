@@ -23,22 +23,11 @@ FOUNDATION_EXPORT NSString *const kHSUAppodealConnectorKey;
 @property (nonatomic, readonly) HSAppConfiguration *configuration;
 @property (nonatomic, assign) BOOL debug;
 @property (nonatomic, assign) long timeout;
+@property (nonatomic, assign) BOOL logging;
+@property (nonatomic, assign) const char appKey;
+@property (nonatomic, assign) int adType;
 
 + (instancetype)shared;
-
-- (void)setupAppodeal;
-- (void)setupFacebook;
-- (void)setupAppsFlyerWithAppId:(NSString *)appId
-                         devKey:(NSString *)devKey
-                 conversionKeys:(NSArray <NSString *> *)conversionKeys;
-- (void)setupFirebaseWithDefaults:(NSDictionary <NSString *, id> *)defaults
-                             keys:(NSArray <NSString *> *)keys
-               expirationDuration:(long)expirationDuration;
-
-- (id)connector:(NSString *)key;
-- (void)setTrackingForService:(NSString *)key enabled:(BOOL)enabled;
-- (void)registerService:(id)service;
-- (void)registerConnector:(id)connector;
 
 @end
 
