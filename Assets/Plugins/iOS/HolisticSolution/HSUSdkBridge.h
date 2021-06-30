@@ -24,7 +24,7 @@ FOUNDATION_EXPORT NSString *const kHSUAppodealConnectorKey;
 @property (nonatomic, assign) BOOL debug;
 @property (nonatomic, assign) long timeout;
 @property (nonatomic, assign) BOOL logging;
-@property (nonatomic, assign) const char appKey;
+@property (nonatomic, assign) const char *appKey;
 @property (nonatomic, assign) int adType;
 
 + (instancetype)shared;
