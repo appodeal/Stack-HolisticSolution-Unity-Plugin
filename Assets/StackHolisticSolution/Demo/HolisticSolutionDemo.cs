@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealAds.Unity.Api;
+using DefaultNamespace;
 using StackHolisticSolution;
 using UnityEngine;
 
@@ -25,21 +26,37 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 #endif
     
     #endregion
-    
     void Start()
     {
+        StartCoroutine(waitInitializeFirebase());
+
+       
+
+
+// #if UNITY_ANDROID
+
+// #elif UNITY_IOS
+//         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
+//             "additionalParams", this);
+// #endif
+    }
+
+    private IEnumerator waitInitializeFirebase()
+    {
+        yield return new WaitUntil(() => FirebaseController.IsInitialized);
+        
         HolisticSolutionInitialize();
     }
 
-   
     private void HolisticSolutionInitialize()
     {
-        Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
+        Appodeal.setTesting(true);
+        Appodeal.setLogLevel(Appodeal.LogLevel.Verbose);
 
         var appConfig = new HSAppConfig()
             .setDebugEnabled(true)
             .setLoggingEnabled(true)
-            .setAppKey("")
+            .setAppKey(appKey)
             .setComponentInitializeTimeout(10000)
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO);
 
@@ -68,14 +85,14 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         HSApp.validateInAppPurchaseAndroid(firstPurchase, this);
 #endif
         
-        HSApp.validateInAppPurchaseiOS( 
-            "productIdentifier",  
-            "price",  
-            "currency",
-             "transactionId",
-             "additionalParams", 
-             iOSPurchaseType.consumable, 
-            this);
+        // HSApp.validateInAppPurchaseiOS( 
+        //     "productIdentifier",  
+        //     "price",  
+        //     "currency",
+        //      "transactionId",
+        //      "additionalParams", 
+        //      iOSPurchaseType.consumable, 
+        //     this);
         
         
         
