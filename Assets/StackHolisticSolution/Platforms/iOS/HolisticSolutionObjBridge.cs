@@ -33,7 +33,7 @@ namespace StackHolisticSolution.Platforms.iOS
         
         public static void setLoggingEnabled(bool value)
         {
-            SetLoggingEnabled(value);
+           //TODO implementation
         }
 
         public static void setAppKey(string appKey)
@@ -64,10 +64,7 @@ namespace StackHolisticSolution.Platforms.iOS
 
         [DllImport("__Internal")]
         private static extern void SetComponentInitializeTimeout(long value);
-        
-        [DllImport("__Internal")]
-        private static extern void SetLoggingEnabled(bool value);
-        
+
         [DllImport("__Internal")]
         private static extern void SetAppKey(string appKey);
 
@@ -122,12 +119,14 @@ namespace StackHolisticSolution.Platforms.iOS
 
         public string getVersion()
         {
-            return GetVersion();
+            //TODO implement
+            return "version";
         }
 
         public bool isInitialized()
         {
-            return IsInitialized();
+            //TODO implement
+            return false;
         }
 
         [DllImport("__Internal")]
@@ -140,12 +139,6 @@ namespace StackHolisticSolution.Platforms.iOS
             int type,
             HSUSdkInAppPurchaseValidationSuccessCallback success,
             HSUSdkInAppPurchaseValidationFailureCallback failure);
-
-        [DllImport("__Internal")]
-        private static extern bool IsInitialized();
-        
-        [DllImport("__Internal")]
-        private static extern string GetVersion();
 
         [DllImport("__Internal")]
         private static extern void LogEvent(string key, string obj);
