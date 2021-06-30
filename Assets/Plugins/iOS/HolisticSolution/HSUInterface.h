@@ -15,7 +15,7 @@ FOUNDATION_EXPORT void SetDebugEnabled(bool enabled);
 FOUNDATION_EXPORT void SetComponentInitializeTimeout(long value);
 FOUNDATION_EXPORT void SetLoggingEnabled(bool enabled);
 FOUNDATION_EXPORT void SetAppKey(const char *key);
-FOUNDATION_EXPORT void SetAdType(const char *adType);
+FOUNDATION_EXPORT void SetAdType(int adType);
 
 FOUNDATION_EXPORT HSUAppConfigurationRef GetHSAppConfig(void);
 
