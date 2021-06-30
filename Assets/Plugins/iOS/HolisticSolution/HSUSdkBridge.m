@@ -24,9 +24,8 @@
 
 - (HSAppConfiguration *)configuration {
     HSAppConfigurationDebug debug = self.debug ? HSAppConfigurationDebugEnabled : HSAppConfigurationDebugDisabled;
-
     double timeout = (self.timeout != 0) ? (self.timeout / 1000) : 30.0;
-    return [[HSAppConfiguration alloc] initWithAppKey:@""
+    return [[HSAppConfiguration alloc] initWithAppKey:[NSString stringWithUTF8String:self.appKey]
                                               timeout:timeout
                                                 debug:debug
                                               adTypes:self.adType];
