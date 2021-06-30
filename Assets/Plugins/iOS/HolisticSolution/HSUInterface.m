@@ -42,7 +42,7 @@ void SetComponentInitializeTimeout(long value) {
     HSUSdkBridge.shared.timeout = value;
 }
 
-void SetAdtype(int adType){
+void SetAdType(int adType){
     HSUSdkBridge.shared.adType = adType;
 }
 
@@ -97,7 +97,7 @@ void ValidateInAppPurchase(const char *productIdentifier,
     NSString *transactionIdString = HSUStringFromUTF8String(transactionId);
     NSDictionary *additionalParamsDict = HSUDictionaryFromUTF8String(additionalParams);
     
-    NSString *purchaseType =HSUStringFromUTF8String(type);
+    NSString *purchaseType = HSUStringFromUTF8String(type);
     
 
     
