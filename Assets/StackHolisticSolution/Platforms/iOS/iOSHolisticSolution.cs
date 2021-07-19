@@ -27,11 +27,6 @@ namespace StackHolisticSolution.Platforms.iOS
             HSAppConfigObjCBridge.setDebugEnabled(value);
         }
 
-        public void setLoggingEnabled(bool value)
-        {
-            HSAppConfigObjCBridge.setLoggingEnabled(value);
-        }
-
         public void setAppKey(string appKey)
         {
             HSAppConfigObjCBridge.setAppKey(appKey);
