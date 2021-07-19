@@ -72,7 +72,6 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
         var appConfig = new HSAppConfig()
             .setDebugEnabled(true)
-            .setLoggingEnabled(true)
             .setAppKey(appKey)
             .setComponentInitializeTimeout(10000)
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO);
