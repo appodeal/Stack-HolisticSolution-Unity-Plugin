@@ -88,10 +88,9 @@ void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback c
     }
 }
 
-void LogEvent(const char *key, const char *params) {
-    NSDictionary *paramsDict = HSUDictionaryFromUTF8String(params);
+void LogEvent(const char *key) {
     [Appodeal.hs trackEvent:HSUStringFromUTF8String(key)
-           customParameters:paramsDict];
+           customParameters:nil];
 }
 
 void ValidateInAppPurchase(const char *productIdentifier,
