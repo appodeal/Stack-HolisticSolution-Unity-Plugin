@@ -93,6 +93,16 @@ void LogEvent(const char *key) {
            customParameters:nil];
 }
 
+char *GetVersion() {
+    const char *cString = [[HSApp sdkVersion] UTF8String];
+    char *cStringCopy = calloc([[Appodeal getVersion] length]+1, 1);
+    return strncpy(cStringCopy, cString, [[Appodeal getVersion] length]);
+}
+
+BOOL IsInitialized() {
+    return [Appodeal.hs initialized];
+}
+
 void ValidateInAppPurchase(const char *productIdentifier,
                            const char *price,
                            const char *currency,
