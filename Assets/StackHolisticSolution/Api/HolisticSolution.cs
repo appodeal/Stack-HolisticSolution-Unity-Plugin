@@ -131,8 +131,8 @@ namespace StackHolisticSolution
 
     public enum PurchaseType
     {
-        Subscription,
-        Purchase
+        SUBS,
+        INAPP
     }
     
     public enum iOSPurchaseType{
