@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using AOT;
 using AppodealAds.Unity.Api;
 using AppodealAds.Unity.Common;
-using ConsentManager;
 using UnityEngine;
 
 namespace AppodealAds.Unity.iOS
@@ -435,12 +434,6 @@ namespace AppodealAds.Unity.iOS
                 Appodeal.getPluginVersion(), Appodeal.getUnityVersion());
         }
 
-        public void initialize(string appKey, int adTypes, Consent consent)
-        {
-            AppodealObjCBridge.AppodealInitializeWithConsent(appKey, nativeAdTypesForType(adTypes),
-                Appodeal.getPluginVersion(), Appodeal.getUnityVersion());
-        }
-
         public bool isInitialized(int adType)
         {
             return AppodealObjCBridge.AppodealIsInitialized(nativeAdTypesForType(adType));
@@ -566,11 +559,6 @@ namespace AppodealAds.Unity.iOS
         public void updateConsent(bool value)
         {
             AppodealObjCBridge.AppodealUpdateConsent(value);
-        }
-
-        public void updateConsent(Consent consent)
-        {
-            AppodealObjCBridge.AppodealUpdateConsentReport();
         }
 
         public void disableNetwork(string network)
