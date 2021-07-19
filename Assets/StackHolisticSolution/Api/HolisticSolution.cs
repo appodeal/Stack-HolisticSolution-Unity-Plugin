@@ -71,14 +71,9 @@ namespace StackHolisticSolution
             getInstance().initialize(hsAppConfig, hsAppInitializeListener);
         }
 
-        public static void logEventiOS(string key, Dictionary<string, object> dictionary)
+        public static void logEvent(string key)
         {
-            getInstance().logEventiOS(key, dictionary);
-        }
-
-        public static void logEventAndroid(string key)
-        {
-            getInstance().logEventAndroid(key);
+            getInstance().logEvent(key);
         }
 
         public static string getVersion()
