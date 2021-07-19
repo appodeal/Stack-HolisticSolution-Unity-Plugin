@@ -30,12 +30,6 @@ namespace StackHolisticSolution
             return this;
         }
 
-        public HSAppConfig setLoggingEnabled(bool value)
-        {
-            nativeHSAppConfig.setLoggingEnabled(value);
-            return this;
-        }
-        
         public HSAppConfig setAppKey(string appKey)
         {
             nativeHSAppConfig.setAppKey(appKey);
