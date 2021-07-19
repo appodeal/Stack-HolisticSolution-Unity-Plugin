@@ -78,6 +78,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO);
 
         HSApp.initialize(appConfig, this);
+        HSApp.logEvent("hs_sdk_example_test_event");
 
 
 #if UNITY_ANDROID
@@ -93,15 +94,12 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .withCurrency("Currency")
             .build();
 
-        HSApp.logEvent("hs_sdk_example_test_event_android");
 
         HSApp.validateInAppPurchaseAndroid(purchase, this);
 #elif UNITY_IOS
         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
             "additionalParams", iOSPurchaseType.consumable, this);
         
-        HSApp.logEvent("hs_sdk_example_test_event_ios");
-
 #endif
     }
 
