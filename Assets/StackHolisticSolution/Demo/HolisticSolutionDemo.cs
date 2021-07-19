@@ -46,31 +46,12 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     #region HSAppInitializeListener
 
-    public void onAppInitializeFailed(IEnumerable<HSError> hsErrors)
+    public void onAppInitialized(string error)
     {
-        Debug.Log("onAppInitializeFailed");
-
-        if (hsErrors == null) return;
-
-        foreach (var error in hsErrors)
-        {
-            Debug.Log($"HSApp: [Error]: " + error.toString());
-        }
-    }
-
-    public void onAppInitializeFailed(string error)
-    {
-        if (error != null)
+        if (!string.IsNullOrEmpty(error))
         {
             Debug.Log($"onAppInitializeFailed - {error}");
         }
-    }
-
-    public void onAppInitialized()
-    {
-        Debug.Log("onAppInitialized");
-        Debug.Log($"HSApp.isInitialized() - {HSApp.isInitialized()}");
-        Debug.Log($"HSApp.getVersion() - {HSApp.getVersion()}");
     }
 
     #endregion
@@ -112,4 +93,5 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
     }
 
     #endregion
+    
 }
