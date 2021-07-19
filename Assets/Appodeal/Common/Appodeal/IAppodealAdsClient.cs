@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using AppodealAds.Unity.Api;
-using ConsentManager;
 
 namespace AppodealAds.Unity.Common
 {
@@ -11,7 +10,6 @@ namespace AppodealAds.Unity.Common
     {
         void initialize(string appKey, int type);
         void initialize(string appKey, int type, bool hasConsent);
-        void initialize(string appKey, int adTypes, Consent consent);
         bool isInitialized(int adType);
         bool show(int adTypes);
         bool show(int adTypes, string placement);
@@ -33,7 +31,6 @@ namespace AppodealAds.Unity.Common
         void setLogLevel(Appodeal.LogLevel level);
         void setChildDirectedTreatment(bool value);
         void updateConsent(bool value);
-        void updateConsent(Consent consent);
         void disableNetwork(string network);
         void disableNetwork(string network, int type);
         void disableLocationPermissionCheck();
