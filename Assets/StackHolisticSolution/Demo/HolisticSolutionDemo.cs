@@ -81,9 +81,12 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
 
 #if UNITY_ANDROID
-        HSInAppPurchase purchase = new HSInAppPurchase.Builder()
+        HSInAppPurchase purchase = new HSInAppPurchase.Builder(PurchaseType.SUBS)
             .withPublicKey("YOUR_PUBLIC_KEY")
-            .withAdditionalParams(additionalParams)
+            .withAdditionalParams(new Dictionary<string, string>
+            {
+                {"test_key", "test_value"},
+            })
             .withSignature("Signature")
             .withPurchaseData("PurchaseData")
             .withPrice("Price")
