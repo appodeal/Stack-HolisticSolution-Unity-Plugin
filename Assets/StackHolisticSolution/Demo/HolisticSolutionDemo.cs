@@ -24,12 +24,49 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     #endregion
 
-    void Start()
+    public void ShowBanner()
     {
-        HolisticSolutionInitialize();
+        if (Appodeal.canShow(Appodeal.BANNER_BOTTOM))
+        {
+            Appodeal.show(Appodeal.BANNER_BOTTOM);
+        }
+        else
+        {
+            Debug.Log("Appodeal.canShow(Appodeal.BANNER_BOTTOM) - " + Appodeal.BANNER_BOTTOM);
+        }
     }
 
-    private void HolisticSolutionInitialize()
+    public void HieBanner()
+    {
+        Appodeal.hide(Appodeal.BANNER_BOTTOM);
+    }
+
+    public void ShowInterstitial()
+    {
+        if (Appodeal.canShow(Appodeal.INTERSTITIAL))
+        {
+            Appodeal.show(Appodeal.INTERSTITIAL);
+        }
+        else
+        {
+            Debug.Log("Appodeal.canShow(Appodeal.INTERSTITIAL) - " + Appodeal.canShow(Appodeal.INTERSTITIAL));
+
+        }
+    }
+
+    public void ShowRewardedVideo()
+    {
+        if (Appodeal.canShow(Appodeal.REWARDED_VIDEO))
+        {
+            Appodeal.show(Appodeal.REWARDED_VIDEO);
+        }
+        else
+        {
+            Debug.Log("Appodeal.canShow(Appodeal.REWARDED_VIDEO) - " + Appodeal.canShow(Appodeal.REWARDED_VIDEO));
+        }
+    }
+    
+    public void HolisticSolutionInitialize()
     {
         Appodeal.setTesting(true);
         Appodeal.setLogLevel(Appodeal.LogLevel.Verbose);
@@ -42,6 +79,24 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO);
 
         HSApp.initialize(appConfig, this);
+        
+        HSApp.logEvent("hs_sdk_example_test_event_1");
+
+#if UNITY_ANDROID
+        HSInAppPurchase purchase = new HSInAppPurchase.Builder()
+            .withPublicKey("YOUR_PUBLIC_KEY")
+            .withAdditionalParams(additionalParams)
+            .withSignature("Signature")
+            .withPurchaseData("PurchaseData")
+            .withPrice("Price")
+            .withCurrency("Currency")
+            .build();
+
+        HSApp.validateInAppPurchaseAndroid(purchase, this);
+#elif UNITY_IOS
+        HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
+            "additionalParams", iOSPurchaseType.consumable, this);
+#endif
     }
 
     #region HSAppInitializeListener
@@ -52,6 +107,8 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         {
             Debug.Log($"onAppInitializeFailed - {error}");
         }
+
+        Debug.Log("Holistic Solution Initialize - " + HSApp.isInitialized());
     }
 
     #endregion
@@ -93,5 +150,4 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
     }
 
     #endregion
-    
 }
