@@ -67,14 +67,14 @@ namespace StackHolisticSolution.Platforms.iOS
             hsAppObjCBridge.initialize(iOSAppConfig.getIntPtr(), onAppInitialized);
         }
 
-        public void logEvent(string key, Dictionary<string, object> dictionary)
+        public void logEventiOS(string key, Dictionary<string, object> dictionary)
         {
             hsAppObjCBridge.logEvent(key, dictionary);
         }
 
-        public void logEvent(string key)
+        public void logEventAndroid(string key)
         {
-            Debug.Log("Method void logEvent(string key) not supported on iOS platform");
+            Debug.Log("Method void logEventAndroid(string key) not supported on iOS platform");
         }
 
         public string getVersion()
