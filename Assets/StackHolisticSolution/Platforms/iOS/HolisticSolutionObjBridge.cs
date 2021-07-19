@@ -95,6 +95,7 @@ namespace StackHolisticSolution.Platforms.iOS
 
         public void logEvent(string key)
         {
+            //TODO Implementation
             // LogEvent(key);
         }
 
