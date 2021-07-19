@@ -147,19 +147,19 @@ namespace StackHolisticSolution
         {
             switch (purchaseType)
             {
-                case PurchaseType.Subscription:
+                case PurchaseType.SUBS:
                     HSInAppPurchaseBuilder =
                         new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase").CallStatic<AndroidJavaObject>(
                             "newBuilder", new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase$PurchaseType")
                                 .GetStatic<AndroidJavaObject>(
-                                    "SUBSCRIPTION"));
+                                    "SUBS"));
                     break;
-                case PurchaseType.Purchase:
+                case PurchaseType.INAPP:
                     HSInAppPurchaseBuilder =
                         new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase").CallStatic<AndroidJavaObject>(
                             "newBuilder", new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase$PurchaseType")
                                 .Get<AndroidJavaObject>(
-                                    "PURCHASE"));
+                                    "INAPP"));
                     break;
             }
         }
@@ -250,15 +250,15 @@ namespace StackHolisticSolution
 
         public PurchaseType getType()
         {
-            var purchaseType = PurchaseType.Subscription;
+            var purchaseType = PurchaseType.SUBS;
             var type = HSInAppPurchase.Call<AndroidJavaObject>("getType").Call<string>("toString");
             switch (type)
             {
-                case "SUBSCRIPTION":
-                    purchaseType = PurchaseType.Subscription;
+                case "SUBS":
+                    purchaseType = PurchaseType.SUBS;
                     break;
-                case "PURCHASE":
-                    purchaseType = PurchaseType.Purchase;
+                case "INAPP":
+                    purchaseType = PurchaseType.INAPP;
                     break;
             }
 
