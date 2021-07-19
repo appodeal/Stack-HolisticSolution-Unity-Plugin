@@ -50,7 +50,6 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         else
         {
             Debug.Log("Appodeal.canShow(Appodeal.INTERSTITIAL) - " + Appodeal.canShow(Appodeal.INTERSTITIAL));
-
         }
     }
 
@@ -65,7 +64,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             Debug.Log("Appodeal.canShow(Appodeal.REWARDED_VIDEO) - " + Appodeal.canShow(Appodeal.REWARDED_VIDEO));
         }
     }
-    
+
     public void HolisticSolutionInitialize()
     {
         Appodeal.setTesting(true);
@@ -79,8 +78,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO);
 
         HSApp.initialize(appConfig, this);
-        
-        HSApp.logEvent("hs_sdk_example_test_event_1");
+
 
 #if UNITY_ANDROID
         HSInAppPurchase purchase = new HSInAppPurchase.Builder()
@@ -92,10 +90,20 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .withCurrency("Currency")
             .build();
 
+        HSApp.logEventAndroid("hs_sdk_example_test_event_android");
+
         HSApp.validateInAppPurchaseAndroid(purchase, this);
 #elif UNITY_IOS
         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
             "additionalParams", iOSPurchaseType.consumable, this);
+        
+        HSApp.logEventiOS("hs_sdk_example_test_event_ios", new Dictionary<string, object>
+        {
+            {"first_key", "test_1"},
+            {"second_key", "test_2"},
+            {"third_key", "test_3"}
+        });
+
 #endif
     }
 
