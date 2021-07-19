@@ -9,7 +9,6 @@ namespace StackHolisticSolution
     {
         void setComponentInitializeTimeout(long value);
         void setDebugEnabled(bool value);
-        void setLoggingEnabled(bool value);
         void setAppKey(string appKey);
         void setAdType(int adType);
     }
