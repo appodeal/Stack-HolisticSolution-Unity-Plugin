@@ -21,22 +21,17 @@ namespace StackHolisticSolution
 
         private void onAppInitialized(AndroidJavaObject javaTypeList)
         {
-            if (javaTypeList != null)
+            if (javaTypeList == null) return;
+            
+            var csTypeList = new List<HSError>();
+            var length = javaTypeList.Call<int>("size");
+            for (var i = 0; i < length; i++)
             {
-                var csTypeList = new List<HSError>();
-                var length = javaTypeList.Call<int>("size");
-                for (var i = 0; i < length; i++)
-                {
-                    var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
-                    csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
-                }
-
-                listener.onAppInitializeFailed(csTypeList);
+                var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
+                csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
             }
-            else
-            {
-                listener.onAppInitialized();
-            }
+                
+            listener.onAppInitialized(csTypeList.ToString());
         }
     }
 #else
