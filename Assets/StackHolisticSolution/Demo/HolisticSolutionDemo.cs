@@ -90,19 +90,14 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
             .withCurrency("Currency")
             .build();
 
-        HSApp.logEventAndroid("hs_sdk_example_test_event_android");
+        HSApp.logEvent("hs_sdk_example_test_event_android");
 
         HSApp.validateInAppPurchaseAndroid(purchase, this);
 #elif UNITY_IOS
         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
             "additionalParams", iOSPurchaseType.consumable, this);
         
-        HSApp.logEventiOS("hs_sdk_example_test_event_ios", new Dictionary<string, object>
-        {
-            {"first_key", "test_1"},
-            {"second_key", "test_2"},
-            {"third_key", "test_3"}
-        });
+        HSApp.logEvent("hs_sdk_example_test_event_ios");
 
 #endif
     }
