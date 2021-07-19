@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using AppodealAds.Unity.Common;
-using ConsentManager;
 using UnityEngine;
 
 namespace AppodealAds.Unity.Api
@@ -126,24 +125,6 @@ namespace AppodealAds.Unity.Api
         }
 
         /// <summary>
-        /// Initializes the relevant (Android or iOS) Appodeal SDK.
-        /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
-        /// <param name="appKey">Appodeal app key you received when you created an app.</param>
-        /// <param name="adTypes">Type of advertising you want to initialize.</param>
-        /// <param name="consent">Consent info object from Stack ConsentManager SDK.</param>
-        /// 
-        ///  To initialize only interstitials use <see cref="Appodeal.initialize(appKey, Appodeal.INTERSTITIAL, consent);"/> 
-        ///  To initialize only banners use <see cref="Appodeal.initialize(appKey, Appodeal.BANNER, consent);"/> 
-        ///  To initialize only rewarded video use <see cref="Appodeal.initialize(appKey, Appodeal.REWARDED_VIDEO, consent);"/> 
-        ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO, consent);"/> 
-        ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, consent);"/> 
-        /// </summary>
-        public static void initialize(string appKey, int adTypes, Consent consent)
-        {
-            getInstance().initialize(appKey, adTypes, consent);
-        }
-
-        /// <summary>
         /// Check if ad type is initialized
         /// See <see cref="Appodeal.isInitialized"/> for resulting triggered event.
         /// <param name="adType">adType type of advertising.</param>
@@ -161,16 +142,6 @@ namespace AppodealAds.Unity.Api
         public static void updateConsent(bool hasConsent)
         {
             getInstance().updateConsent(hasConsent);
-        }
-
-        /// <summary>
-        /// Update consent value for ad networks in Appodeal SDK
-        /// See <see cref="Appodeal.updateConsent"/> for resulting triggered event.
-        /// <param name="consent"> Consent user has given consent to the processing of personal data relating to him or her. https://www.eugdpr.org/.</param>
-        /// </summary>
-        public static void updateConsent(Consent consent)
-        {
-            getInstance().updateConsent(consent);
         }
 
         /// <summary>
