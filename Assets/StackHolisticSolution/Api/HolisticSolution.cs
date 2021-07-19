@@ -71,14 +71,14 @@ namespace StackHolisticSolution
             getInstance().initialize(hsAppConfig, hsAppInitializeListener);
         }
 
-        public static void logEvent(string key, Dictionary<string, object> dictionary)
+        public static void logEventiOS(string key, Dictionary<string, object> dictionary)
         {
-            getInstance().logEvent(key, dictionary);
+            getInstance().logEventiOS(key, dictionary);
         }
 
-        public static void logEvent(string key)
+        public static void logEventAndroid(string key)
         {
-            getInstance().logEvent(key);
+            getInstance().logEventAndroid(key);
         }
 
         public static string getVersion()
@@ -129,6 +129,7 @@ namespace StackHolisticSolution
         }
     }
 
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum PurchaseType
     {
         SUBS,
