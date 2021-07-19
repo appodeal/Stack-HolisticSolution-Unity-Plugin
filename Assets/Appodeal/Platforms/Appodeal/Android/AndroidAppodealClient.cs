@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using AppodealAds.Unity.Api;
 using AppodealAds.Unity.Common;
-using ConsentManager;
-using ConsentManager.Platforms.Android;
 using UnityEngine;
 
 namespace AppodealAds.Unity.Android
@@ -129,15 +127,6 @@ namespace AppodealAds.Unity.Android
                 Appodeal.getUnityVersion());
             getAppodealClass().CallStatic("initialize", getActivity(), appKey, nativeAdTypesForType(adTypes),
                 hasConsent);
-        }
-
-        public void initialize(string appKey, int adTypes, Consent consent)
-        {
-            getAppodealClass().CallStatic("setFramework", "unity", Appodeal.getPluginVersion(),
-                Appodeal.getUnityVersion());
-            var androidConsent = (AndroidConsent) consent.getConsent();
-            getAppodealClass().CallStatic("initialize", getActivity(), appKey, nativeAdTypesForType(adTypes),
-                androidConsent.getConsent());
         }
 
         public bool isInitialized(int adType)
@@ -282,12 +271,6 @@ namespace AppodealAds.Unity.Android
         public void updateConsent(bool value)
         {
             getAppodealClass().CallStatic("updateConsent", boolToAndroid(value));
-        }
-
-        public void updateConsent(Consent consent)
-        {
-            var androidConsent = (AndroidConsent) consent.getConsent();
-            getAppodealClass().CallStatic("updateConsent", androidConsent.getConsent());
         }
 
         public void disableNetwork(string network)
