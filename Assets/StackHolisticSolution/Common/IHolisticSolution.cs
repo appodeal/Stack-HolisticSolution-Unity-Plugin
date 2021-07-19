@@ -18,8 +18,8 @@ namespace StackHolisticSolution
     public interface IHSApp
     {
         void initialize(HSAppConfig appConfig, IHSAppInitializeListener hsAppInitializeListener);
-        void logEvent(string key, Dictionary<string, object> dictionary);
-        void logEvent(string key);
+        void logEventiOS(string key, Dictionary<string, object> dictionary);
+        void logEventAndroid(string key);
         string getVersion();
         bool isInitialized();
         void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener);
