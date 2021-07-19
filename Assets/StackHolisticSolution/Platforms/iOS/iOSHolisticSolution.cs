@@ -106,14 +106,7 @@ namespace StackHolisticSolution.Platforms.iOS
         [MonoPInvokeCallback(typeof(HSUSdkInitialisationCallback))]
         private static void onAppInitialized(string error)
         {
-            if (string.IsNullOrEmpty(error))
-            {
-                hsAppInitializeListener?.onAppInitialized();
-            }
-            else
-            {
-                hsAppInitializeListener?.onAppInitializeFailed(error);
-            }
+            hsAppInitializeListener?.onAppInitialized(error);
         }
 
         #endregion
