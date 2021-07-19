@@ -98,14 +98,7 @@ namespace StackHolisticSolution.Platforms.iOS
 
         public void logEvent(string key)
         {
-            //Not to support on iOS platform
-        }
-
-        public void logEvent(string key, Dictionary<string, object> dictionary)
-        {
-            var defaultsString =
-                dictionary.Aggregate("", (current, kvp) => current + (kvp.Key + "=" + kvp.Value + "\n"));
-            LogEvent(key, defaultsString);
+            LogEvent(key);
         }
         
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
@@ -144,7 +137,7 @@ namespace StackHolisticSolution.Platforms.iOS
             HSUSdkInAppPurchaseValidationFailureCallback failure);
 
         [DllImport("__Internal")]
-        private static extern void LogEvent(string key, string obj);
+        private static extern void LogEvent(string key);
 
         [DllImport("__Internal")]
         private static extern void Initialize(IntPtr appConfig, HSUSdkInitialisationCallback onInitialize);
