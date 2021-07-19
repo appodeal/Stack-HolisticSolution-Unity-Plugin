@@ -62,16 +62,27 @@ HSUAppRef GetHSApp(void) {
 
 void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback callback) {
     HSUSdkBridge *config = (__bridge_transfer HSUSdkBridge *)appConfig;
+    
+    
+    
+    [Appodeal.hs registerWithConnectors: @[
+        HSFacebookConnector.self,
+        HSAppsFlyerConnector.self,
+        HSAdjustConnector.self,
+        HSFirebaseConnector.self
+    ]];
+    
+    
     if ([config isKindOfClass:HSUSdkBridge.class]) {
         [Appodeal.hs initializeWithApplication:UIApplication.sharedApplication
                                  launchOptions:@{}
                                  configuration:config.configuration
                                     completion:^(NSError *error) {
-            
+            callback ? callback(error.localizedDescription.UTF8String) : nil;
         }];
-//    configureWithConfiguration:config.configuration completion:^(NSError *error) {
-//            callback ? callback(error.localizedDescription.UTF8String) : nil;
-//        }];
+        //    configureWithConfiguration:config.configuration completion:^(NSError *error) {
+        //            callback ? callback(error.localizedDescription.UTF8String) : nil;
+        //        }];
     } else {
         callback ? callback("Invalid configuration was sent from Unity") : nil;
     }
@@ -80,7 +91,7 @@ void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback c
 void LogEvent(const char *key, const char *params) {
     NSDictionary *paramsDict = HSUDictionaryFromUTF8String(params);
     [Appodeal.hs trackEvent:HSUStringFromUTF8String(key)
-     customParameters:paramsDict];
+           customParameters:paramsDict];
 }
 
 void ValidateInAppPurchase(const char *productIdentifier,
@@ -99,7 +110,7 @@ void ValidateInAppPurchase(const char *productIdentifier,
     
     NSString *purchaseType = HSUStringFromUTF8String(type);
     
-
+    
     
     [Appodeal.hs validateAndTrackInAppPurchaseWithProductId:productIdString
                                                        type:(HSPurchaseType)type
@@ -123,7 +134,7 @@ void ValidateInAppPurchase(const char *productIdentifier,
             
         }
     }
-                                              failure:^(NSError *error, id response) {
+                                                    failure:^(NSError *error, id response) {
         NSString *errorString = (!error) ? @"unknown" : [NSString stringWithFormat:@"error: %@", error.localizedDescription];
         if ([response isKindOfClass:NSDictionary.class]) {
             if ([response objectForKey:@"error"] != nil) {
