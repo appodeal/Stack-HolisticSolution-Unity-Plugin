@@ -41,14 +41,9 @@ namespace StackHolisticSolution.Platforms.Dummy
             Debug.Log("Call to initialize on not supported platform." + DummyMessage);
         }
 
-        public void logEventiOS(string key, Dictionary<string, object> dictionary)
+        public void logEvent(string key)
         {
-            Debug.Log("Call to logEventiOS on not supported platform." + DummyMessage);
-        }
-
-        public void logEventAndroid(string key)
-        {
-            Debug.Log("Call to logEventAndroid on not supported platform." + DummyMessage);
+            Debug.Log("Call to logEvent on not supported platform." + DummyMessage);
         }
 
         public string getVersion()
