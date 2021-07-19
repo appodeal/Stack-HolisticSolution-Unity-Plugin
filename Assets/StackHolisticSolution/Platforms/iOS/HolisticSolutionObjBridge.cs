@@ -30,11 +30,6 @@ namespace StackHolisticSolution.Platforms.iOS
         {
             return hSAppConfig;
         }
-        
-        public static void setLoggingEnabled(bool value)
-        {
-            SetLoggingEnabled(value);
-        }
 
         public static void setAppKey(string appKey)
         {
@@ -70,10 +65,7 @@ namespace StackHolisticSolution.Platforms.iOS
 
         [DllImport("__Internal")]
         private static extern void SetAdType(int adType);
-        
-        [DllImport("__Internal")]
-        private static extern void SetLoggingEnabled(bool value);
-        
+
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -115,14 +107,12 @@ namespace StackHolisticSolution.Platforms.iOS
 
         public string getVersion()
         {
-            //TODO implement
-            return "version";
+            return GetVersion();
         }
 
         public bool isInitialized()
         {
-            //TODO implement
-            return false;
+            return IsInitialized();
         }
 
         [DllImport("__Internal")]
@@ -141,6 +131,12 @@ namespace StackHolisticSolution.Platforms.iOS
 
         [DllImport("__Internal")]
         private static extern void Initialize(IntPtr appConfig, HSUSdkInitialisationCallback onInitialize);
+        
+        [DllImport("__Internal")]
+        private static extern string GetVersion();
+        
+        [DllImport("__Internal")]
+        private static extern bool IsInitialized();
     }
 
 }
