@@ -33,7 +33,7 @@ namespace StackHolisticSolution.Platforms.iOS
         
         public static void setLoggingEnabled(bool value)
         {
-           //TODO implementation
+            SetLoggingEnabled(value);
         }
 
         public static void setAppKey(string appKey)
@@ -71,6 +71,9 @@ namespace StackHolisticSolution.Platforms.iOS
         [DllImport("__Internal")]
         private static extern void SetAdType(int adType);
         
+        [DllImport("__Internal")]
+        private static extern void SetLoggingEnabled(bool value);
+        
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -95,8 +98,7 @@ namespace StackHolisticSolution.Platforms.iOS
 
         public void logEvent(string key)
         {
-            //TODO Implementation
-            // LogEvent(key);
+            //Not to support on iOS platform
         }
 
         public void logEvent(string key, Dictionary<string, object> dictionary)
