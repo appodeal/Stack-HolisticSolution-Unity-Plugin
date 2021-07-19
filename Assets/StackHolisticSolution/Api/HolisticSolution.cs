@@ -135,6 +135,7 @@ namespace StackHolisticSolution
         INAPP
     }
     
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum iOSPurchaseType{
      consumable = 0,
      nonConsumable = 1,
