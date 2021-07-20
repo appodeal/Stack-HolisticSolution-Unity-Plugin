@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using AppodealAds.Unity.Api;
 using StackHolisticSolution;
 using UnityEngine;
@@ -32,7 +33,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         }
         else
         {
-            Debug.Log("Appodeal.canShow(Appodeal.BANNER_BOTTOM) - " + Appodeal.BANNER_BOTTOM);
+            Debug.Log("Appodeal.canShow(Appodeal.BANNER_BOTTOM) - " + Appodeal.canShow(Appodeal.BANNER_BOTTOM));
         }
     }
 
@@ -67,19 +68,20 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     public void HolisticSolutionInitialize()
     {
-        Appodeal.setTesting(true);
-        Appodeal.setLogLevel(Appodeal.LogLevel.Verbose);
-
         var appConfig = new HSAppConfig()
             .setDebugEnabled(true)
             .setAppKey(appKey)
             .setComponentInitializeTimeout(10000)
-            .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO);
+            .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO | Appodeal.BANNER);
 
         HSApp.initialize(appConfig, this);
         HSApp.logEvent("hs_sdk_example_test_event");
+        
+    }
 
-
+    private void PurchaseTest()
+    {
+        
 #if UNITY_ANDROID
         HSInAppPurchase purchase = new HSInAppPurchase.Builder(PurchaseType.SUBS)
             .withPublicKey("YOUR_PUBLIC_KEY")
@@ -98,7 +100,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 #elif UNITY_IOS
         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
             "additionalParams", iOSPurchaseType.consumable, this);
-        
+
 #endif
     }
 
@@ -112,6 +114,8 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
         }
 
         Debug.Log("Holistic Solution Initialize - " + HSApp.isInitialized());
+
+        PurchaseTest();
     }
 
     #endregion
@@ -120,9 +124,11 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     public void onInAppPurchaseValidateSuccess(HSInAppPurchase purchase, IEnumerable<HSError> errors)
     {
-        Debug.Log("onInAppPurchaseValidateSuccess(HSInAppPurchase purchase, IEnumerable<HSError> errors)");
+        Debug.Log("onInAppPurchaseValidateSuccess");
 
-        foreach (var error in errors)
+        var hsErrors = errors as HSError[] ?? errors.ToArray();
+        if (!hsErrors.ToList().Any()) return;
+        foreach (var error in hsErrors)
         {
             Debug.Log("Error - " + error.toString());
         }
@@ -130,7 +136,9 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     public void onInAppPurchaseValidateFail(IEnumerable<HSError> errors)
     {
-        Debug.Log("onInAppPurchaseValidateFail(IEnumerable<HSError> errors)");
+        Debug.Log("onInAppPurchaseValidateFail");
+
+        if (errors == null) return;
 
         foreach (var error in errors)
         {
@@ -144,11 +152,13 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     public void InAppPurchaseValidationSuccessCallback(string json)
     {
+        if (string.IsNullOrEmpty(json)) return;
         Debug.Log($"InAppPurchaseValidationSuccessCallback - {json}");
     }
 
     public void InAppPurchaseValidationFailureCallback(string error)
     {
+        if (string.IsNullOrEmpty(error)) return;
         Debug.Log($"InAppPurchaseValidationFailureCallback - {error}");
     }
 
