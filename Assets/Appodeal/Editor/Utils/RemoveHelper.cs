@@ -67,8 +67,9 @@ namespace AppodealAds.Unity.Editor.Utils
                 "PubnativeDependencies.xml",
                 "TapjoyDependencies.xml"
             };
-
-
+            //ывывывывывыв
+            if (!Directory.Exists("Assets/Appodeal/Editor/NetworkConfigs/")) return;
+            
             var info = new DirectoryInfo("Assets/Appodeal/Editor/NetworkConfigs/");
 
             var fileInfo = info.GetFiles();
@@ -243,7 +244,6 @@ namespace AppodealAds.Unity.Editor.Utils
                 }
 
                 AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-                
             }
         }
 
