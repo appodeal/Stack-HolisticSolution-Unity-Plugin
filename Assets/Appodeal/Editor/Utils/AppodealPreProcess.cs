@@ -84,15 +84,15 @@ namespace Appodeal.Unity.Editor.Utils
             androidManifest.Save();
         }
 
+
         private void EnableMultidex(string manifestPath, AndroidManifest androidManifest)
         {
 #if UNITY_2019_3_OR_NEWER
-            if(CheckContainsMultidex(manifestPath, manifestMutlidexApp))
+            if (CheckContainsMultidex(manifestPath, manifestMutlidexApp))
             {
                 androidManifest.RemoveMultiDexApplication();
             }
 #else
-
             if (AppodealSettings.Instance.AndroidMultidex)
             {
                 if (PlayerSettings.Android.minSdkVersion < AndroidSdkVersions.AndroidApiLevel21)
@@ -151,13 +151,6 @@ namespace Appodeal.Unity.Editor.Utils
             {
                 Debug.LogWarning(
                     $"Missing internal AndroidManifest {path}.");
-                return;
-            }
-
-            if (!File.Exists("Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml"))
-            {
-                Debug.LogWarning(
-                    "Missing config Admob (Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
                 return;
             }
 
