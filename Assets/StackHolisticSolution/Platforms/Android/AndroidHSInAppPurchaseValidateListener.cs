@@ -11,9 +11,9 @@ namespace StackHolisticSolution
 #if UNITY_ANDROID
         : UnityEngine.AndroidJavaProxy
     {
-        private readonly IHSInAppPurchaseValidateListener listener;
+        private readonly IInAppPurchaseValidationCallback listener;
 
-        internal AndroidHSInAppPurchaseValidateListener(IHSInAppPurchaseValidateListener listener) : base(
+        internal AndroidHSInAppPurchaseValidateListener(IInAppPurchaseValidationCallback listener) : base(
             "com.explorestack.hs.sdk.HSInAppPurchaseValidateListener")
         {
             this.listener = listener;
@@ -29,8 +29,21 @@ namespace StackHolisticSolution
                 csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
             }
 
-            listener.onInAppPurchaseValidateSuccess(new HSInAppPurchase(new AndroidHSInAppPurchase(purchase)),
-                csTypeList);
+            string responseError = null;
+
+            if (csTypeList.Count > 0)
+            {
+                foreach (var error in csTypeList)
+                {
+                    responseError = string.Join(", ", error.toString());
+                }
+
+                listener.InAppPurchaseValidationSuccessCallback(responseError);
+            }
+            else
+            {
+                listener.InAppPurchaseValidationSuccessCallback(null);
+            }
         }
 
         private void onInAppPurchaseValidateFail(AndroidJavaObject javaTypeList)
@@ -43,12 +56,26 @@ namespace StackHolisticSolution
                 csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
             }
 
-            listener.onInAppPurchaseValidateFail(csTypeList);
+            string responseError = null;
+
+            if (csTypeList.Count > 0)
+            {
+                foreach (var error in csTypeList)
+                {
+                    responseError = string.Join(", ", error.toString());
+                }
+
+                listener.InAppPurchaseValidationFailureCallback(responseError);
+            }
+            else
+            {
+                listener.InAppPurchaseValidationFailureCallback(null);
+            }
         }
     }
 #else
     {
-        public AndroidHSInAppPurchaseValidateListener(IHSInAppPurchaseValidateListener listener)
+        public AndroidHSInAppPurchaseValidateListener(IInAppPurchaseValidationCallback listener)
         {
 
         }
