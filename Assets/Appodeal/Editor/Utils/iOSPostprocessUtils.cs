@@ -107,13 +107,6 @@ namespace Appodeal.Unity.Editor.Utils
 
         private static void AddGADApplicationIdentifier(string path)
         {
-            if (!CheckiOSAttribute())
-            {
-                Debug.LogError(
-                    "Google Admob Config is invalid. Ensure that Appodeal Unity plugin is imported correctly.");
-                return;
-            }
-
             if (string.IsNullOrEmpty(AppodealSettings.Instance.AdMobIosAppId))
             {
                 return;
