@@ -1,6 +1,5 @@
 #if UNITY_IOS
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AOT;
 using UnityEngine;
@@ -48,7 +47,7 @@ namespace StackHolisticSolution.Platforms.iOS
     {
         private readonly HSAppObjCBridge hsAppObjCBridge;
         private static IHSAppInitializeListener hsAppInitializeListener;
-        private static IInAppPurchaseValidationiOSCallback _inAppPurchaseValidationiOSCallback;
+        private static IInAppPurchaseValidationCallback _inAppPurchaseValidationiOSCallback;
 
         public iOSHSApp()
         {
@@ -77,14 +76,14 @@ namespace StackHolisticSolution.Platforms.iOS
             return hsAppObjCBridge.isInitialized();
         }
 
-        public void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener listener)
+        public void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IInAppPurchaseValidationCallback listener)
         {
             Debug.Log("Method void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener listener) not supported on iOS platform");
         }
 
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
             string transactionId,
-            string additionalParams,iOSPurchaseType type, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+            string additionalParams,iOSPurchaseType type, IInAppPurchaseValidationCallback inAppPurchaseValidationiOSCallback)
         {
             _inAppPurchaseValidationiOSCallback = inAppPurchaseValidationiOSCallback;
             hsAppObjCBridge.validateInAppPurchaseiOS(productIdentifier, price, currency, transactionId,
