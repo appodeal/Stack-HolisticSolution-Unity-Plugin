@@ -20,8 +20,8 @@ namespace StackHolisticSolution
         void logEvent(string key);
         string getVersion();
         bool isInitialized();
-        void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener);
-        void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, iOSPurchaseType type, IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback);
+        void validateInAppPurchaseAndroid(HSInAppPurchase purchase, IInAppPurchaseValidationCallback hsInAppPurchaseValidateListener);
+        void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, iOSPurchaseType type, IInAppPurchaseValidationCallback inAppPurchaseValidationiOSCallback);
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
