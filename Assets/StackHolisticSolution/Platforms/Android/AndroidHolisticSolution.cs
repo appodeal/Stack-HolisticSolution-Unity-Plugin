@@ -1,4 +1,5 @@
 #if UNITY_ANDROID
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealAds.Unity.Android;
@@ -98,7 +99,7 @@ namespace StackHolisticSolution
         }
 
         public void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
-            IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
+            IInAppPurchaseValidationCallback hsInAppPurchaseValidateListener)
         {
             var androidHSInAppPurchase = (AndroidHSInAppPurchase) purchase.getNativeHSInAppPurchase();
             HSAppInstance.CallStatic("validateInAppPurchase", androidHSInAppPurchase.getHSInAppPurchase(),
@@ -107,7 +108,7 @@ namespace StackHolisticSolution
 
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency, string transactionId,
             string additionalParams, iOSPurchaseType type,
-            IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+            IInAppPurchaseValidationCallback inAppPurchaseValidationiOSCallback)
         {
             Debug.Log("Not support");
         }
