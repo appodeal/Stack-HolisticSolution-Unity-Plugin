@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using StackHolisticSolution.Platforms;
 
@@ -81,7 +82,7 @@ namespace StackHolisticSolution
         }
 
         public static void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
-            IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
+            IInAppPurchaseValidationCallback hsInAppPurchaseValidateListener)
         {
             getInstance().validateInAppPurchaseAndroid(purchase, hsInAppPurchaseValidateListener);
         }
@@ -90,7 +91,7 @@ namespace StackHolisticSolution
             string transactionId,
             string additionalParams, 
             iOSPurchaseType type, 
-            IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+            IInAppPurchaseValidationCallback inAppPurchaseValidationiOSCallback)
         {
             getInstance().validateInAppPurchaseiOS(productIdentifier, price, currency, transactionId, additionalParams, type, inAppPurchaseValidationiOSCallback);
         }
@@ -133,6 +134,7 @@ namespace StackHolisticSolution
      nonRenewingSubscription = 3
     }
 
+    [Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class HSInAppPurchase
     {
@@ -253,16 +255,7 @@ namespace StackHolisticSolution
                 nativeIHSInAppPurchaseBuilder.withAdditionalParams(additionalParameters);
                 return this;
             }
-
-
-
-
-          
-
-            
-            
-            
-            
+    
         }
     }
 }
