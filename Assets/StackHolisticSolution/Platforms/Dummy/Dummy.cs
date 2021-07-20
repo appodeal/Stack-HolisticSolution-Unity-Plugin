@@ -59,7 +59,7 @@ namespace StackHolisticSolution.Platforms.Dummy
         }
 
         public void validateInAppPurchaseAndroid(HSInAppPurchase purchase,
-            IHSInAppPurchaseValidateListener hsInAppPurchaseValidateListener)
+            IInAppPurchaseValidationCallback hsInAppPurchaseValidateListener)
         {
             Debug.Log("Call to validateInAppPurchaseAndroid on not supported platform." + DummyMessage);
         }
@@ -67,7 +67,7 @@ namespace StackHolisticSolution.Platforms.Dummy
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
             string transactionId,
             string additionalParams, iOSPurchaseType type,
-            IInAppPurchaseValidationiOSCallback inAppPurchaseValidationiOSCallback)
+            IInAppPurchaseValidationCallback inAppPurchaseValidationiOSCallback)
         {
             Debug.Log("Call to validateInAppPurchaseiOS on not supported platform." + DummyMessage);
         }
