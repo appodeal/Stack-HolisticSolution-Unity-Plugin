@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
@@ -30,8 +31,21 @@ namespace StackHolisticSolution
                 var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
                 csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
             }
-                
-            listener.onAppInitialized(csTypeList.ToString());
+
+            string responseError = null;
+
+            if (csTypeList.Count > 0)
+            {
+                foreach (var error in csTypeList)
+                {
+                    responseError = string.Join(", ", error.toString());
+                }
+                listener.onAppInitialized(responseError);
+            }
+            else
+            {
+                listener.onAppInitialized(null);
+            }
         }
     }
 #else
