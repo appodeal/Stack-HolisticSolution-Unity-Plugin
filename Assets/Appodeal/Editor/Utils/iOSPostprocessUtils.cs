@@ -107,13 +107,6 @@ namespace Appodeal.Unity.Editor.Utils
 
         private static void AddGADApplicationIdentifier(string path)
         {
-            if (!File.Exists("Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml"))
-            {
-                Debug.Log(
-                    "Can't find Google Admob Config by path - Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml");
-                return;
-            }
-
             if (!CheckiOSAttribute())
             {
                 Debug.LogError(
