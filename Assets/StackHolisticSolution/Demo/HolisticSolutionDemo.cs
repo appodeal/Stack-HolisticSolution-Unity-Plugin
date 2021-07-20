@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using AppodealAds.Unity.Api;
 using StackHolisticSolution;
 using UnityEngine;
@@ -8,8 +7,8 @@ using UnityEngine;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "ArrangeTypeMemberModifiers")]
 [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
-public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHSInAppPurchaseValidateListener,
-    IInAppPurchaseValidationiOSCallback
+public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener,
+    IInAppPurchaseValidationCallback
 {
     #region Application keys
 
@@ -120,35 +119,8 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHS
 
     #endregion
 
-    #region HSInAppPurchaseValidateListener
 
-    public void onInAppPurchaseValidateSuccess(HSInAppPurchase purchase, IEnumerable<HSError> errors)
-    {
-        Debug.Log("onInAppPurchaseValidateSuccess");
-
-        var hsErrors = errors as HSError[] ?? errors.ToArray();
-        if (!hsErrors.ToList().Any()) return;
-        foreach (var error in hsErrors)
-        {
-            Debug.Log("Error - " + error.toString());
-        }
-    }
-
-    public void onInAppPurchaseValidateFail(IEnumerable<HSError> errors)
-    {
-        Debug.Log("onInAppPurchaseValidateFail");
-
-        if (errors == null) return;
-
-        foreach (var error in errors)
-        {
-            Debug.Log("Error - " + error.toString());
-        }
-    }
-
-    #endregion
-
-    #region InAppPurchaseValidationiOSCallback
+    #region InAppPurchaseValidationCallback
 
     public void InAppPurchaseValidationSuccessCallback(string json)
     {
