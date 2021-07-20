@@ -97,7 +97,6 @@ namespace StackHolisticSolution.Platforms.iOS
             string transactionId,
             string additionalParams, 
             iOSPurchaseType type,
-            
             HSUSdkInAppPurchaseValidationSuccessCallback success,
             HSUSdkInAppPurchaseValidationFailureCallback failure)
         {
