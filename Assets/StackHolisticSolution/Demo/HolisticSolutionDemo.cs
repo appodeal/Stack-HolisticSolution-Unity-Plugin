@@ -17,7 +17,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener,
 #elif UNITY_ANDROID
     public static string appKey = "c05de97de46bf68a9ede523a580bef97e42692848736ecad";
 #elif UNITY_IPHONE
-    public static string appKey = "ae8558d35fbf2175d3e23ff61df138e27d3cd8efe1e789c4";
+    public static string appKey = "466de0d625e01e8811c588588a42a55970bc7c132649eede";
 #else
 	public static string appKey = "";
 #endif
