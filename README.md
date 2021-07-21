@@ -41,7 +41,7 @@ Appodeal plugin includes Play Services Resolver package.  You need to complete t
  - After the import Appodeal Unity Plugin, in the Unity editor select File → Build Settings → iOS.
  - During build a project the modules, that are required for the Appodeal SDK support, will be imported to your project. You can edit them or add other modules in the Assets → Appodeal → Editor → AppodealDependencies.xml file.
 
-###. Setup required services
+### Setup required services
 
 #### Facebook Service
 > Note that HS Facebook Service will include only 'facebook-core' dependency independently
