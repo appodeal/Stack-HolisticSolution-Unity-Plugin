@@ -10,6 +10,7 @@ Stack Holistic Solution SDK for Unity simplifies the collection and transfer of 
    - [Setup required services](#setup-required-services)
 		- [Facebook Service](#facebook-service)
 		- [Firebase Service](#firebase-service)
+- [Initialize SDK](#initialize-sdk)
 
 ## Before integration started
 
