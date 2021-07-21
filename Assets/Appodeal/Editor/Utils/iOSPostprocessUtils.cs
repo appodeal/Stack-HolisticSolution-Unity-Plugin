@@ -37,6 +37,10 @@ namespace Appodeal.Unity.Editor.Utils
             AddNSCalendarsUsageDescription(path);
             AddNSAppTransportSecurity();
             AddSkAdNetworkIds(buildTarget, buildPath);
+
+            ReplaceInFile(buildPath + "/Podfile", "source 'https://github.com/CocoaPods/Specs.git'", 
+                "source 'https://github.com/CocoaPods/Specs.git'"   + "\n" + 
+                "source 'https://github.com/appodeal/CocoaPods.git'");
         }
 
         private static void AddSkAdNetworkIds(BuildTarget buildTarget, string buildPath)
