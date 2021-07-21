@@ -1,7 +1,15 @@
 # About
 Stack Holistic Solution SDK for Unity simplifies the collection and transfer of the necessary parameters from third-party services to the corresponding Stack SDKs to improve the performance of services such as Mediation and UA
 
-Integration guide 
+## Integration Guide
+- [Before integration started](#before-integration-started)
+- [Import SDK](#import-sdk)
+   - [Import Appodeal Holistic Solution plugin](#import-appodeal-holistic-solution-plugin)
+   - [Android platform](#android-platform)
+   - [iOS platform](#ios-platform)
+   - [Setup required services](#setup-required-services)
+		- [Facebook Service](#31-facebook-service)
+		- [Firebase Service](#32-firebase-service)
 
 ## Before integration started
 
@@ -9,11 +17,11 @@ Integration guide
 
 ## Import SDK
 
-#### Import Appodeal Holistic Solution plugin
+### Import Appodeal Holistic Solution plugin
 
 To import the Appodeal-Unity-HS-Plugin-2.0.0-21.07.2021.unitypackage, double-click on the Appodeal-Unity-HS-Plugin-2.0.0-21.07.2021.unitypackage, or go to Assets → Import Package → Custom Package. Keep all the files in the Importing Package window selected, and click Import .
 
-Android
+### Android platform
 
 1. Enable flag Custom Gradle Template for Unity 2017.4 - Unity 2019.2 versions or Custom Base Gradle Template for Unity 2019.3 or higher versions in Player Settings/Publishing Settings
 2. Change classpath 'com.android.tools.build:gradle:3.4.0' to 'com.android.tools.build:gradle:3.4.3' in Custom Gradle Template file (path - Assets/Plugins/Android/mainTemplate.gradle) for Unity 2017.4 - Unity 2019.4 versions.
@@ -26,12 +34,28 @@ Android
    - Then run Assets → External Dependency Manager → Android Resolver and press Resolve or Force Resolve.
    - As a result, the modules, that are required for the Appodeal SDK support, will be imported to project's mainTemplate.gradle file.
 
-iOS 
+### iOS platform 
 
 Appodeal plugin includes Play Services Resolver package.  You need to complete these following steps to resolve Appodeal's dependencies:
 
  - After the import Appodeal Unity Plugin, in the Unity editor select File → Build Settings → iOS.
  - During build a project the modules, that are required for the Appodeal SDK support, will be imported to your project. You can edit them or add other modules in the Assets → Appodeal → Editor → AppodealDependencies.xml file.
+
+###. Setup required services
+
+#### Facebook Service
+> Note that HS Facebook Service will include only 'facebook-core' dependency independently
+
+###### 1. Configure Your Facebook App
+
+Please follow this [guide](https://developers.facebook.com/docs/unity/gettingstarted) to configure you Facebook app
+
+#### Firebase Service
+>Note that HS Firebase Service will include 'firebase-analytics' and 'firebase-config' dependencies independently
+
+###### 1. Configure Your Firebase App
+
+Please, follow this [guide](https://firebase.google.com/docs/android/setup#console) to configure you Firebase app
 
 
 [initialize_sdk]: initialize_sdk
