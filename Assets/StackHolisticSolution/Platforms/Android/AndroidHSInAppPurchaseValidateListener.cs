@@ -30,8 +30,49 @@ namespace StackHolisticSolution
             }
 
             string responseError = null;
+            string responsePurchase = null;
 
-            if (csTypeList.Count > 0)
+            var hsAndroidPurchase = new HSInAppPurchase(new AndroidHSInAppPurchase(purchase));
+
+            if (string.IsNullOrEmpty(hsAndroidPurchase.getCurrency()))
+            {
+                responsePurchase = "/n" + "[HSInAppPurchase" + " " + "currency: " + hsAndroidPurchase.getCurrency();
+            }
+            else if (string.IsNullOrEmpty(hsAndroidPurchase.getPrice()))
+            {
+                responsePurchase += " " + "price: " + hsAndroidPurchase.getPrice();
+            }
+            else if (string.IsNullOrEmpty(hsAndroidPurchase.getSignature()))
+            {
+                responsePurchase += " " + "signature: " + hsAndroidPurchase.getSignature();
+            }
+            else if (string.IsNullOrEmpty(hsAndroidPurchase.getAdditionalParameters()))
+            {
+                responsePurchase += " " + "additional params: " + hsAndroidPurchase.getAdditionalParameters();
+            }
+            else if (string.IsNullOrEmpty(hsAndroidPurchase.getPublicKey()))
+            {
+                responsePurchase += " " + "public key: " + hsAndroidPurchase.getPublicKey();
+            }
+            else if (string.IsNullOrEmpty(hsAndroidPurchase.getPurchaseData()))
+            {
+                responsePurchase += " " + "purchase data: " + hsAndroidPurchase.getPurchaseData() + "]";
+            }
+            
+            if (csTypeList.Count > 0 && !string.IsNullOrEmpty(responsePurchase))
+            {
+                foreach (var error in csTypeList)
+                {
+                    responseError = string.Join(", ", error.toString());
+                }
+
+                listener.InAppPurchaseValidationSuccessCallback(responsePurchase + "/n" + responseError);
+            }
+            else if (csTypeList.Count <= 0 && !string.IsNullOrEmpty(responsePurchase))
+            {
+                listener.InAppPurchaseValidationSuccessCallback(responsePurchase);
+            }
+            else if (csTypeList.Count > 0 && string.IsNullOrEmpty(responsePurchase))
             {
                 foreach (var error in csTypeList)
                 {
@@ -39,10 +80,6 @@ namespace StackHolisticSolution
                 }
 
                 listener.InAppPurchaseValidationSuccessCallback(responseError);
-            }
-            else
-            {
-                listener.InAppPurchaseValidationSuccessCallback(null);
             }
         }
 
