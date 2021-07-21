@@ -113,6 +113,8 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener
 
 ## Features
 
+### Events
+
 Holistic Solution SDK allows you to send events to analytic services such as Firebase, AppsFlyer and Facebook using a single method:
 
 > Event parameters can only be strings and numbers
@@ -120,7 +122,7 @@ Holistic Solution SDK allows you to send events to analytic services such as Fir
 [Code example](https://github.com/appodeal/Stack-HolisticSolution-Unity-Plugin/blob/master/Assets/StackHolisticSolution/Demo/HolisticSolutionDemo.cs#L77)
 
 
-#### Purchase validation
+### Purchase validation
 Holistic Solution SDK allows you to unify purchase validation using a single method:
 ```c#
 public class HolisticSolutionDemo : MonoBehaviour, IInAppPurchaseValidationCallback
