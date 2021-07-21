@@ -13,7 +13,7 @@ Stack Holistic Solution SDK for Unity simplifies the collection and transfer of 
 - [Initialize SDK](#initialize-sdk)
 - [Features](#features)
   * [Events](#events)
-  * [In-App purchase validation](#in-app-purchase-validation)
+  * [In-App purchase validation](#purchase-validation)
 
 ## Before integration started
 
