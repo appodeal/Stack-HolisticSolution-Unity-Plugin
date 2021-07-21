@@ -11,6 +11,9 @@ Stack Holistic Solution SDK for Unity simplifies the collection and transfer of 
 		- [Facebook Service](#facebook-service)
 		- [Firebase Service](#firebase-service)
 - [Initialize SDK](#initialize-sdk)
+- [Features](#features)
+  * [Events](#events)
+  * [In-App purchase validation](#in-app-purchase-validation)
 
 ## Before integration started
 
@@ -62,138 +65,133 @@ Please, follow this [guide](https://firebase.google.com/docs/android/setup#conso
 [initialize_sdk]: initialize_sdk
 ##  Initialize SDK
 
+Holistic Solution SDK will automatically initialize all components and sync all required data to connectors (e.g - Appodeal).
+
 To initialize SDK add the line below to your script:
 
 ```c#
-public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener, IHSInAppPurchaseValidateListener,
-    IInAppPurchaseValidationiOSCallback
-{
-    #region SampleDictionaries
-
-    Dictionary<string, object> dictionary = new Dictionary<string, object>
-    {
-        {"example_param_1", "Param1 value"},
-        {"example_param_2", 123},
-        {"example_param_3", true},
-        {"example_param_4", 1.2f}
-    };
-
-    Dictionary<string, string> additionalParams = new Dictionary<string, string>()
-    {
-        {"1.KeY", "value.1"},
-        {"2.KeY", "value.2"},
-        {"3.KeY", "value.2"}
-    };
+public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener
     
-    Dictionary<string, string> defaults = new Dictionary<string, string>()
-    {
-        {"key", "value"}
-    };
-
-    #endregion
-
+{
+    
     void Start()
     {
-#if UNITY_ANDROID
-        HSAppodealConnector hsAppodealConnector = new HSAppodealConnector();
-        hsAppodealConnector.setEventsEnabled(true);
-        
-        HSAppsflyerService appsflyerService = new HSAppsflyerService("YOUR_APPSFLYER_DEV_KEY");
-        appsflyerService.setEventsEnabled(true);
-        
-        HSFirebaseService firebaseService = new HSFirebaseService();
-        firebaseService.setEventsEnabled(true);
-        
-        HSFacebookService facebookService = new HSFacebookService();
-        facebookService.setEventsEnabled(true);
-#elif UNITY_IOS
-        HSAppodealConnector hsAppodealConnector = new HSAppodealConnector();
-        HSAppsflyerService appsflyerService = new HSAppsflyerService("DEV_KEY", "APP_ID", new[] {"KEYS"});
-        HSFirebaseService firebaseService = new HSFirebaseService(defaults, long.MaxValue);
-        HSFacebookService facebookService = new HSFacebookService();
-#endif
-
-        HSAppConfig appConfig = new HSAppConfig()
+    
+   	 HSAppConfig appConfig = new HSAppConfig()
             .setDebugEnabled(true)
-            .withServices(appsflyerService.getHSAppsflyerService(), firebaseService.getHSFirebaseService(),
-                facebookService.getHSFacebookService())
-            .withConnectors(hsAppodealConnector);
+            .setAppKey("YOUR_APP_KEY)
+            .setComponentInitializeTimeout(10000)
+            .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO | Appodeal.BANNER);
 
-        HSApp.initialize(appConfig, this);
-        HSApp.logEvent("hs_sdk_example_test_event_1");
+   	 HSApp.initialize(appConfig, this);
+    
+    }
+
+    public void onAppInitialized(string error)
+    {
+        if (!string.IsNullOrEmpty(error))
+        {
+            Debug.Log($"onAppInitializeFailed - {error}");
+        }
+	
+        Debug.Log("Holistic Solution Initialize - " + HSApp.isInitialized());
+
+	//HSApp initialization finished, now you can initialize required SDK
+	
+    }
+...
+}
+```
+| Parameter            | Description                                                                                                        		               |
+|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| appKey               | [Appodeal application key](https://app.appodeal.com/apps).							                                                       |
+| adType               | Appodeal ad types (e.g - `Appodeal.INTERSTITIAL`).                                   	           	                        			   |
+| debug                | Enable sdk, services and connectors debug logic if possible.                        				                             		   |
+| timeout              | In this case is timeout for **one** operation: starting attribution service or fetching remote config. By default the value is **30 sec**.|
+
+[Code example](https://github.com/appodeal/Stack-HolisticSolution-Unity-Plugin/blob/master/Assets/StackHolisticSolution/Demo/HolisticSolutionDemo.cs#L68)
+
+## Features
+
+Holistic Solution SDK allows you to send events to analytic services such as Firebase, AppsFlyer and Facebook using a single method:
+
+> Event parameters can only be strings and numbers
+
+[Code example](https://github.com/appodeal/Stack-HolisticSolution-Unity-Plugin/blob/master/Assets/StackHolisticSolution/Demo/HolisticSolutionDemo.cs#L77)
+
+
+#### Purchase validation
+Holistic Solution SDK allows you to unify purchase validation using a single method:
+```c#
+public class HolisticSolutionDemo : MonoBehaviour, IInAppPurchaseValidationCallback
+    
+{
+    
+    void Start()
+    {
+   	 PurchaseTest();
+    }
+    
+    private void PurchaseTest()
+    {
         
 #if UNITY_ANDROID
-            HSInAppPurchase purchase = new HSInAppPurchase.Builder()
+        HSInAppPurchase purchase = new HSInAppPurchase.Builder(PurchaseType.SUBS)
             .withPublicKey("YOUR_PUBLIC_KEY")
-            .withAdditionalParams(additionalParams)
+            .withAdditionalParams(new Dictionary<string, string>
+            {
+                {"test_key", "test_value"},
+            })
             .withSignature("Signature")
             .withPurchaseData("PurchaseData")
             .withPrice("Price")
             .withCurrency("Currency")
             .build();
 
-            HSApp.validateInAppPurchaseAndroid(purchase, this);
+
+        HSApp.validateInAppPurchaseAndroid(purchase, this);
 #elif UNITY_IOS
         HSApp.validateInAppPurchaseiOS("productIdentifier", "price", "currency", "transactionId",
-            "additionalParams", this);
+            "additionalParams", iOSPurchaseType.consumable, this);
+
 #endif
     }
 
-    #region HSAppInitializeListener
-
-    public void onAppInitialized(IEnumerable<HSError> hsErrors)
-    {
-        Debug.Log("onAppInitialized");
-        foreach (var error in hsErrors)
-        {
-            Debug.Log("Error - " + error.toString());
-        }
-    }
-
-    public void onAppInitialized(string error)
-    {
-        Debug.Log($"onAppInitialized - {error}");
-    }
-
-    #endregion
-
-    #region HSInAppPurchaseValidateListener
-
-    public void onInAppPurchaseValidateSuccess(HSInAppPurchase purchase, IEnumerable<HSError> errors)
-    {
-        Debug.Log("onInAppPurchaseValidateSuccess");
-
-        foreach (var error in errors)
-        {
-            Debug.Log("Error - " + error.toString());
-        }
-    }
-
-    public void onInAppPurchaseValidateFail(IEnumerable<HSError> errors)
-    {
-        Debug.Log("onInAppPurchaseValidateSuccess");
-
-        foreach (var error in errors)
-        {
-            Debug.Log("Error - " + error.toString());
-        }
-    }
-
-    #endregion
-
-    #region InAppPurchaseValidationiOSCallback
+    #region InAppPurchaseValidationCallback
 
     public void InAppPurchaseValidationSuccessCallback(string json)
     {
+        if (string.IsNullOrEmpty(json)) return;
         Debug.Log($"InAppPurchaseValidationSuccessCallback - {json}");
     }
 
     public void InAppPurchaseValidationFailureCallback(string error)
     {
+        if (string.IsNullOrEmpty(error)) return;
         Debug.Log($"InAppPurchaseValidationFailureCallback - {error}");
     }
 
     #endregion
+    
+    
 ...
 }
 ```
+
+| Parameter            | Description                                                                                                        |
+|----------------------|--------------------------------------------------------------------------------------------------------------------|
+| purchaseType         | Purchase type. Must be one of [PurchaseType](https://github.com/appodeal/Stack-HolisticSolution-Unity-Plugin/blob/master/Assets/StackHolisticSolution/Api/HolisticSolution.cs#L123).   |
+| publicKey            | [Public key from Google Developer Console](https://support.google.com/googleplay/android-developer/answer/186113). |
+| signature            | Transaction signature (returned from Google API when the purchase is completed).                                   |
+| purchaseData         | Product purchased in JSON format (returned from Google API when the purchase is completed).                        |
+| purchaseToken        | Product purchased token (returned from Google API when the purchase is completed).                        	        |
+| purchaseTimestamp    | Product purchased timestamp (returned from Google API when the purchase is completed).                        	    |
+| orderId              | Product purchased unique order id for the transaction (returned from Google API when the purchase is completed).   |
+| sku                  | Stock keeping unit id.											                                                    |
+| price                | Purchase revenue.                                                                                                  |
+| currency             | Purchase currency.                                                                                                 |
+| additionalParameters | Additional parameters of the purchase event.                                                                       |
+
+> In-App purchase validation runs by FIFO queue in a single thread
+
+[Code example](https://github.com/appodeal/Stack-HolisticSolution-Unity-Plugin/blob/master/Assets/StackHolisticSolution/Demo/HolisticSolutionDemo.cs#L81)
