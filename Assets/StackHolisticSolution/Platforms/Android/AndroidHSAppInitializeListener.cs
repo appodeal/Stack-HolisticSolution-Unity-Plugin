@@ -22,14 +22,16 @@ namespace StackHolisticSolution
 
         private void onAppInitialized(AndroidJavaObject javaTypeList)
         {
-            if (javaTypeList == null) return;
-            
             var csTypeList = new List<HSError>();
-            var length = javaTypeList.Call<int>("size");
-            for (var i = 0; i < length; i++)
+
+            if (javaTypeList != null)
             {
-                var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
-                csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
+                var length = javaTypeList.Call<int>("size");
+                for (var i = 0; i < length; i++)
+                {
+                    var javaTypeHSError = javaTypeList.Call<AndroidJavaObject>("get", i);
+                    csTypeList.Add(new HSError(new AndroidHSError(javaTypeHSError)));
+                }
             }
 
             string responseError = null;
@@ -40,6 +42,7 @@ namespace StackHolisticSolution
                 {
                     responseError = string.Join(", ", error.toString());
                 }
+
                 listener.onAppInitialized(responseError);
             }
             else
