@@ -17,7 +17,7 @@ Stack Holistic Solution SDK for Unity simplifies the collection and transfer of 
 
 ## Before integration started
 
-1. [Download hs unity plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.0-21.07.2021.unitypackage)
+1. [Download hs unity plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.0-23.07.2021.unitypackage)
 
 ## Import SDK
 
