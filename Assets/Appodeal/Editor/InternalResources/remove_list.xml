@@ -51,7 +51,6 @@
         <name>Appodeal iOS</name>
         <path>Plugins/iOS</path>
     </item>
-    
     <item>
         <check_if_empty>false</check_if_empty>
         <is_confirmation_required>false</is_confirmation_required>
