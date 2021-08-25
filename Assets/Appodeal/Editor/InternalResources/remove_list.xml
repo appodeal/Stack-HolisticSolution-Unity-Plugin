@@ -25,6 +25,12 @@
         <path>ConsentManager</path>
     </item>
     <item>
+        <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
+        <name>StackHolisticSolution</name>
+        <path>StackHolisticSolution</path>
+    </item>
+    <item>
         <description>External Dependency Manager is used by many plugins for integrating platform specific
             libraries and resolving conflicting dependencies. If some of your plugins use Jar
             Resolver, removing can lead to issues.
@@ -56,6 +62,12 @@
         <is_confirmation_required>false</is_confirmation_required>
         <name>Plugins iOS Consent Manager</name>
         <path>Plugins/iOS/ConsentManager</path>
+    </item>
+    <item>
+        <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
+        <name>Plugins iOS Holistic Solution</name>
+        <path>Plugins/iOS/HolisticSolution</path>
     </item>
     <item>
         <check_if_empty>true</check_if_empty>
@@ -103,7 +115,7 @@
         <name>Plugins Android Assets</name>
         <path>Plugins/Android/assets</path>
     </item>
-    
+
     <item>
         <check_if_empty>true</check_if_empty>
         <is_confirmation_required>false</is_confirmation_required>
