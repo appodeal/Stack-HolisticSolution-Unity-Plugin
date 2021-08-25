@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using AOT;
+using AppodealAds.Unity.Api;
 using UnityEngine;
 
 namespace StackHolisticSolution.Platforms.iOS
@@ -10,6 +11,12 @@ namespace StackHolisticSolution.Platforms.iOS
     public class iOSHSAppConfig : IHSAppConfig
     {
         private readonly HSAppConfigObjCBridge hSAppConfigObjCBridge;
+        
+        private const int AppodealAdTypeInterstitial = 1 << 0;
+        private const int AppodealAdTypeBanner = 1 << 2;
+        private const int AppodealAdTypeRewardedVideo = 1 << 4;
+        private const int AppodealAdTypeMrec = 1 << 5;
+        private const int AppodealAdTypeNonSkippableVideo = 1 << 6;
 
         public iOSHSAppConfig()
         {
@@ -33,13 +40,51 @@ namespace StackHolisticSolution.Platforms.iOS
 
         public void setAdType(int adType)
         {
-            HSAppConfigObjCBridge.setAdType(adType);
+            HSAppConfigObjCBridge.setAdType(nativeAdTypesForType(adType));
         }
 
         public void setComponentInitializeTimeout(long value)
         {
             HSAppConfigObjCBridge.setComponentInitializeTimeout(value);
         }
+        
+        private static int nativeAdTypesForType(int adTypes)
+        {
+            var nativeAdTypes = 0;
+
+            if ((adTypes & Appodeal.INTERSTITIAL) > 0)
+            {
+                nativeAdTypes |= AppodealAdTypeInterstitial;
+            }
+
+            if ((adTypes & Appodeal.BANNER) > 0 ||
+                (adTypes & Appodeal.BANNER_VIEW) > 0 ||
+                (adTypes & Appodeal.BANNER_TOP) > 0 ||
+                (adTypes & Appodeal.BANNER_LEFT) > 0 ||
+                (adTypes & Appodeal.BANNER_RIGHT) > 0 ||
+                (adTypes & Appodeal.BANNER_BOTTOM) > 0)
+            {
+                nativeAdTypes |= AppodealAdTypeBanner;
+            }
+
+            if ((adTypes & Appodeal.MREC) > 0)
+            {
+                nativeAdTypes |= AppodealAdTypeMrec;
+            }
+
+            if ((adTypes & Appodeal.REWARDED_VIDEO) > 0)
+            {
+                nativeAdTypes |= AppodealAdTypeRewardedVideo;
+            }
+
+            if ((adTypes & Appodeal.NON_SKIPPABLE_VIDEO) > 0)
+            {
+                nativeAdTypes |= AppodealAdTypeNonSkippableVideo;
+            }
+
+            return nativeAdTypes;
+        }
+
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
