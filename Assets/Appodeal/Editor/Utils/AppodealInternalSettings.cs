@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using AppodealAds.Unity.Editor.InternalResources;
 using marijnz.EditorCoroutines;
 using UnityEditor;
@@ -176,6 +175,17 @@ public class AppodealInternalSettings : EditorWindow
 
             AppodealSettings.Instance.IOSSkAdNetworkItems =
                 KeyRow("Add SKAdNetworkItems", AppodealSettings.Instance.IOSSkAdNetworkItems);
+
+            if (AppodealSettings.Instance.IOSSkAdNetworkItemsList != null &&
+                AppodealSettings.Instance.IOSSkAdNetworkItemsList.Count > 0)
+            {
+                AppodealSettings.Instance.IOSSkAdNetworkItemsList = null;
+                AppodealSettings.Instance.IOSSkAdNetworkItemsList = SKAdNetworkIdentifiers;
+            }
+            else
+            {
+                AppodealSettings.Instance.IOSSkAdNetworkItemsList = SKAdNetworkIdentifiers;
+            }
 
             GUILayout.Space(10);
         }
