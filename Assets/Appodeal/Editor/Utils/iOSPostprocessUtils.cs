@@ -280,7 +280,7 @@ namespace Appodeal.Unity.Editor.Utils
             project.AddBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
 #endif
             project.AddBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks");
-            project.SetBuildProperty(target, "SWIFT_VERSION", "4.0");
+            project.AddBuildProperty(target, "SWIFT_VERSION", "5.0");
 
             File.WriteAllText(projectPath, project.WriteToString());
         }
