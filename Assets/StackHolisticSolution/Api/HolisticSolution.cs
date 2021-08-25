@@ -7,7 +7,7 @@ namespace StackHolisticSolution
 {
     public static class HolisticSolution
     {
-        public const string HolisticSolutionPluginVersion = "2.0.0";
+        public const string HolisticSolutionPluginVersion = "2.0.1";
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
