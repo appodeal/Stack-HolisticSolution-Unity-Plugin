@@ -8,6 +8,7 @@ using UnityEngine;
 namespace AppodealAds.Unity.Android
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AndroidAppodealClient : IAppodealAdsClient
     {
         private bool isShow;
@@ -15,7 +16,7 @@ namespace AppodealAds.Unity.Android
         private AndroidJavaClass appodealUnityClass;
         private AndroidJavaClass appodealBannerClass;
         private AndroidJavaObject appodealBannerInstance;
-        public AndroidJavaObject userSettings;
+        private AndroidJavaObject userSettings;
         private AndroidJavaObject activity;
         private AndroidJavaObject popupWindow, resources, displayMetrics, window, decorView, attributes, rootView;
 
@@ -90,12 +91,6 @@ namespace AppodealAds.Unity.Android
         private AndroidJavaClass getAppodealClass()
         {
             return appodealClass ?? (appodealClass = new AndroidJavaClass("com.appodeal.ads.Appodeal"));
-        }
-
-        public AndroidJavaClass getAppodealUnityClass()
-        {
-            return appodealUnityClass ??
-                   (appodealUnityClass = new AndroidJavaClass("com.appodeal.unity.AppodealUnity"));
         }
 
         private AndroidJavaObject getAppodealBannerInstance()
