@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
 namespace StackHolisticSolution.Platforms.iOS
 {
@@ -88,9 +89,19 @@ namespace StackHolisticSolution.Platforms.iOS
             Initialize(appConfig, onInitialize);
         }
 
-        public void logEvent(string key)
+        public void logEvent(string eventName)
         {
-            LogEvent(key);
+            LogEvent(eventName);
+        }
+        
+        public void logEvent(string eventName, Dictionary<string,string> eventParams)
+        {
+            var values = eventParams.Values.ToArray();
+            var keys = eventParams.Keys.ToArray();
+            
+            Debug.Log($"values - {values}");
+            Debug.Log($"keys - {keys}");
+            //LogEvent(key);
         }
         
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
