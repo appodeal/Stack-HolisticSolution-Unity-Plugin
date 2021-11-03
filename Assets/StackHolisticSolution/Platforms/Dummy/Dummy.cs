@@ -41,7 +41,12 @@ namespace StackHolisticSolution.Platforms.Dummy
             Debug.Log("Call to initialize on not supported platform." + DummyMessage);
         }
 
-        public void logEvent(string key)
+        public void logEvent(string eventName)
+        {
+            Debug.Log("Call to logEvent on not supported platform." + DummyMessage);
+        }
+        
+        public void logEvent(string eventName, Dictionary<string,string> eventParams)
         {
             Debug.Log("Call to logEvent on not supported platform." + DummyMessage);
         }
