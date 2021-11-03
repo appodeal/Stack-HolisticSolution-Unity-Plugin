@@ -72,10 +72,11 @@ namespace StackHolisticSolution
                 new AndroidHSAppInitializeListener(hsAppInitializeListener));
         }
 
-        public void logEvent(string key, Dictionary<string, object> dictionary)
+        public void logEvent(string key, Dictionary<string, string> eventParams)
         {
             var map = new AndroidJavaObject("java.util.HashMap");
-            foreach (var entry in dictionary)
+            
+            foreach (var entry in eventParams)
             {
                 map.Call<AndroidJavaObject>("put", entry.Key, Helper.getJavaObject(entry.Value));
             }
@@ -159,7 +160,7 @@ namespace StackHolisticSolution
                     HSInAppPurchaseBuilder =
                         new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase").CallStatic<AndroidJavaObject>(
                             "newBuilder", new AndroidJavaClass("com.explorestack.hs.sdk.HSInAppPurchase$PurchaseType")
-                                .Get<AndroidJavaObject>(
+                                .GetStatic<AndroidJavaObject>(
                                     "INAPP"));
                     break;
             }
