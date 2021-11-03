@@ -74,19 +74,19 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener,
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO | Appodeal.BANNER);
 
         HSApp.initialize(appConfig, this);
-        HSApp.logEvent("hs_sdk_example_test_event");
-        
+       // HSApp.logEvent("hs_sdk_example_test_event");
+        HSApp.logEvent("hs_sdk_example_test_event",
+            new Dictionary<string, string> { { "testParam", "testValue" } });
     }
 
     private void PurchaseTest()
     {
-        
 #if UNITY_ANDROID
         HSInAppPurchase purchase = new HSInAppPurchase.Builder(PurchaseType.SUBS)
             .withPublicKey("YOUR_PUBLIC_KEY")
             .withAdditionalParams(new Dictionary<string, string>
             {
-                {"test_key", "test_value"},
+                { "test_key", "test_value" },
             })
             .withSignature("Signature")
             .withPurchaseData("PurchaseData")
@@ -123,13 +123,15 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener,
     #region InAppPurchaseValidationCallback
 
     public void InAppPurchaseValidationSuccessCallback(string json)
-    {
+    {        
+        Debug.Log($"InAppPurchaseValidationSuccessCallback");
         if (string.IsNullOrEmpty(json)) return;
         Debug.Log($"InAppPurchaseValidationSuccessCallback - {json}");
     }
 
     public void InAppPurchaseValidationFailureCallback(string error)
     {
+        Debug.Log($"InAppPurchaseValidationFailureCallback");
         if (string.IsNullOrEmpty(error)) return;
         Debug.Log($"InAppPurchaseValidationFailureCallback - {error}");
     }
