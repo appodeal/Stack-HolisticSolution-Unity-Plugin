@@ -1,5 +1,6 @@
 #if UNITY_IOS
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AOT;
 using AppodealAds.Unity.Api;
@@ -106,9 +107,14 @@ namespace StackHolisticSolution.Platforms.iOS
             hsAppObjCBridge.initialize(iOSAppConfig.getIntPtr(), onAppInitialized);
         }
 
-        public void logEvent(string key)
+        public void logEvent(string eventName)
         {
-            hsAppObjCBridge.logEvent(key);
+            hsAppObjCBridge.logEvent(eventName);
+        }
+        
+        public void logEvent(string eventName, Dictionary<string, string> eventParams)
+        {
+            hsAppObjCBridge.logEvent(eventName, eventParams);
         }
 
         public string getVersion()
