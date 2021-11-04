@@ -96,12 +96,14 @@ namespace StackHolisticSolution.Platforms.iOS
         
         public void logEvent(string eventName, Dictionary<string,string> eventParams)
         {
-            var values = eventParams.Values.ToArray();
-            var keys = eventParams.Keys.ToArray();
             
-            Debug.Log($"values - {values}");
-            Debug.Log($"keys - {keys}");
-            //LogEvent(key);
+            LogEventWithParam(eventName, DictionaryToString(eventParams));
+        }
+        
+        private string DictionaryToString(Dictionary < string, string > dictionary) {  
+            var dictionaryString = dictionary.Aggregate("", (current, keyValues) 
+                => current + (keyValues.Key + " , " + keyValues.Value + ", "));
+            return dictionaryString.TrimEnd(',', ' ') + "";  
         }
         
         public void validateInAppPurchaseiOS(string productIdentifier, string price, string currency,
@@ -137,7 +139,10 @@ namespace StackHolisticSolution.Platforms.iOS
             HSUSdkInAppPurchaseValidationFailureCallback failure);
 
         [DllImport("__Internal")]
-        private static extern void LogEvent(string key);
+        private static extern void LogEvent(string eventName);
+            
+        [DllImport("__Internal")]
+        private static extern void LogEventWithParam(string eventName, string eventParams);
 
         [DllImport("__Internal")]
         private static extern void Initialize(IntPtr appConfig, HSUSdkInitialisationCallback onInitialize);
