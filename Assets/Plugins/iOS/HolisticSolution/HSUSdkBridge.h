@@ -1,10 +1,3 @@
-//
-//  HSUSdkBridge.h
-//  Unity-iPhone
-//
-//  Created by Stas Kochkin on 13.07.2020.
-//
-
 #import <Foundation/Foundation.h>
 #import <HolisticSolutionSDK/HolisticSolutionSDK-Swift.h>
 
