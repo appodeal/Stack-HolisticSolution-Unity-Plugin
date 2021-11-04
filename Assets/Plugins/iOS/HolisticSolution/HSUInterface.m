@@ -84,12 +84,12 @@ void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback c
 }
 
 void LogEvent(const char *eventName) {
-    [Appodeal.hs trackEvent:HSUStringFromUTF8String(key)
+    [Appodeal.hs trackEvent:HSUStringFromUTF8String(eventName)
            customParameters:nil];
 }
 
 void LogEventWithParam(const char *eventName, const char *eventParams) {
-    [Appodeal.hs trackEvent:HSUStringFromUTF8String(key)
+    [Appodeal.hs trackEvent:HSUStringFromUTF8String(eventName)
            customParameters:HSUDictionaryFromUTF8String(eventParams)];
 }
 
