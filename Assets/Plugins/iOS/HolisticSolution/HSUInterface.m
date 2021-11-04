@@ -1,14 +1,9 @@
-//
-//  HSSdkObjCBridge.m
-//  Unity-iPhone
-//
-//  Created by Stas Kochkin on 13.07.2020.
-//
-
 #import "HSUInterface.h"
 #import "HSUSdkBridge.h"
-#import <HolisticSolutionSDK/HolisticSolutionSDK-Swift.h>
 #import <Appodeal/Appodeal.h>
+#import <Adjust/Adjust.h>
+#import <AppsFlyerLib/AppsFlyerLib.h>
+#import <HolisticSolutionSDK/HolisticSolutionSDK-Swift.h>
 
 
 #pragma mark - Helpers
