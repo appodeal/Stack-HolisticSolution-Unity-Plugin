@@ -102,7 +102,7 @@ namespace StackHolisticSolution.Platforms.iOS
         
         private string DictionaryToString(Dictionary < string, string > dictionary) {  
             var dictionaryString = dictionary.Aggregate("", (current, keyValues) 
-                => current + (keyValues.Key + " , " + keyValues.Value + ", "));
+                => current + (keyValues.Key + "=" + keyValues.Value + ", "));
             return dictionaryString.TrimEnd(',', ' ') + "";  
         }
         
