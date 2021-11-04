@@ -74,15 +74,22 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener,
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO | Appodeal.BANNER);
 
         HSApp.initialize(appConfig, this);
-       // HSApp.logEvent("hs_sdk_example_test_event");
-        HSApp.logEvent("hs_sdk_example_test_event",
-            new Dictionary<string, string> { { "testParam", "testValue" } });
+        
+        HSApp.logEvent("hs_sdk_example_test_event");
+        
+        HSApp.logEvent("logEventWithParams",
+            new Dictionary<string, string>
+            {
+                { "testKey1", "testParam1" },
+                { "testKey2", "testParam2" },
+                { "testKey3", "testParam3" }
+            });
     }
 
     private void PurchaseTest()
     {
 #if UNITY_ANDROID
-        HSInAppPurchase purchase = new HSInAppPurchase.Builder(PurchaseType.SUBS)
+        var purchase = new HSInAppPurchase.Builder(PurchaseType.SUBS)
             .withPublicKey("YOUR_PUBLIC_KEY")
             .withAdditionalParams(new Dictionary<string, string>
             {
