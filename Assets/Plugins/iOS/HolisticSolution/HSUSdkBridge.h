@@ -1,4 +1,7 @@
 #import <Foundation/Foundation.h>
+#import <Appodeal/Appodeal.h>
+#import <Adjust/Adjust.h>
+#import <AppsFlyerLib/AppsFlyerLib.h>
 #import <HolisticSolutionSDK/HolisticSolutionSDK-Swift.h>
 
 
