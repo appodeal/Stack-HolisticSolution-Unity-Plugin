@@ -43,8 +43,9 @@ namespace StackHolisticSolution
         string getSku();
         string getOrderId();
         string getPurchaseToken();
-        string getPurchaseTimestamp();
+        long getPurchaseTimestamp();
         string getAdditionalParameters();
+        string getDeveloperPayload();
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -60,6 +61,7 @@ namespace StackHolisticSolution
         void withPurchaseToken(string purchaseToken);
         void withPurchaseTimestamp(long purchaseTimestamp);
         void withAdditionalParams(Dictionary<string, string> additionalParameters);
+        void withDeveloperPayload(string developerPayload);
         IHSInAppPurchase build();
 
     }

@@ -133,6 +133,11 @@ namespace StackHolisticSolution.Platforms.Dummy
             Debug.Log("Call to withAdditionalParams on not supported platform." + DummyMessage);
         }
 
+        public void withDeveloperPayload(string developerPayload)
+        {
+            Debug.Log("Call to withDeveloperPayload on not supported platform." + DummyMessage);
+        }
+
         public IHSInAppPurchase build()
         {
             Debug.Log("Call to withAdditionalParams on not supported platform." + DummyMessage);
