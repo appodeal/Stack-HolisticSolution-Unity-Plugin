@@ -34,27 +34,27 @@ namespace StackHolisticSolution
 
             var hsAndroidPurchase = new HSInAppPurchase(new AndroidHSInAppPurchase(purchase));
 
-            if (string.IsNullOrEmpty(hsAndroidPurchase.getCurrency()))
+            if (!string.IsNullOrEmpty(hsAndroidPurchase.getCurrency()))
             {
                 responsePurchase = "/n" + "[HSInAppPurchase" + " " + "currency: " + hsAndroidPurchase.getCurrency();
             }
-            else if (string.IsNullOrEmpty(hsAndroidPurchase.getPrice()))
+            else if (!string.IsNullOrEmpty(hsAndroidPurchase.getPrice()))
             {
                 responsePurchase += " " + "price: " + hsAndroidPurchase.getPrice();
             }
-            else if (string.IsNullOrEmpty(hsAndroidPurchase.getSignature()))
+            else if (!string.IsNullOrEmpty(hsAndroidPurchase.getSignature()))
             {
                 responsePurchase += " " + "signature: " + hsAndroidPurchase.getSignature();
             }
-            else if (string.IsNullOrEmpty(hsAndroidPurchase.getAdditionalParameters()))
+            else if (!string.IsNullOrEmpty(hsAndroidPurchase.getAdditionalParameters()))
             {
                 responsePurchase += " " + "additional params: " + hsAndroidPurchase.getAdditionalParameters();
             }
-            else if (string.IsNullOrEmpty(hsAndroidPurchase.getPublicKey()))
+            else if (!string.IsNullOrEmpty(hsAndroidPurchase.getPublicKey()))
             {
                 responsePurchase += " " + "public key: " + hsAndroidPurchase.getPublicKey();
             }
-            else if (string.IsNullOrEmpty(hsAndroidPurchase.getPurchaseData()))
+            else if (!string.IsNullOrEmpty(hsAndroidPurchase.getPurchaseData()))
             {
                 responsePurchase += " " + "purchase data: " + hsAndroidPurchase.getPurchaseData() + "]";
             }
