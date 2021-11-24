@@ -148,12 +148,6 @@ namespace AppodealAds.Unity.Dummy
             Debug.Log("Call to Appodeal.disableLocationPermissionCheck on not supported platform." + DummyMessage);
         }
 
-        public void disableWriteExternalStoragePermissionCheck()
-        {
-            Debug.Log("Call to Appodeal.disableWriteExternalStoragePermissionCheck on not supported platform." +
-                      DummyMessage);
-        }
-
         public void setTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
         {
             Debug.Log("Call to Appodeal.setTriggerOnLoadedOnPrecache on not supported platform." + DummyMessage);
