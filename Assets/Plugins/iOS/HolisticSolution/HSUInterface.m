@@ -55,7 +55,11 @@ HSUAppRef GetHSApp(void) {
     return (__bridge HSUAppRef)(HSApp.class);
 }
 
-void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback callback) {
+void Initialize(HSUAppConfigurationRef appConfig, HSUSdkInitialisationCallback callback, const char *pluginVer, const char *engineVer) {
+    
+    [Appodeal setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
+    [Appodeal setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
+
     HSUSdkBridge *config = (__bridge_transfer HSUSdkBridge *)appConfig;
     
     

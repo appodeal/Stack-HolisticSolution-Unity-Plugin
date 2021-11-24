@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealAds.Unity.Android;
+using AppodealAds.Unity.Api;
 using UnityEngine;
 
 namespace StackHolisticSolution
@@ -53,6 +54,7 @@ namespace StackHolisticSolution
     public class AndroidHSApp : IHSApp
     {
         private readonly AndroidJavaObject HSAppInstance = new AndroidJavaObject("com.explorestack.hs.sdk.HSApp");
+        private readonly AndroidJavaObject AppodealInstance = new AndroidJavaObject("com.appodeal.ads.Appodeal");
         private AndroidJavaObject activity;
 
         private AndroidJavaObject getActivity()
@@ -66,6 +68,8 @@ namespace StackHolisticSolution
 
         public void initialize(HSAppConfig appConfig, IHSAppInitializeListener hsAppInitializeListener)
         {
+            AppodealInstance.CallStatic("setFramework", "unity", Appodeal.getPluginVersion(),
+                Appodeal.getUnityVersion());
             var androidHSAppConfig = (AndroidHSAppConfig) appConfig.getHSAppConfig();
             HSAppInstance.CallStatic("initialize", getActivity(),
                 androidHSAppConfig.getHSAppConfigInstance(),

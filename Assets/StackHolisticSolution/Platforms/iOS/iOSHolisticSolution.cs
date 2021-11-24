@@ -104,7 +104,7 @@ namespace StackHolisticSolution.Platforms.iOS
         {
             hsAppInitializeListener = listener;
             var iOSAppConfig = (iOSHSAppConfig) appConfig.getHSAppConfig();
-            hsAppObjCBridge.initialize(iOSAppConfig.getIntPtr(), onAppInitialized);
+            hsAppObjCBridge.initialize(iOSAppConfig.getIntPtr(), onAppInitialized, Appodeal.getPluginVersion(), Appodeal.getUnityVersion());
         }
 
         public void logEvent(string eventName)
