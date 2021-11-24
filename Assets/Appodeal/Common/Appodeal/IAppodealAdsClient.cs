@@ -34,7 +34,6 @@ namespace AppodealAds.Unity.Common
         void disableNetwork(string network);
         void disableNetwork(string network, int type);
         void disableLocationPermissionCheck();
-        void disableWriteExternalStoragePermissionCheck();
         void muteVideosIfCallsMuted(bool value);
         void showTestScreen();
         string getVersion();
