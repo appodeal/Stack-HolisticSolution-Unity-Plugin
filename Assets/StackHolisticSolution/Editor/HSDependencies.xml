@@ -3,9 +3,9 @@
         <repositories>
             <repository>https://artifactory.appodeal.com/appodeal</repository>
         </repositories>
-        <androidPackage spec="com.explorestack.hs:sdk:2.0.0.3"/>
+        <androidPackage spec="com.explorestack.hs:sdk:2.0.1.0"/>
     </androidPackages>
     <iosPods>
-        <iosPod name='HolisticSolutionSDK' version='2.0.2' minTargetSdk='10.0'/>
+        <iosPod name='HolisticSolutionSDK' version='2.0.3' minTargetSdk='10.0'/>
     </iosPods>
 </dependencies>
