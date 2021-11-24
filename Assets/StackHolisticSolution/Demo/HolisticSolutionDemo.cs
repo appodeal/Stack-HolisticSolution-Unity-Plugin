@@ -99,6 +99,11 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener,
             .withPurchaseData("PurchaseData")
             .withPrice("Price")
             .withCurrency("Currency")
+            .withSku("Sku")
+            .withOrderId("OrderId")
+            .withPurchaseToken("Purchase token")
+            .withPurchaseTimestamp(123)
+            .withDeveloperPayload("DeveloperPayload")
             .build();
 
 

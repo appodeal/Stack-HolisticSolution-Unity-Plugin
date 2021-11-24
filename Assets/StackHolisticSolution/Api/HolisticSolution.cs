@@ -185,6 +185,27 @@ namespace StackHolisticSolution
             return nativeHSInAppPurchase.getAdditionalParameters();
         }
 
+        public string getSku() {
+            return nativeHSInAppPurchase.getSku();
+        }
+
+        public string getOrderId() {
+            return nativeHSInAppPurchase.getOrderId();
+        }
+
+        public string getPurchaseToken() {
+            return nativeHSInAppPurchase.getPurchaseToken();
+        }
+
+        public long getPurchaseTimestamp() {
+            return nativeHSInAppPurchase.getPurchaseTimestamp();
+        }
+
+        public string getDeveloperPayload()
+        {
+            return nativeHSInAppPurchase.getDeveloperPayload();
+        }
+
         public class Builder
         {
             private readonly IHSInAppPurchaseBuilder nativeIHSInAppPurchaseBuilder;
@@ -258,6 +279,11 @@ namespace StackHolisticSolution
             public Builder withAdditionalParams(Dictionary<string, string> additionalParameters)
             {
                 nativeIHSInAppPurchaseBuilder.withAdditionalParams(additionalParameters);
+                return this;
+            }
+
+            public Builder withDeveloperPayload(string developerPayload) {
+                nativeIHSInAppPurchaseBuilder.withDeveloperPayload(developerPayload);
                 return this;
             }
     

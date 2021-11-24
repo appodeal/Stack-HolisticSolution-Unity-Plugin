@@ -233,6 +233,11 @@ namespace StackHolisticSolution
         {
             getBuilder().Call<AndroidJavaObject>("withSignature", signature);
         }
+
+        public void withDeveloperPayload(string developerPayload) 
+        {
+            getBuilder().Call<AndroidJavaObject>("withDeveloperPayload", developerPayload);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -307,14 +312,19 @@ namespace StackHolisticSolution
             return HSInAppPurchase.Call<string>("getPurchaseToken");
         }
 
-        public string getPurchaseTimestamp()
+        public long getPurchaseTimestamp()
         {
-            return HSInAppPurchase.Call<string>("getPurchaseTimestamp");
+            return HSInAppPurchase.Call<long>("getPurchaseTimestamp");
         }
 
         public string getAdditionalParameters()
         {
             return HSInAppPurchase.Call<AndroidJavaObject>("getAdditionalParameters").Call<string>("toString");
+        }
+
+        public string getDeveloperPayload()
+        {
+            return HSInAppPurchase.Call<string>("getDeveloperPayload");
         }
     }
 
