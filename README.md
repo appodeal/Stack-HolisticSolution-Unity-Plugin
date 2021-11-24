@@ -17,13 +17,13 @@ Stack Holistic Solution SDK for Unity simplifies the collection and transfer of 
 
 ## Before integration started
 
-1. [Download hs unity plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.2-08.10.2021.unitypackage)
+1. [Download hs unity plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage)
 
 ## Import SDK
 
 ### Import Appodeal Holistic Solution plugin
 
-To import the Appodeal-Unity-HS-Plugin-2.0.2-08.10.2021.unitypackage, double-click on the Appodeal-Unity-HS-Plugin-2.0.2-08.10.2021.unitypackage, or go to Assets → Import Package → Custom Package. Keep all the files in the Importing Package window selected, and click Import.
+To import the Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage, double-click on the Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage, or go to Assets → Import Package → Custom Package. Keep all the files in the Importing Package window selected, and click Import.
 
 ### Android platform
 
