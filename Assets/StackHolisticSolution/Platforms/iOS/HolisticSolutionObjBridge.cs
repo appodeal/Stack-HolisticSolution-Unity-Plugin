@@ -84,9 +84,9 @@ namespace StackHolisticSolution.Platforms.iOS
             return hSApp;
         }
 
-        public void initialize(IntPtr appConfig, HSUSdkInitialisationCallback onInitialize)
+        public void initialize(IntPtr appConfig, HSUSdkInitialisationCallback onInitialize, string pluginVer, string engineVersion)
         {
-            Initialize(appConfig, onInitialize);
+            Initialize(appConfig, onInitialize, pluginVer, engineVersion);
         }
 
         public void logEvent(string eventName)
@@ -145,7 +145,7 @@ namespace StackHolisticSolution.Platforms.iOS
         private static extern void LogEventWithParam(string eventName, string eventParams);
 
         [DllImport("__Internal")]
-        private static extern void Initialize(IntPtr appConfig, HSUSdkInitialisationCallback onInitialize);
+        private static extern void Initialize(IntPtr appConfig, HSUSdkInitialisationCallback onInitialize, string pluginVer, string engineVersion);
         
         [DllImport("__Internal")]
         private static extern string GetVersion();

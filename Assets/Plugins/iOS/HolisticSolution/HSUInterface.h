@@ -14,7 +14,9 @@ FOUNDATION_EXPORT HSUAppConfigurationRef GetHSAppConfig(void);
 
 FOUNDATION_EXPORT HSUAppRef GetHSApp(void);
 FOUNDATION_EXPORT void Initialize(HSUAppConfigurationRef appConfig,
-                                  HSUSdkInitialisationCallback callback);
+                                  HSUSdkInitialisationCallback callback,
+                                  const char *pluginVer,
+                                  const char *engineVer);
 
 FOUNDATION_EXPORT void LogEvent(const char *key);
 
