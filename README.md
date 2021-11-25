@@ -17,7 +17,7 @@ Stack Holistic Solution SDK for Unity simplifies the collection and transfer of 
 
 ## Before integration started
 
-1. [Download hs unity plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage)
+1. [Download HS Unity Plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage)
 
 ## Import SDK
 
@@ -79,7 +79,7 @@ public class HolisticSolutionDemo : MonoBehaviour, IHSAppInitializeListener
     
    	 HSAppConfig appConfig = new HSAppConfig()
             .setDebugEnabled(true)
-            .setAppKey("YOUR_APP_KEY)
+            .setAppKey("YOUR_APP_KEY")
             .setComponentInitializeTimeout(10000)
             .setAdType(Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO | Appodeal.BANNER);
 
