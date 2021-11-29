@@ -1,7 +1,6 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using AppodealAds.Unity.Editor.Checkers;
 
 namespace AppodealAds.Unity.Editor.Utils
 {
