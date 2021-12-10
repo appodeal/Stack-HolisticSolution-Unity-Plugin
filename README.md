@@ -17,13 +17,13 @@ Stack Holistic Solution SDK for Unity simplifies the collection and transfer of 
 
 ## Before integration started
 
-1. [Download HS Unity Plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage)
+1. [Download HS Unity Plugin](https://appodeal-unity.s3.amazonaws.com/Appodeal-Unity-HS-Plugin-2.0.4-10.12.2021.unitypackage)
 
 ## Import SDK
 
 ### Import Appodeal Holistic Solution plugin
 
-To import the Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage, double-click on the Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage, or go to Assets → Import Package → Custom Package. Keep all the files in the Importing Package window selected, and click Import.
+To import the Appodeal-Unity-HS-Plugin-2.0.4-10.12.2021.unitypackage, double-click on the Appodeal-Unity-HS-Plugin-2.0.4-10.12.2021.unitypackage, or go to Assets → Import Package → Custom Package. Keep all the files in the Importing Package window selected, and click Import.
 
 ### Android platform
 
@@ -37,6 +37,23 @@ To import the Appodeal-Unity-HS-Plugin-2.0.3-24.11.2021.unitypackage, double-cli
    - Enable the setting "Use Jetifier" (Assets → External Dependency Manager → Android Resolver → Settings).
    - Then run Assets → External Dependency Manager → Android Resolver and press Resolve or Force Resolve.
    - As a result, the modules, that are required for the Appodeal SDK support, will be imported to project's mainTemplate.gradle file.
+
+#### Known issues
+
+Admob bug causing app crashes on Android S+
+
+Happens only if your target API Level is set to 31+ (Android 12+). [More information](https://developers.google.com/admob/android/rel-notes)
+
+To fix this bug, add the following dependency to your mainTemplate.gradle file under dependencies object:
+
+```groovy
+dependencies {
+    // ... other project dependencies
+    implementation 'androidx.work:work-runtime:2.7.0'
+}
+```
+
+Then run Assets → External Dependency Manager → Android Resolver and press Resolve or Force Resolve.
 
 ### iOS platform 
 
