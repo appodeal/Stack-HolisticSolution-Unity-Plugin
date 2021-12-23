@@ -142,15 +142,32 @@ namespace Appodeal.Unity.Editor.Utils
             if (File.Exists(Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml"))
                 && CheckContainsAppId(Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")))
             {
-                Debug.LogWarning(
-                    $"AdmobAppId has already added in {Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")}.");
-                return;
+                if (File.Exists(path) && CheckContainsAppId(path))
+                {
+                    androidManifest.RemoveAdmobAppId();
+                    Debug.LogWarning(
+                        $"AdmobAppId has already been added to {Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")}" +
+                        "\nRemoving duplicate from internal Appodeal AndroidManifest.xml file.");
+                    return;
+                }
+                else if (!string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
+                {
+                    Debug.LogWarning(
+                        $"AdmobAppId has already been added to {Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")}" +
+                        "\nThe value you set up via 'Appodeal/Appodeal Settings' tool will be ignored.");
+                    return;
+                }
+                else
+                {
+                    return;
+                }
             }
 
             if (!File.Exists(path))
             {
-                Debug.LogWarning(
-                    $"Missing internal AndroidManifest {path}.");
+                Debug.LogError(
+                    $"Missing internal AndroidManifest {path}." +
+                    "\nAdmob App ID can't be added. The app may crash on startup!");
                 return;
             }
 
@@ -160,15 +177,17 @@ namespace Appodeal.Unity.Editor.Utils
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
+                Debug.LogError(
+                    $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
+                    "\nThe app may crash on startup!");
             }
             else
             {
-                if (string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId)
-                    || !AppodealSettings.Instance.AdMobAndroidAppId.StartsWith("ca-app-pub-"))
+                if (!AppodealSettings.Instance.AdMobAndroidAppId.StartsWith("ca-app-pub-"))
                 {
                     Debug.LogError(
-                        "Please enter a valid AdMob app ID within the Appodeal/AdMob settings tool.");
-                    return;
+                        "Incorrect value. The app may crash on startup." +
+                        "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
                 }
 
                 if (CheckContainsAppId(path))
@@ -626,5 +645,4 @@ namespace Appodeal.Unity.Editor.Utils
         }
     }
 }
-
 #endif
