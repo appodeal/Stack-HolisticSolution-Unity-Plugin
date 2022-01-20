@@ -67,7 +67,6 @@ namespace AppodealAds.Unity.Common
         void setRewardedVideoCallbacks(IRewardedVideoAdListener listener);
         void setBannerCallbacks(IBannerAdListener listener);
         void setMrecCallbacks(IMrecAdListener listener);
-        void requestAndroidMPermissions(IPermissionGrantedListener listener);
         void destroy(int adTypes);
         void setSharedAdsInstanceAcrossActivities(bool value);
         void setUseSafeArea(bool value);
