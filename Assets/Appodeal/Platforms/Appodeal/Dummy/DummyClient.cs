@@ -303,16 +303,6 @@ namespace AppodealAds.Unity.Dummy
             Debug.Log("Call to Appodeal.setMrecCallbacks on not supported platform." + DummyMessage);
         }
 
-        public void requestAndroidMPermissions(IPermissionGrantedListener listener)
-        {
-            Debug.Log("Call to Appodeal.requestAndroidMPermissions on not supported platform." + DummyMessage);
-        }
-
-        public void requestAndroidMPermissions()
-        {
-            Debug.Log("Call to Appodeal.requestAndroidMPermissions on not supported platform." + DummyMessage);
-        }
-
         public void destroy(int adTypes)
         {
             Debug.Log("Call to Appodeal.destroy on not supported platform." + DummyMessage);

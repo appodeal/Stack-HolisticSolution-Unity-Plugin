@@ -36,11 +36,6 @@ namespace AppodealAds.Unity.iOS
 
         #endregion
 
-        public void requestAndroidMPermissions(IPermissionGrantedListener listener)
-        {
-            Debug.LogWarning("Not supported on iOS platform");
-        }
-
         private static IInterstitialAdListener interstitialListener;
         private static INonSkippableVideoAdListener nonSkippableVideoListener;
         private static IRewardedVideoAdListener rewardedVideoListener;
@@ -282,6 +277,12 @@ namespace AppodealAds.Unity.iOS
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerViewCallbacks))]
+        private static void bannerViewDidShow()
+        {
+            bannerListener?.onBannerShown();
+        }
+
+        [MonoPInvokeCallback(typeof(AppodealBannerViewCallbacks))]
         private static void bannerViewDidExpired()
         {
             bannerListener?.onBannerExpired();
@@ -302,6 +303,7 @@ namespace AppodealAds.Unity.iOS
                 bannerViewDidLoadAd,
                 bannerViewDidFailToLoadAd,
                 bannerViewDidClick,
+                bannerViewDidShow,
                 bannerViewDidExpired);
         }
 
@@ -328,6 +330,12 @@ namespace AppodealAds.Unity.iOS
         }
 
         [MonoPInvokeCallback(typeof(AppodealMrecViewCallbacks))]
+        private static void mrecViewDidShow()
+        {
+            mrecListener?.onMrecShown();
+        }
+
+        [MonoPInvokeCallback(typeof(AppodealMrecViewCallbacks))]
         private static void mrecViewDidExpired()
         {
             mrecListener?.onMrecExpired();
@@ -341,6 +349,7 @@ namespace AppodealAds.Unity.iOS
                 mrecViewDidLoadAd,
                 mrecViewDidFailToLoadAd,
                 mrecViewDidClick,
+                mrecViewDidShow,
                 mrecViewDidExpired);
         }
 
